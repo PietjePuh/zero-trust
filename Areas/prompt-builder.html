@@ -121,12 +121,24 @@
             </p>
         </div>
     </div>
+
+    <div style="margin-top: 4rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+            <h2 class="wiki-section-title" style="margin: 0; border: none;">📚 Community Prompts Library</h2>
+            <a href="https://github.com/PietjePuh/zero-trust/issues/new?title=New+Prompt+Submission&body=Title:%0A%0ACategory:%0A%0APrompt:" target="_blank" class="button button-secondary">➕ Submit a Prompt</a>
+        </div>
+
+        <div id="libraryGrid" class="grid-container">
+            <!-- Prompts loaded via JS -->
+        </div>
+    </div>
   </main>
 
   <footer>
     <p>&copy; Zero Trust. Hosted with ❤️ on GitHub Pages.</p>
   </footer>
 
+  <script src="data/prompts.js"></script>
   <script>
     const personaSelect = document.getElementById('persona');
     const taskSelect = document.getElementById('task');
@@ -181,6 +193,32 @@
             setTimeout(() => copyBtn.innerText = "Copy", 2000);
         });
     });
+
+    // Load Community Prompts
+    const libraryGrid = document.getElementById('libraryGrid');
+
+    if (typeof communityPrompts !== 'undefined') {
+        communityPrompts.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'module-card';
+            card.style.height = 'auto'; // Override default height
+
+            let badgeClass = 'badge-medium';
+            if (item.category.includes('Red')) badgeClass = 'badge-hard';
+            if (item.category.includes('Blue') || item.category.includes('SOC')) badgeClass = 'badge-easy';
+
+            card.innerHTML = `
+                <div class="module-header">
+                    <h3 class="module-title">${item.title}</h3>
+                    <span class="badge ${badgeClass}">${item.category}</span>
+                </div>
+                <p class="module-desc">${item.description}</p>
+                <div class="code-block" style="font-size: 0.8rem; max-height: 150px; overflow-y: auto; margin-bottom: 1rem;">${item.prompt}</div>
+                <button class="button button-secondary" onclick="navigator.clipboard.writeText(this.previousElementSibling.innerText); this.innerText = 'Copied!'; setTimeout(() => this.innerText = 'Copy Prompt', 2000);">Copy Prompt</button>
+            `;
+            libraryGrid.appendChild(card);
+        });
+    }
   </script>
 </body>
 </html>
