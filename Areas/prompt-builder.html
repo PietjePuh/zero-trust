@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Security Prompt Builder - Zero Trust</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+      .builder-container {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 2rem;
+          margin-top: 2rem;
+      }
+      @media (max-width: 768px) {
+          .builder-container {
+              grid-template-columns: 1fr;
+          }
+      }
+      .input-group {
+          margin-bottom: 1.5rem;
+      }
+      label {
+          display: block;
+          margin-bottom: 0.5rem;
+          font-weight: 600;
+          color: var(--accent-color);
+      }
+      select, textarea, input[type="text"] {
+          width: 100%;
+          padding: 0.8rem;
+          background-color: var(--secondary-bg);
+          border: 1px solid var(--border-color);
+          border-radius: 6px;
+          color: var(--text-color);
+          font-family: inherit;
+          font-size: 1rem;
+      }
+      textarea {
+          min-height: 150px;
+          resize: vertical;
+      }
+      .output-area {
+          background-color: #0d1117;
+          border: 1px solid var(--accent-color);
+          padding: 1.5rem;
+          border-radius: 6px;
+          position: relative;
+      }
+      #promptOutput {
+          font-family: monospace;
+          white-space: pre-wrap;
+          color: #e6edf3;
+      }
+      .copy-btn {
+          position: absolute;
+          top: 1rem;
+          right: 1rem;
+          padding: 0.5rem 1rem;
+          font-size: 0.8rem;
+      }
+  </style>
+</head>
+<body>
+  <header style="padding: 4rem 1rem;">
+    <div class="nav-bar">
+        <a href="../index.html">Home</a>
+        <a href="tools.html">Tools</a>
+        <a href="../Resources/index.html">Resources</a>
+        <a href="../Projects/index.html">Projects</a>
+    </div>
+    <h1>Security Prompt Builder</h1>
+    <p>Construct optimized prompts for AI security analysis.</p>
+  </header>
+
+  <main>
+    <div class="builder-container">
+        <div class="input-section">
+            <div class="input-group">
+                <label for="persona">1. Select Persona</label>
+                <select id="persona">
+                    <option value="Security Engineer">Security Engineer</option>
+                    <option value="Penetration Tester">Penetration Tester (Red Team)</option>
+                    <option value="SOC Analyst">SOC Analyst (Blue Team)</option>
+                    <option value="Malware Analyst">Malware Analyst</option>
+                    <option value="Security Auditor">Security Auditor</option>
+                    <option value="CTF Player">CTF Player</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="task">2. Select Task</label>
+                <select id="task">
+                    <option value="explain">Explain this code/vulnerability</option>
+                    <option value="analyze">Analyze this log/snippet for threats</option>
+                    <option value="write">Write a script/poc (Ethical only)</option>
+                    <option value="fix">Suggest remediation/fix</option>
+                    <option value="decode">Decode/Deobfuscate this string</option>
+                    <option value="summary">Summarize this report</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="context">3. Input Data / Context</label>
+                <textarea id="context" placeholder="Paste code, logs, or description here..."></textarea>
+            </div>
+
+            <button id="generateBtn" class="button" style="width: 100%;">Generate Prompt</button>
+        </div>
+
+        <div class="output-section">
+            <label>Generated Prompt</label>
+            <div class="output-area">
+                <button id="copyBtn" class="button button-secondary copy-btn">Copy</button>
+                <div id="promptOutput">Your generated prompt will appear here...</div>
+            </div>
+            <p style="margin-top: 1rem; font-size: 0.9rem; color: #8b949e;">
+                <strong>Tip:</strong> Always sanitize sensitive data (IPs, passwords, PII) before sending to public LLMs.
+            </p>
+        </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; Zero Trust. Hosted with ❤️ on GitHub Pages.</p>
+  </footer>
+
+  <script>
+    const personaSelect = document.getElementById('persona');
+    const taskSelect = document.getElementById('task');
+    const contextInput = document.getElementById('context');
+    const generateBtn = document.getElementById('generateBtn');
+    const outputDiv = document.getElementById('promptOutput');
+    const copyBtn = document.getElementById('copyBtn');
+
+    generateBtn.addEventListener('click', () => {
+        const persona = personaSelect.value;
+        const task = taskSelect.value;
+        const context = contextInput.value.trim();
+
+        let prompt = `Act as an expert ${persona}.\n\n`;
+
+        switch(task) {
+            case 'explain':
+                prompt += `I need you to explain the following code or concept in detail. Identify any potential security implications.\n`;
+                break;
+            case 'analyze':
+                prompt += `Analyze the provided data for indicators of compromise (IOCs), anomalies, or security misconfigurations. Highlight the most critical findings.\n`;
+                break;
+            case 'write':
+                prompt += `Write a script or code snippet to accomplish the following task. Ensure the code is secure, commented, and follows best practices. (Ethical use only).\n`;
+                break;
+            case 'fix':
+                prompt += `Review the following vulnerability or code issue and provide a comprehensive remediation strategy, including code patches if applicable.\n`;
+                break;
+            case 'decode':
+                prompt += `Attempt to decode, deobfuscate, or translate the following string/data. Explain the encoding method used.\n`;
+                break;
+            case 'summary':
+                prompt += `Summarize the following security report or text. Focus on key findings, impact, and recommendations.\n`;
+                break;
+        }
+
+        if (context) {
+            prompt += `\n[DATA START]\n${context}\n[DATA END]\n\n`;
+        } else {
+            prompt += `\n[Insert Data Here]\n\n`;
+        }
+
+        prompt += `Provide your response in a clear, structured format using Markdown.`;
+
+        outputDiv.innerText = prompt;
+    });
+
+    copyBtn.addEventListener('click', () => {
+        const text = outputDiv.innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            copyBtn.innerText = "Copied!";
+            setTimeout(() => copyBtn.innerText = "Copy", 2000);
+        });
+    });
+  </script>
+</body>
+</html>
