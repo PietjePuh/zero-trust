@@ -10,9 +10,9 @@
   <header>
     <div class="nav-bar">
         <a href="index.html" class="active">Knowledge Base</a>
-        <a href="tools.html">Tools Encyclopedia</a>
-        <a href="resources.html">Resources</a>
-        <a href="Sec-labs/">All Labs</a>
+        <a href="Areas/tools.html">Tools Encyclopedia</a>
+        <a href="Resources/index.html">Resources</a>
+        <a href="Projects/Sec-labs/">All Labs</a>
     </div>
     <h1>Zero Trust Knowledge Base</h1>
     <p>Your centralized hub for ethical hacking, blue teaming, and security research.</p>
@@ -27,7 +27,7 @@
     <div class="grid-container">
 
         <!-- Path 1: Ethical Hacking -->
-        <a href="Sec-labs/docs/tcm/practical-ethical-hacking/" class="module-card-link" style="text-decoration: none;">
+        <a href="Projects/Sec-labs/docs/tcm/practical-ethical-hacking/" class="module-card-link" style="text-decoration: none;">
             <div class="module-card">
                 <div class="module-header">
                     <h3 class="module-title">Practical Ethical Hacking</h3>
@@ -44,7 +44,7 @@
         </a>
 
         <!-- Path 2: Network Security -->
-        <a href="tools.html?category=net" class="module-card-link" style="text-decoration: none;">
+        <a href="Areas/tools.html?category=net" class="module-card-link" style="text-decoration: none;">
             <div class="module-card">
                 <div class="module-header">
                     <h3 class="module-title">Network Security & Enumeration</h3>
@@ -60,7 +60,7 @@
         </a>
 
         <!-- Path 3: Forensics -->
-        <a href="tools.html?category=for" class="module-card-link" style="text-decoration: none;">
+        <a href="Areas/tools.html?category=for" class="module-card-link" style="text-decoration: none;">
             <div class="module-card">
                 <div class="module-header">
                     <h3 class="module-title">Digital Forensics</h3>
@@ -80,30 +80,30 @@
     <div class="grid-container">
 
         <section>
-            <h3><a href="tools.html">⚔️ Red Team Tools</a></h3>
+            <h3><a href="Areas/tools.html">⚔️ Red Team Tools</a></h3>
             <p>A complete encyclopedia of offensive security tools.</p>
             <ul>
-                <li><a href="tools.html#metasploit">Metasploit Framework</a></li>
-                <li><a href="tools.html#hydra">Password Cracking (Hydra, Hashcat)</a></li>
-                <li><a href="tools.html#burp">Web Proxies (Burp Suite)</a></li>
+                <li><a href="Areas/tools.html#metasploit">Metasploit Framework</a></li>
+                <li><a href="Areas/tools.html#hydra">Password Cracking (Hydra, Hashcat)</a></li>
+                <li><a href="Areas/tools.html#burp">Web Proxies (Burp Suite)</a></li>
             </ul>
         </section>
 
         <section>
-            <h3><a href="tools.html?category=osint">🌐 OSINT & Recon</a></h3>
+            <h3><a href="Areas/tools.html?category=osint">🌐 OSINT & Recon</a></h3>
             <p>Open Source Intelligence gathering techniques.</p>
             <ul>
-                <li><a href="tools.html#sherlock">User Enumeration (Sherlock)</a></li>
-                <li><a href="tools.html#shodan">Shodan / Dorking</a></li>
-                <li><a href="tools.html#maltego">Link Analysis (Maltego)</a></li>
+                <li><a href="Areas/tools.html#sherlock">User Enumeration (Sherlock)</a></li>
+                <li><a href="Areas/tools.html#shodan">Shodan / Dorking</a></li>
+                <li><a href="Areas/tools.html#maltego">Link Analysis (Maltego)</a></li>
             </ul>
         </section>
 
         <section>
-            <h3><a href="Sec-labs/">🧪 Live Labs</a></h3>
+            <h3><a href="Projects/Sec-labs/">🧪 Live Labs</a></h3>
             <p>Hands-on practice environments.</p>
             <ul>
-                <li><a href="Sec-labs/docs/tcm/practical-ethical-hacking/eternalblue-lab.md">EternalBlue Exploitation</a></li>
+                <li><a href="Projects/Sec-labs/docs/tcm/practical-ethical-hacking/eternalblue-lab.md">EternalBlue Exploitation</a></li>
                 <li><a href="#">Active Directory Attacks (Coming Soon)</a></li>
                 <li><a href="#">Buffer Overflows (Coming Soon)</a></li>
             </ul>
@@ -137,7 +137,7 @@
             const query = e.target.value;
             if (query) {
                 // Redirect to tools page search
-                window.location.href = `tools.html?q=${encodeURIComponent(query)}`;
+                window.location.href = `Areas/tools.html?q=${encodeURIComponent(query)}`;
             }
         }
     });
