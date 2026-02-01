@@ -49,6 +49,10 @@
     </div>
     <h1>Security Resources</h1>
     <p>A comprehensive directory of search engines, threat intel, and learning platforms.</p>
+
+    <div style="margin-top: 2rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+        <input type="text" id="resourceSearch" class="search-input" placeholder="Filter resources by name or domain..." style="background-color: var(--secondary-bg); border: 1px solid var(--border-color); padding: 1rem; border-radius: 6px; width: 100%; color: var(--text-color);">
+    </div>
   </header>
 
   <main>
@@ -420,5 +424,43 @@
   <footer>
     <p>&copy; Zero Trust. Hosted with ❤️ on GitHub Pages.</p>
   </footer>
+
+  <script>
+      const searchInput = document.getElementById('resourceSearch');
+      const resourceItems = document.querySelectorAll('.resource-item');
+      const categories = document.querySelectorAll('.resource-category');
+
+      searchInput.addEventListener('input', (e) => {
+          const term = e.target.value.toLowerCase();
+
+          resourceItems.forEach(item => {
+              const title = item.querySelector('.resource-title').textContent.toLowerCase();
+              const domain = item.querySelector('.resource-domain').textContent.toLowerCase();
+
+              if (title.includes(term) || domain.includes(term)) {
+                  item.style.display = 'block';
+              } else {
+                  item.style.display = 'none';
+              }
+          });
+
+          // Hide empty categories
+          categories.forEach(cat => {
+              const visibleItems = cat.querySelectorAll('.resource-item[style="display: block;"]');
+              // Note: By default display is not set inline, so checking not 'none' is safer
+              const allItems = cat.querySelectorAll('.resource-item');
+              let hasVisible = false;
+              allItems.forEach(i => {
+                  if (i.style.display !== 'none') hasVisible = true;
+              });
+
+              if (hasVisible) {
+                  cat.style.display = 'block';
+              } else {
+                  cat.style.display = 'none';
+              }
+          });
+      });
+  </script>
 </body>
 </html>

