@@ -3,88 +3,144 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zero Trust - Securing the Future</title>
+  <title>Zero Trust Knowledge Base</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <header>
     <div class="nav-bar">
-        <a href="index.html" class="active">Home</a>
-        <a href="tools.html">Tools</a>
+        <a href="index.html" class="active">Knowledge Base</a>
+        <a href="tools.html">Tools Encyclopedia</a>
+        <a href="resources.html">Resources</a>
+        <a href="Sec-labs/">All Labs</a>
     </div>
-    <h1>Zero Trust</h1>
-    <p>Securing the Future of the Decentralized Web</p>
-    <div class="button-container" style="margin-top: 2rem;">
-        <a href="https://brave.com/download/" class="button" target="_blank">Download Brave</a>
-        <a href="tools.html" class="button button-secondary">View Security Tools</a>
+    <h1>Zero Trust Knowledge Base</h1>
+    <p>Your centralized hub for ethical hacking, blue teaming, and security research.</p>
+
+    <div class="hero-search">
+        <input type="text" class="search-input" placeholder="Search the wiki (e.g., 'eternalblue', 'nmap', 'forensics')...">
     </div>
   </header>
 
   <main>
+    <h2 class="wiki-section-title">🚀 Learning Paths</h2>
     <div class="grid-container">
-        <section id="about" class="full-width">
-          <h2>About Zero-Trust.Brave</h2>
-          <p>
-            Welcome to the official landing page for <strong>Zero Trust</strong>. We are dedicated to providing cutting-edge security resources and labs for the ethical hacking community.
-          </p>
-          <p>
-            Our main site is accessible on the decentralized web at:
-            <br>
-            <code style="font-size: 1.2rem; display: block; margin: 1rem 0;">http://zero-trust.brave</code>
-          </p>
-          <p>
-            <em>Note: This domain requires the Brave Browser or a compatible resolver to access.</em>
-          </p>
-        </section>
 
-        <section>
-          <h2>Why Decentralized?</h2>
-          <p>
-            The decentralized web (DWeb) offers a future where users control their data and content is resistant to censorship.
-          </p>
-          <p>
-            By hosting on the <code>.brave</code> TLD (and <code>.pw</code>), we ensure that our resources remain accessible and resilient. Zero Trust isn't just a security model; it's a philosophy of verification and independence.
-          </p>
-        </section>
+        <!-- Path 1: Ethical Hacking -->
+        <a href="Sec-labs/docs/tcm/practical-ethical-hacking/" class="module-card-link" style="text-decoration: none;">
+            <div class="module-card">
+                <div class="module-header">
+                    <h3 class="module-title">Practical Ethical Hacking</h3>
+                    <span class="badge badge-medium">Medium</span>
+                </div>
+                <p class="module-desc">
+                    Comprehensive course covering networking, Linux, Python, and exploitation. Based on TCM Academy's curriculum.
+                </p>
+                <div class="module-meta">
+                    <span>📚 12 Modules</span>
+                    <span>⏱️ 25 Hours</span>
+                </div>
+            </div>
+        </a>
 
-        <section>
-          <h2>Security Philosophy</h2>
-          <p>
-            <strong>"Never trust, always verify."</strong>
-          </p>
-          <p>
-            Zero Trust architecture abolishes the idea of a trusted network inside a corporate perimeter. We apply these principles to our educational content, teaching you how to secure systems by assuming breach and verifying every request.
-          </p>
-        </section>
+        <!-- Path 2: Network Security -->
+        <a href="tools.html?category=net" class="module-card-link" style="text-decoration: none;">
+            <div class="module-card">
+                <div class="module-header">
+                    <h3 class="module-title">Network Security & Enumeration</h3>
+                    <span class="badge badge-easy">Easy</span>
+                </div>
+                <p class="module-desc">
+                    Master the art of network mapping, port scanning, and service enumeration using industry-standard tools.
+                </p>
+                <div class="module-meta">
+                    <span>🛠️ Tools: Nmap, Netcat</span>
+                </div>
+            </div>
+        </a>
 
-        <section class="full-width">
-          <h2>Labs & Resources</h2>
-          <p>Dive into our practical security labs designed to sharpen your skills:</p>
-          <ul>
-            <li><a href="Sec-labs/docs/tcm/practical-ethical-hacking/eternalblue-lab.md">TCM Practical Ethical Hacking - EternalBlue Lab</a></li>
-            <li><a href="Sec-labs/">Browse all Security Labs</a></li>
-          </ul>
-        </section>
+        <!-- Path 3: Forensics -->
+        <a href="tools.html?category=for" class="module-card-link" style="text-decoration: none;">
+            <div class="module-card">
+                <div class="module-header">
+                    <h3 class="module-title">Digital Forensics</h3>
+                    <span class="badge badge-hard">Hard</span>
+                </div>
+                <p class="module-desc">
+                    Learn to analyze memory dumps, disk images, and Windows event logs to investigate incidents.
+                </p>
+                <div class="module-meta">
+                    <span>🔍 Volatility, Autopsy</span>
+                </div>
+            </div>
+        </a>
     </div>
 
-    <section style="text-align: center; margin-top: 3rem;">
-      <h2>Join the Community</h2>
-      <p>
-        To access <code>.brave</code> domains and experience a faster, more private internet, we recommend using the Brave Browser.
-      </p>
-      <div class="button-container">
-        <a href="https://brave.com/download/" class="button" target="_blank">Download Brave Browser</a>
-        <a href="https://github.com/PietjePuh/zero-trust" class="button button-secondary" target="_blank">View on GitHub</a>
-      </div>
+    <h2 class="wiki-section-title">📖 Hacker's Wiki</h2>
+    <div class="grid-container">
+
+        <section>
+            <h3><a href="tools.html">⚔️ Red Team Tools</a></h3>
+            <p>A complete encyclopedia of offensive security tools.</p>
+            <ul>
+                <li><a href="tools.html#metasploit">Metasploit Framework</a></li>
+                <li><a href="tools.html#hydra">Password Cracking (Hydra, Hashcat)</a></li>
+                <li><a href="tools.html#burp">Web Proxies (Burp Suite)</a></li>
+            </ul>
+        </section>
+
+        <section>
+            <h3><a href="tools.html?category=osint">🌐 OSINT & Recon</a></h3>
+            <p>Open Source Intelligence gathering techniques.</p>
+            <ul>
+                <li><a href="tools.html#sherlock">User Enumeration (Sherlock)</a></li>
+                <li><a href="tools.html#shodan">Shodan / Dorking</a></li>
+                <li><a href="tools.html#maltego">Link Analysis (Maltego)</a></li>
+            </ul>
+        </section>
+
+        <section>
+            <h3><a href="Sec-labs/">🧪 Live Labs</a></h3>
+            <p>Hands-on practice environments.</p>
+            <ul>
+                <li><a href="Sec-labs/docs/tcm/practical-ethical-hacking/eternalblue-lab.md">EternalBlue Exploitation</a></li>
+                <li><a href="#">Active Directory Attacks (Coming Soon)</a></li>
+                <li><a href="#">Buffer Overflows (Coming Soon)</a></li>
+            </ul>
+        </section>
+
+    </div>
+
+    <section class="full-width" style="margin-top: 3rem; text-align: center;">
+        <h2>About Zero Trust</h2>
+        <p>
+            Hosted on the decentralized web (<code>.brave</code> / <code>.pw</code>), this platform serves as an uncensorable repository of security knowledge.
+        </p>
+        <div class="button-container">
+            <a href="https://github.com/PietjePuh/zero-trust" class="button button-secondary">Contribute on GitHub</a>
+        </div>
     </section>
+
   </main>
 
   <footer>
-    <p>&copy; Zero Trust. Hosted with ❤️ on GitHub Pages.</p>
-    <p>
-        <a href="https://github.com/PietjePuh/zero-trust">GitHub Repository</a> |
-        <a href="https://github.com/PietjePuh/zero-trust/issues">Report an Issue</a>
-    </p>
+    <p>&copy; Zero Trust Knowledge Base. Open Source & Decentralized.</p>
   </footer>
+
+  <script>
+    // Simple script to handle search on the wiki homepage
+    // It redirects to the tools page with the search query for now,
+    // or we could implement a local search if we had more content pages.
+    const heroSearch = document.querySelector('.hero-search .search-input');
+    heroSearch.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            const query = e.target.value;
+            if (query) {
+                // Redirect to tools page search
+                window.location.href = `tools.html?q=${encodeURIComponent(query)}`;
+            }
+        }
+    });
+  </script>
 </body>
 </html>

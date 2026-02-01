@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Security Resources - Zero Trust</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+      .resource-category {
+          margin-bottom: 3rem;
+      }
+      .resource-list {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+          gap: 1.5rem;
+      }
+      .resource-item {
+          background-color: var(--secondary-bg);
+          border: 1px solid var(--border-color);
+          border-radius: 6px;
+          padding: 1rem;
+          transition: transform 0.2s, border-color 0.2s;
+      }
+      .resource-item:hover {
+          transform: translateY(-3px);
+          border-color: var(--accent-color);
+      }
+      .resource-title {
+          font-weight: 600;
+          color: var(--accent-color);
+          margin-bottom: 0.5rem;
+          display: block;
+      }
+      .resource-domain {
+          font-size: 0.8rem;
+          color: #8b949e;
+      }
+  </style>
+</head>
+<body>
+  <header style="padding: 4rem 1rem;">
+    <div class="nav-bar">
+        <a href="index.html">Home</a>
+        <a href="tools.html">Tools</a>
+        <a href="resources.html" class="active">Resources</a>
+    </div>
+    <h1>Security Resources</h1>
+    <p>A comprehensive directory of search engines, threat intel, and learning platforms.</p>
+  </header>
+
+  <main>
+
+    <div class="resource-category">
+        <h2 class="wiki-section-title">🔍 Search Engines & Recon</h2>
+        <div class="resource-list">
+            <a href="https://search.brave.com" target="_blank" class="resource-item">
+                <span class="resource-title">Brave Search</span>
+                <span class="resource-domain">search.brave.com</span>
+            </a>
+            <a href="https://shodan.io" target="_blank" class="resource-item">
+                <span class="resource-title">Shodan</span>
+                <span class="resource-domain">shodan.io</span>
+            </a>
+            <a href="https://search.censys.io/" target="_blank" class="resource-item">
+                <span class="resource-title">Censys</span>
+                <span class="resource-domain">search.censys.io</span>
+            </a>
+            <a href="https://pimeyes.com/en" target="_blank" class="resource-item">
+                <span class="resource-title">PimEyes</span>
+                <span class="resource-domain">pimeyes.com</span>
+            </a>
+            <a href="https://archive.org/" target="_blank" class="resource-item">
+                <span class="resource-title">Internet Archive</span>
+                <span class="resource-domain">archive.org</span>
+            </a>
+            <a href="https://hunter.io/" target="_blank" class="resource-item">
+                <span class="resource-title">Hunter.io</span>
+                <span class="resource-domain">hunter.io</span>
+            </a>
+            <a href="https://who.is/" target="_blank" class="resource-item">
+                <span class="resource-title">Who.is</span>
+                <span class="resource-domain">who.is</span>
+            </a>
+             <a href="https://dnsdumpster.com/" target="_blank" class="resource-item">
+                <span class="resource-title">DNS Dumpster</span>
+                <span class="resource-domain">dnsdumpster.com</span>
+            </a>
+            <a href="https://crt.sh/" target="_blank" class="resource-item">
+                <span class="resource-title">crt.sh (Cert Search)</span>
+                <span class="resource-domain">crt.sh</span>
+            </a>
+            <a href="https://wigle.net/" target="_blank" class="resource-item">
+                <span class="resource-title">WiGLE (Wifi Maps)</span>
+                <span class="resource-domain">wigle.net</span>
+            </a>
+             <a href="https://urlscan.io" target="_blank" class="resource-item">
+                <span class="resource-title">URLScan.io</span>
+                <span class="resource-domain">urlscan.io</span>
+            </a>
+             <a href="https://search.onyphe.io/" target="_blank" class="resource-item">
+                <span class="resource-title">Onyphe</span>
+                <span class="resource-domain">onyphe.io</span>
+            </a>
+            <a href="https://fullhunt.io" target="_blank" class="resource-item">
+                <span class="resource-title">FullHunt</span>
+                <span class="resource-domain">fullhunt.io</span>
+            </a>
+             <a href="https://zoomeye.org" target="_blank" class="resource-item">
+                <span class="resource-title">ZoomEye</span>
+                <span class="resource-domain">zoomeye.org</span>
+            </a>
+             <a href="https://leak-lookup.com" target="_blank" class="resource-item">
+                <span class="resource-title">Leak Lookup</span>
+                <span class="resource-domain">leak-lookup.com</span>
+            </a>
+            <a href="https://haveibeenpwned.com/" target="_blank" class="resource-item">
+                <span class="resource-title">Have I Been Pwned</span>
+                <span class="resource-domain">haveibeenpwned.com</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="resource-category">
+        <h2 class="wiki-section-title">🛡️ Threat Intelligence & Analysis</h2>
+        <div class="resource-list">
+            <a href="https://www.virustotal.com/gui/home/search" target="_blank" class="resource-item">
+                <span class="resource-title">VirusTotal</span>
+                <span class="resource-domain">virustotal.com</span>
+            </a>
+            <a href="https://hybrid-analysis.com/" target="_blank" class="resource-item">
+                <span class="resource-title">Hybrid Analysis</span>
+                <span class="resource-domain">hybrid-analysis.com</span>
+            </a>
+            <a href="https://any.run/" target="_blank" class="resource-item">
+                <span class="resource-title">Any.Run (Sandbox)</span>
+                <span class="resource-domain">any.run</span>
+            </a>
+             <a href="https://joesandbox.com/" target="_blank" class="resource-item">
+                <span class="resource-title">Joe Sandbox</span>
+                <span class="resource-domain">joesandbox.com</span>
+            </a>
+             <a href="https://tria.ge/" target="_blank" class="resource-item">
+                <span class="resource-title">Triage</span>
+                <span class="resource-domain">tria.ge</span>
+            </a>
+            <a href="https://otx.alienvault.com" target="_blank" class="resource-item">
+                <span class="resource-title">AlienVault OTX</span>
+                <span class="resource-domain">otx.alienvault.com</span>
+            </a>
+             <a href="https://talosintelligence.com/" target="_blank" class="resource-item">
+                <span class="resource-title">Cisco Talos</span>
+                <span class="resource-domain">talosintelligence.com</span>
+            </a>
+            <a href="https://abuse.ch" target="_blank" class="resource-item">
+                <span class="resource-title">Abuse.ch</span>
+                <span class="resource-domain">abuse.ch</span>
+            </a>
+            <a href="https://urlhaus.abuse.ch/browse/" target="_blank" class="resource-item">
+                <span class="resource-title">URLhaus</span>
+                <span class="resource-domain">urlhaus.abuse.ch</span>
+            </a>
+             <a href="https://threatfox.abuse.ch" target="_blank" class="resource-item">
+                <span class="resource-title">ThreatFox</span>
+                <span class="resource-domain">threatfox.abuse.ch</span>
+            </a>
+            <a href="https://bazaar.abuse.ch/" target="_blank" class="resource-item">
+                <span class="resource-title">MalwareBazaar</span>
+                <span class="resource-domain">bazaar.abuse.ch</span>
+            </a>
+            <a href="https://vuldb.com/" target="_blank" class="resource-item">
+                <span class="resource-title">VulDB</span>
+                <span class="resource-domain">vuldb.com</span>
+            </a>
+            <a href="https://exploit-db.com/" target="_blank" class="resource-item">
+                <span class="resource-title">Exploit-DB</span>
+                <span class="resource-domain">exploit-db.com</span>
+            </a>
+            <a href="https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator" target="_blank" class="resource-item">
+                <span class="resource-title">NIST NVD</span>
+                <span class="resource-domain">nvd.nist.gov</span>
+            </a>
+            <a href="https://attack.mitre.org" target="_blank" class="resource-item">
+                <span class="resource-title">MITRE ATT&CK</span>
+                <span class="resource-domain">attack.mitre.org</span>
+            </a>
+             <a href="https://malpedia.caad.fkie.fraunhofer.de/library" target="_blank" class="resource-item">
+                <span class="resource-title">Malpedia</span>
+                <span class="resource-domain">malpedia.caad.fkie</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="resource-category">
+        <h2 class="wiki-section-title">🎓 Learning & CTFs</h2>
+        <div class="resource-list">
+             <a href="https://tryhackme.com/" target="_blank" class="resource-item">
+                <span class="resource-title">TryHackMe</span>
+                <span class="resource-domain">tryhackme.com</span>
+            </a>
+             <a href="https://www.hackthebox.com/" target="_blank" class="resource-item">
+                <span class="resource-title">Hack The Box</span>
+                <span class="resource-domain">hackthebox.com</span>
+            </a>
+             <a href="https://academy.tcm-sec.com/" target="_blank" class="resource-item">
+                <span class="resource-title">TCM Security Academy</span>
+                <span class="resource-domain">academy.tcm-sec.com</span>
+            </a>
+             <a href="https://portswigger.net/web-security" target="_blank" class="resource-item">
+                <span class="resource-title">PortSwigger Web Security</span>
+                <span class="resource-domain">portswigger.net</span>
+            </a>
+             <a href="https://pentesterlab.com/" target="_blank" class="resource-item">
+                <span class="resource-title">PentesterLab</span>
+                <span class="resource-domain">pentesterlab.com</span>
+            </a>
+             <a href="https://www.vulnhub.com/" target="_blank" class="resource-item">
+                <span class="resource-title">VulnHub</span>
+                <span class="resource-domain">vulnhub.com</span>
+            </a>
+             <a href="https://overthewire.org/" target="_blank" class="resource-item">
+                <span class="resource-title">OverTheWire</span>
+                <span class="resource-domain">overthewire.org</span>
+            </a>
+             <a href="https://www.root-me.org/" target="_blank" class="resource-item">
+                <span class="resource-title">Root-Me</span>
+                <span class="resource-domain">root-me.org</span>
+            </a>
+             <a href="https://www.offsec.com/" target="_blank" class="resource-item">
+                <span class="resource-title">OffSec (OSCP)</span>
+                <span class="resource-domain">offsec.com</span>
+            </a>
+            <a href="https://learn.eccouncil.org/" target="_blank" class="resource-item">
+                <span class="resource-title">EC-Council Learning</span>
+                <span class="resource-domain">learn.eccouncil.org</span>
+            </a>
+             <a href="https://cybrary.it" target="_blank" class="resource-item">
+                <span class="resource-title">Cybrary</span>
+                <span class="resource-domain">cybrary.it</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="resource-category">
+        <h2 class="wiki-section-title">📰 Security News & Blogs</h2>
+        <div class="resource-list">
+             <a href="http://thehackernews.com" target="_blank" class="resource-item">
+                <span class="resource-title">The Hacker News</span>
+                <span class="resource-domain">thehackernews.com</span>
+            </a>
+             <a href="https://www.bleepingcomputer.com/news/" target="_blank" class="resource-item">
+                <span class="resource-title">BleepingComputer</span>
+                <span class="resource-domain">bleepingcomputer.com</span>
+            </a>
+             <a href="https://krebsonsecurity.com" target="_blank" class="resource-item">
+                <span class="resource-title">Krebs on Security</span>
+                <span class="resource-domain">krebsonsecurity.com</span>
+            </a>
+             <a href="https://www.darkreading.com" target="_blank" class="resource-item">
+                <span class="resource-title">Dark Reading</span>
+                <span class="resource-domain">darkreading.com</span>
+            </a>
+             <a href="https://securityweek.com" target="_blank" class="resource-item">
+                <span class="resource-title">SecurityWeek</span>
+                <span class="resource-domain">securityweek.com</span>
+            </a>
+             <a href="https://therecord.media" target="_blank" class="resource-item">
+                <span class="resource-title">The Record</span>
+                <span class="resource-domain">therecord.media</span>
+            </a>
+             <a href="https://cybersecuritynews.com/" target="_blank" class="resource-item">
+                <span class="resource-title">Cyber Security News</span>
+                <span class="resource-domain">cybersecuritynews.com</span>
+            </a>
+             <a href="https://threatpost.com" target="_blank" class="resource-item">
+                <span class="resource-title">Threatpost</span>
+                <span class="resource-domain">threatpost.com</span>
+            </a>
+             <a href="https://gbhackers.com" target="_blank" class="resource-item">
+                <span class="resource-title">GBHackers</span>
+                <span class="resource-domain">gbhackers.com</span>
+            </a>
+            <a href="https://www.schneier.com/" target="_blank" class="resource-item">
+                <span class="resource-title">Schneier on Security</span>
+                <span class="resource-domain">schneier.com</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="resource-category">
+        <h2 class="wiki-section-title">🛠️ Web Tools & Utilities</h2>
+        <div class="resource-list">
+             <a href="https://gchq.github.io/CyberChef/" target="_blank" class="resource-item">
+                <span class="resource-title">CyberChef</span>
+                <span class="resource-domain">gchq.github.io</span>
+            </a>
+             <a href="https://mxtoolbox.com" target="_blank" class="resource-item">
+                <span class="resource-title">MxToolbox</span>
+                <span class="resource-domain">mxtoolbox.com</span>
+            </a>
+             <a href="https://viewdns.info/" target="_blank" class="resource-item">
+                <span class="resource-title">ViewDNS.info</span>
+                <span class="resource-domain">viewdns.info</span>
+            </a>
+             <a href="https://check-host.net/" target="_blank" class="resource-item">
+                <span class="resource-title">Check-Host</span>
+                <span class="resource-domain">check-host.net</span>
+            </a>
+             <a href="https://www.revshells.com/" target="_blank" class="resource-item">
+                <span class="resource-title">RevShells</span>
+                <span class="resource-domain">revshells.com</span>
+            </a>
+             <a href="https://crackstation.net" target="_blank" class="resource-item">
+                <span class="resource-title">CrackStation</span>
+                <span class="resource-domain">crackstation.net</span>
+            </a>
+             <a href="https://hashes.com/en/tools/hash_identifier" target="_blank" class="resource-item">
+                <span class="resource-title">Hash Identifier</span>
+                <span class="resource-domain">hashes.com</span>
+            </a>
+             <a href="https://securityheaders.com/" target="_blank" class="resource-item">
+                <span class="resource-title">Security Headers</span>
+                <span class="resource-domain">securityheaders.com</span>
+            </a>
+             <a href="https://www.ssllabs.com/ssltest/" target="_blank" class="resource-item">
+                <span class="resource-title">SSL Labs</span>
+                <span class="resource-domain">ssllabs.com</span>
+            </a>
+             <a href="https://builtwith.com/" target="_blank" class="resource-item">
+                <span class="resource-title">BuiltWith</span>
+                <span class="resource-domain">builtwith.com</span>
+            </a>
+            <a href="https://unshorten.it" target="_blank" class="resource-item">
+                <span class="resource-title">Unshorten.it</span>
+                <span class="resource-domain">unshorten.it</span>
+            </a>
+             <a href="https://web-check.as93.net/" target="_blank" class="resource-item">
+                <span class="resource-title">Web-Check</span>
+                <span class="resource-domain">web-check.as93.net</span>
+            </a>
+        </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <p>&copy; Zero Trust. Hosted with ❤️ on GitHub Pages.</p>
+  </footer>
+</body>
+</html>
