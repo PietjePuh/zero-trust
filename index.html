@@ -3,10 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Zero Trust Knowledge Base - Your centralized hub for ethical hacking, blue teaming, penetration testing, and security research. Learn offensive security with hands-on labs.">
+  <meta name="keywords" content="ethical hacking, penetration testing, cybersecurity, security tools, OSINT, red team, blue team, CTF">
+  <meta name="author" content="Zero Trust">
+  <!-- Open Graph / Social -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Zero Trust Knowledge Base">
+  <meta property="og:description" content="Your centralized hub for ethical hacking, blue teaming, and security research.">
+  <meta property="og:url" content="https://zero-trust.pw">
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Zero Trust Knowledge Base">
+  <meta name="twitter:description" content="Your centralized hub for ethical hacking, blue teaming, and security research.">
   <title>Zero Trust Knowledge Base</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔐</text></svg>">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
   <header>
     <div class="nav-bar">
         <a href="index.html" class="active">Knowledge Base</a>
@@ -22,8 +36,8 @@
     </div>
   </header>
 
-  <main>
-    <h2 class="wiki-section-title">🚀 Learning Paths</h2>
+  <main id="main-content">
+    <h2 class="wiki-section-title" aria-label="Learning Paths">🚀 Learning Paths</h2>
     <div class="grid-container">
 
         <!-- Path 1: Ethical Hacking -->
@@ -76,7 +90,7 @@
         </a>
     </div>
 
-    <h2 class="wiki-section-title">📖 Hacker's Wiki</h2>
+    <h2 class="wiki-section-title" aria-label="Hacker's Wiki">📖 Hacker's Wiki</h2>
     <div class="grid-container">
 
         <section>
@@ -104,8 +118,8 @@
             <p>Hands-on practice environments.</p>
             <ul>
                 <li><a href="Sec-labs/docs/tcm/practical-ethical-hacking/eternalblue-lab.md">EternalBlue Exploitation</a></li>
-                <li><a href="#">Active Directory Attacks (Coming Soon)</a></li>
-                <li><a href="#">Buffer Overflows (Coming Soon)</a></li>
+                <li><span class="coming-soon" title="This lab is under development">Active Directory Attacks (Coming Soon)</span></li>
+                <li><span class="coming-soon" title="This lab is under development">Buffer Overflows (Coming Soon)</span></li>
             </ul>
         </section>
 

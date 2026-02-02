@@ -175,7 +175,7 @@ exploit
 * Hashdump + NTLM cracking is a fast route to further access
 * Even simple passwords like `Password123!` are still common
 * Pass-the-Hash and plaintext reuse are both viable
-* hashdump is not a windows commadn but a a Meterpreter command
+* hashdump is not a Windows command but a Meterpreter command
 ---
 
 ✅ End of walkthrough — consider chaining to privilege escalation or lateral movement next.

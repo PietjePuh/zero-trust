@@ -1,0 +1,8 @@
+# Zero Trust Knowledge Base
+# https://zero-trust.pw
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://zero-trust.pw/sitemap.xml
