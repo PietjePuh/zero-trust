@@ -14,10 +14,10 @@ services:
       - APP_ENV=development
       - DEBUG=true
       - LOG_LEVEL=DEBUG
-      - DATABASE_URL=postgresql+asyncpg://postgres:postgres@postgres:5432/zero_trust
+      - DATABASE_URL=postgresql+asyncpg://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-zero_trust}
       - WEAVIATE_URL=http://weaviate:8080
       - REDIS_URL=redis://redis:6379/0
-      - SECRET_KEY=${SECRET_KEY:-dev-secret-key-change-in-production}
+      - SECRET_KEY=${SECRET_KEY}
       - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
     depends_on:
       postgres:
@@ -44,9 +44,9 @@ services:
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: zero_trust
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB:-zero_trust}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
