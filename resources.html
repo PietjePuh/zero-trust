@@ -50,6 +50,18 @@
 
   <main>
 
+    <div class="search-container">
+        <div class="search-wrapper">
+            <label for="searchInput" class="sr-only">Search Security Resources</label>
+            <input type="text" id="searchInput" class="search-input" placeholder="Search resources (e.g., 'shodan', 'threat', 'learning')..." aria-label="Search Security Resources">
+            <button id="clearSearch" class="clear-button hidden" aria-label="Clear search" type="button">✕</button>
+        </div>
+    </div>
+
+    <div id="noResults" class="no-results hidden">
+        <p>No resources found matching your criteria.</p>
+    </div>
+
     <div class="resource-category">
         <h2 class="wiki-section-title">🔍 Search Engines & Recon</h2>
         <div class="resource-list">
@@ -345,5 +357,64 @@
   <footer>
     <p>&copy; Zero Trust. Hosted with ❤️ on GitHub Pages.</p>
   </footer>
+
+  <script>
+    const searchInput = document.getElementById('searchInput');
+    const resourceCategories = document.querySelectorAll('.resource-category');
+    const clearBtn = document.getElementById('clearSearch');
+    const noResults = document.getElementById('noResults');
+
+    function filterResources(searchTerm) {
+        searchTerm = searchTerm.toLowerCase();
+        let totalVisible = 0;
+
+        resourceCategories.forEach(category => {
+            let categoryVisibleCount = 0;
+            const items = category.querySelectorAll('.resource-item');
+
+            items.forEach(item => {
+                const text = item.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    item.classList.remove('hidden');
+                    categoryVisibleCount++;
+                    totalVisible++;
+                } else {
+                    item.classList.add('hidden');
+                }
+            });
+
+            // Hide category if no items match
+            if (categoryVisibleCount > 0) {
+                category.classList.remove('hidden');
+            } else {
+                category.classList.add('hidden');
+            }
+        });
+
+        // Toggle No Results
+        if (totalVisible > 0) {
+            noResults.classList.add('hidden');
+        } else {
+            noResults.classList.remove('hidden');
+        }
+
+        // Toggle Clear Button
+        if (searchTerm) {
+            clearBtn.classList.remove('hidden');
+        } else {
+            clearBtn.classList.add('hidden');
+        }
+    }
+
+    searchInput.addEventListener('input', (e) => {
+        filterResources(e.target.value);
+    });
+
+    clearBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        filterResources('');
+        searchInput.focus();
+    });
+  </script>
 </body>
 </html>
