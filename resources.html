@@ -50,6 +50,18 @@
 
   <main>
 
+    <div class="search-container">
+        <div class="search-wrapper">
+            <label for="searchInput" class="sr-only">Search Security Resources</label>
+            <input type="text" id="searchInput" class="search-input" placeholder="Search resources, titles, or domains..." aria-label="Search Security Resources">
+            <button id="clearSearch" class="clear-button hidden" aria-label="Clear search" type="button">✕</button>
+        </div>
+    </div>
+
+    <div id="noResults" class="no-results hidden">
+        <p>No resources found matching your criteria.</p>
+    </div>
+
     <div class="resource-category">
         <h2 class="wiki-section-title">🔍 Search Engines & Recon</h2>
         <div class="resource-list">
@@ -345,5 +357,44 @@
   <footer>
     <p>&copy; Zero Trust. Hosted with ❤️ on GitHub Pages.</p>
   </footer>
+
+  <script>
+    const searchInput = document.getElementById('searchInput');
+    const clearBtn = document.getElementById('clearSearch');
+    const noResults = document.getElementById('noResults');
+    const resourceCategories = document.querySelectorAll('.resource-category');
+
+    function filterResources(term) {
+        term = term.toLowerCase();
+        let totalVisible = 0;
+
+        resourceCategories.forEach(category => {
+            const items = category.querySelectorAll('.resource-item');
+            let visibleCount = 0;
+
+            items.forEach(item => {
+                const match = item.textContent.toLowerCase().includes(term);
+                item.classList.toggle('hidden', !match);
+                if (match) visibleCount++;
+            });
+
+            category.classList.toggle('hidden', visibleCount === 0);
+            totalVisible += visibleCount;
+        });
+
+        noResults.classList.toggle('hidden', totalVisible > 0);
+        clearBtn.classList.toggle('hidden', !term);
+    }
+
+    const query = new URLSearchParams(window.location.search).get('q');
+    if (query) { searchInput.value = query; filterResources(query); }
+
+    searchInput.addEventListener('input', (e) => filterResources(e.target.value));
+    clearBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        filterResources('');
+        searchInput.focus();
+    });
+  </script>
 </body>
 </html>
