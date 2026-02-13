@@ -50,6 +50,17 @@
 
   <main>
 
+    <div class="search-container">
+        <div class="search-wrapper">
+            <label for="resourceSearch" class="sr-only">Search Resources</label>
+            <input type="text" id="resourceSearch" class="search-input" placeholder="Search resources (e.g., 'shodan', 'threat', 'learning')..." aria-label="Search Resources">
+            <button id="clearSearch" class="clear-button hidden" aria-label="Clear search" type="button">✕</button>
+        </div>
+    </div>
+    <div id="noResults" class="no-results hidden">
+        <p>No resources found matching your criteria.</p>
+    </div>
+
     <div class="resource-category">
         <h2 class="wiki-section-title">🔍 Search Engines & Recon</h2>
         <div class="resource-list">
@@ -345,5 +356,73 @@
   <footer>
     <p>&copy; Zero Trust. Hosted with ❤️ on GitHub Pages.</p>
   </footer>
+
+  <script>
+    const searchInput = document.getElementById('resourceSearch');
+    const clearBtn = document.getElementById('clearSearch');
+    const noResults = document.getElementById('noResults');
+    const resourceCategories = document.querySelectorAll('.resource-category');
+    const resourceItems = document.querySelectorAll('.resource-item');
+
+    function filterResources(searchTerm) {
+        searchTerm = searchTerm.toLowerCase();
+        let totalVisible = 0;
+
+        // Filter individual items
+        resourceItems.forEach(item => {
+            const title = item.querySelector('.resource-title').textContent.toLowerCase();
+            const domain = item.querySelector('.resource-domain').textContent.toLowerCase();
+
+            if (title.includes(searchTerm) || domain.includes(searchTerm)) {
+                item.classList.remove('hidden');
+                totalVisible++;
+            } else {
+                item.classList.add('hidden');
+            }
+        });
+
+        // Handle Empty Categories
+        resourceCategories.forEach(category => {
+            const visibleItems = category.querySelectorAll('.resource-item:not(.hidden)');
+            if (visibleItems.length === 0) {
+                category.classList.add('hidden');
+            } else {
+                category.classList.remove('hidden');
+            }
+        });
+
+        // Toggle No Results
+        if (totalVisible > 0) {
+            noResults.classList.add('hidden');
+        } else {
+            noResults.classList.remove('hidden');
+        }
+
+        // Toggle Clear Button
+        if (searchTerm) {
+            clearBtn.classList.remove('hidden');
+        } else {
+            clearBtn.classList.add('hidden');
+        }
+    }
+
+    searchInput.addEventListener('input', (e) => {
+        filterResources(e.target.value);
+    });
+
+    clearBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        filterResources('');
+        searchInput.focus();
+    });
+
+    // Check for query parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const query = urlParams.get('q');
+    if (query) {
+        searchInput.value = query;
+        filterResources(query);
+    }
+  </script>
 </body>
 </html>
