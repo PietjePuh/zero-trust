@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab: Kerberoasting - Zero Trust</title>
+  <link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+  <header style="padding: 4rem 1rem;">
+    <div class="nav-bar">
+        <a href="../../../index.html">Home</a>
+        <a href="../../../tools.html">Tools</a>
+        <a href="../../../policy.html">Policy</a>
+        <a href="../../../processes.html">Processes</a>
+    </div>
+    <h1>Identity Attack: Kerberoasting</h1>
+    <p>MITRE T1558.003: Exploiting legacy Active Directory Service Principal Names (SPNs).</p>
+  </header>
+
+  <main>
+    <div class="resource-category">
+        <h2 class="wiki-section-title">⚔️ The Attack (Red Team)</h2>
+        <p><strong>Objective:</strong> Request a TGS (Ticket Granting Service) ticket for a service account. The ticket is encrypted with the service account's NTLM hash. If we can crack the ticket offline, we get the password.</p>
+        
+        <div class="tool-flags">
+<strong># 1. Enumerate SPNs (Find targets)</strong>
+GetUserSPNs.py domain.local/user:password -outputfile hashes.txt
+
+<strong># 2. Crack the Hash (Offline)</strong>
+hashcat -m 13100 hashes.txt /usr/share/wordlists/rockyou.txt
+        </div>
+    </div>
+
+    <div class="resource-category">
+        <h2 class="wiki-section-title">🛡️ The Defense (Zero Trust)</h2>
+        <p>Why does this work? Because Active Directory trusts any authenticated user to request a ticket for any service. Zero Trust demands we <strong>Verify Explicitly</strong>.</p>
+        
+        <div class="grid-container">
+            <section>
+                <h3>Detection (SIEM)</h3>
+                <p>Monitor <strong>Event ID 4769</strong> (Kerberos Service Ticket Operation).</p>
+                <ul>
+                    <li><strong>Alert:</strong> Ticket Encryption Type = <code>0x17</code> (RC4-HMAC) - Modern systems should use AES.</li>
+                    <li><strong>Alert:</strong> Excessive TGS requests from a single user in a short time.</li>
+                </ul>
+            </section>
+            <section>
+                <h3>Mitigation</h3>
+                <p>1. <strong>MSA (Managed Service Accounts):</strong> Use gMSA with 120-character random passwords.</p>
+                <p>2. <strong>AES Encryption:</strong> Force AES-256 for Kerberos to make offline cracking exponentially harder.</p>
+            </section>
+        </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; Zero Trust Knowledge Base.</p>
+  </footer>
+</body>
+</html>

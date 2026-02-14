@@ -1,0 +1,42 @@
+const searchIndex = [
+    {
+        title: "Zero Trust Principles",
+        url: "index.html",
+        content: "Verify explicitly, use least privilege, assume breach pillars of zero trust architecture."
+    },
+    {
+        title: "Compliance Frameworks",
+        url: "compliance.html",
+        content: "EU NIS2 GDPR China PIPL MLPS 2.0 US Executive Order 14028 CISA Maturity Model."
+    },
+    {
+        title: "Policy as Code",
+        url: "policy.html",
+        content: "Open Policy Agent OPA Rego executable security policies Infrastructure as Code IaC."
+    },
+    {
+        title: "Security Processes",
+        url: "processes.html",
+        content: "Zero Trust Lifecycle Incident Response Assume Breach Identity Governance JIT JEA BAS."
+    },
+    {
+        title: "Kerberoasting Lab",
+        url: "Sec-labs/docs/attacks/ad-kerberoasting.html",
+        content: "Active Directory Identity attack TGS tickets NTLM cracking Event ID 4769."
+    },
+    {
+        title: "Buffer Overflow Lab",
+        url: "Sec-labs/docs/attacks/buffer-overflow.html",
+        content: "Memory safety stack overflow RCE ASLR DEP Rust Go memory safe languages."
+    },
+    {
+        title: "Account Recovery Resets",
+        url: "resets.html",
+        content: "Google Microsoft Apple Facebook Instagram Twitter Github password reset links."
+    },
+    {
+        title: "Security Tools Index",
+        url: "tools.html",
+        content: "Nmap Metasploit Burp Suite Wireshark Tailscale Authentik Yubikey FIDO2."
+    }
+];

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Policy as Code - Zero Trust</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header style="padding: 4rem 1rem;">
+    <div class="nav-bar">
+        <a href="index.html">Home</a>
+        <a href="tools.html">Tools</a>
+        <a href="resources.html">Resources</a>
+        <a href="resets.html">Resets</a>
+        <a href="compliance.html">Compliance</a>
+        <a href="policy.html" class="active">Policy</a>
+        <a href="processes.html">Processes</a>
+        <a href="maturity.html">Maturity</a>
+    </div>
+    <h1>Policy as Code (PaC)</h1>
+    <p>Executable security policies using Open Policy Agent (OPA) and Rego.</p>
+  </header>
+
+  <main>
+    <section class="full-width">
+        <h2>Zero Trust API Access Policy (Rego)</h2>
+        <p>This policy denies access unless the user has a valid JWT, is on a managed device, and matches the resource department.</p>
+        <div class="tool-flags">
+package zerotrust.authz
+
+default allow = false
+
+allow {
+    valid_token
+    managed_device
+    department_match
+}
+
+valid_token {
+    [valid, header, payload] := io.jwt.decode_verify(input.token, {"cert": "env.JWT_CERT"})
+    valid == true
+}
+
+managed_device {
+    input.device.status == "managed"
+    input.device.health_score > 80
+}
+        </div>
+    </section>
+
+    <div class="grid-container" style="margin-top: 2rem;">
+        <section>
+            <h3>Infrastructure as Code (IaC)</h3>
+            <p>Scanning Terraform and Kubernetes for ZT violations before deployment using tools like <strong>Checkov</strong> and <strong>Trivy</strong>.</p>
+        </section>
+        <section>
+            <h3>Decoupled Enforcement</h3>
+            <p>By using OPA, security teams can update access rules without changing application code or restarting services.</p>
+        </section>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; Zero Trust. Hosted with ❤️ on GitHub Pages.</p>
+  </footer>
+  <script src="js/search-data.js"></script>
+  <script src="js/search.js"></script>
+</body>
+</html>
