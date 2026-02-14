@@ -1,146 +1,392 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zero Trust Knowledge Base</title>
-  <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zero Trust Lab</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #0c0d11;
+      --bg-alt: rgba(255, 255, 255, 0.07);
+      --text: #f6f7fb;
+      --accent: #4fd1c5;
+      --accent-dark: #38a89d;
+      --border: rgba(255, 255, 255, 0.12);
+      --shadow: rgba(0, 0, 0, 0.35);
+      font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, 'Open Sans', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: radial-gradient(circle at 15% 15%, rgba(79, 209, 197, 0.15), transparent 45%),
+        radial-gradient(circle at 80% 10%, rgba(236, 72, 153, 0.18), transparent 45%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(16px);
+      background: rgba(12, 13, 17, 0.7);
+      border-bottom: 1px solid var(--border);
+      z-index: 1000;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem;
+    }
+
+    nav .brand {
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    nav ul {
+      display: flex;
+      gap: 1rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 4rem 1.5rem 6rem;
+    }
+
+    section {
+      margin-bottom: 4rem;
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    h1 {
+      font-size: clamp(2.5rem, 3.5vw + 1rem, 3.75rem);
+      margin-bottom: 1rem;
+    }
+
+    h2 {
+      font-size: clamp(2rem, 2vw + 1rem, 2.6rem);
+      margin-bottom: 1.25rem;
+    }
+
+    h3 {
+      font-size: 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    p.lead {
+      font-size: 1.15rem;
+      max-width: 650px;
+      color: rgba(246, 247, 251, 0.85);
+    }
+
+    .hero {
+      display: grid;
+      gap: 2.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      align-items: center;
+    }
+
+    .hero-card {
+      background: rgba(12, 13, 17, 0.65);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 2rem;
+      box-shadow: 0 25px 45px -25px var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(79, 209, 197, 0.2), rgba(236, 72, 153, 0.12));
+      opacity: 0.6;
+      z-index: -1;
+    }
+
+    .cta-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .cta-buttons a {
+      padding: 0.85rem 1.5rem;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-weight: 600;
+      transition: transform 0.2s ease, background 0.2s ease, border 0.2s ease;
+    }
+
+    .cta-primary {
+      background: var(--accent);
+      color: #021c1b;
+      box-shadow: 0 14px 32px -16px rgba(79, 209, 197, 0.9);
+    }
+
+    .cta-secondary {
+      border-color: rgba(246, 247, 251, 0.4);
+      color: rgba(246, 247, 251, 0.85);
+      background: transparent;
+    }
+
+    .cta-buttons a:hover {
+      transform: translateY(-2px);
+      background: var(--accent-dark);
+      color: #021c1b;
+    }
+
+    .grid {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .grid.cards {
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+
+    .card {
+      background: rgba(12, 13, 17, 0.65);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 1.75rem;
+      box-shadow: 0 16px 32px -22px var(--shadow);
+      transition: transform 0.2s ease, border 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(79, 209, 197, 0.65);
+    }
+
+    .roadmap-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 1rem;
+    }
+
+    .roadmap-list li {
+      border-left: 3px solid var(--accent);
+      padding: 1rem 1.5rem;
+      background: rgba(12, 13, 17, 0.6);
+      border-radius: 12px;
+    }
+
+    .roadmap-list span {
+      display: block;
+      font-size: 0.75rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(246, 247, 251, 0.55);
+      margin-bottom: 0.4rem;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 1.5rem 3rem;
+      text-align: center;
+      background: rgba(12, 13, 17, 0.7);
+      color: rgba(246, 247, 251, 0.65);
+    }
+
+    @media (max-width: 600px) {
+      nav ul {
+        display: none;
+      }
+
+      main {
+        padding-top: 3rem;
+      }
+    }
+  </style>
 </head>
 <body>
   <header>
-    <div class="nav-bar">
-        <a href="index.html" class="active">Knowledge Base</a>
-        <a href="tools.html">Tools Encyclopedia</a>
-        <a href="resources.html">Resources</a>
-        <a href="Sec-labs/">All Labs</a>
-    </div>
-    <h1>Zero Trust Knowledge Base</h1>
-    <p>Your centralized hub for ethical hacking, blue teaming, and security research.</p>
-
-    <div class="hero-search">
-        <input type="text" class="search-input" placeholder="Search the wiki (e.g., 'eternalblue', 'nmap', 'forensics')...">
-    </div>
+    <nav>
+      <a href="#top" class="brand">Zero Trust Lab</a>
+      <ul>
+        <li><a href="#mission">Mission</a></li>
+        <li><a href="#tools">Tools</a></li>
+        <li><a href="#roadmap">Roadmap</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
   </header>
 
-  <main>
-    <h2 class="wiki-section-title">🚀 Learning Paths</h2>
-    <div class="grid-container">
-
-        <!-- Path 1: Ethical Hacking -->
-        <a href="Sec-labs/docs/tcm/practical-ethical-hacking/" class="module-card-link" style="text-decoration: none;">
-            <div class="module-card">
-                <div class="module-header">
-                    <h3 class="module-title">Practical Ethical Hacking</h3>
-                    <span class="badge badge-medium">Medium</span>
-                </div>
-                <p class="module-desc">
-                    Comprehensive course covering networking, Linux, Python, and exploitation. Based on TCM Academy's curriculum.
-                </p>
-                <div class="module-meta">
-                    <span>📚 12 Modules</span>
-                    <span>⏱️ 25 Hours</span>
-                </div>
-            </div>
-        </a>
-
-        <!-- Path 2: Network Security -->
-        <a href="tools.html?category=net" class="module-card-link" style="text-decoration: none;">
-            <div class="module-card">
-                <div class="module-header">
-                    <h3 class="module-title">Network Security & Enumeration</h3>
-                    <span class="badge badge-easy">Easy</span>
-                </div>
-                <p class="module-desc">
-                    Master the art of network mapping, port scanning, and service enumeration using industry-standard tools.
-                </p>
-                <div class="module-meta">
-                    <span>🛠️ Tools: Nmap, Netcat</span>
-                </div>
-            </div>
-        </a>
-
-        <!-- Path 3: Forensics -->
-        <a href="tools.html?category=for" class="module-card-link" style="text-decoration: none;">
-            <div class="module-card">
-                <div class="module-header">
-                    <h3 class="module-title">Digital Forensics</h3>
-                    <span class="badge badge-hard">Hard</span>
-                </div>
-                <p class="module-desc">
-                    Learn to analyze memory dumps, disk images, and Windows event logs to investigate incidents.
-                </p>
-                <div class="module-meta">
-                    <span>🔍 Volatility, Autopsy</span>
-                </div>
-            </div>
-        </a>
-    </div>
-
-    <h2 class="wiki-section-title">📖 Hacker's Wiki</h2>
-    <div class="grid-container">
-
-        <section>
-            <h3><a href="tools.html">⚔️ Red Team Tools</a></h3>
-            <p>A complete encyclopedia of offensive security tools.</p>
-            <ul>
-                <li><a href="tools.html#metasploit">Metasploit Framework</a></li>
-                <li><a href="tools.html#hydra">Password Cracking (Hydra, Hashcat)</a></li>
-                <li><a href="tools.html#burp">Web Proxies (Burp Suite)</a></li>
-            </ul>
-        </section>
-
-        <section>
-            <h3><a href="tools.html?category=osint">🌐 OSINT & Recon</a></h3>
-            <p>Open Source Intelligence gathering techniques.</p>
-            <ul>
-                <li><a href="tools.html#sherlock">User Enumeration (Sherlock)</a></li>
-                <li><a href="tools.html#shodan">Shodan / Dorking</a></li>
-                <li><a href="tools.html#maltego">Link Analysis (Maltego)</a></li>
-            </ul>
-        </section>
-
-        <section>
-            <h3><a href="Sec-labs/">🧪 Live Labs</a></h3>
-            <p>Hands-on practice environments.</p>
-            <ul>
-                <li><a href="Sec-labs/docs/tcm/practical-ethical-hacking/eternalblue-lab.md">EternalBlue Exploitation</a></li>
-                <li><a href="#">Active Directory Attacks (Coming Soon)</a></li>
-                <li><a href="#">Buffer Overflows (Coming Soon)</a></li>
-            </ul>
-        </section>
-
-    </div>
-
-    <section class="full-width" style="margin-top: 3rem; text-align: center;">
-        <h2>About Zero Trust</h2>
-        <p>
-            Hosted on the decentralized web (<code>.brave</code> / <code>.pw</code>), this platform serves as an uncensorable repository of security knowledge.
+  <main id="top">
+    <section class="hero" aria-labelledby="hero-title">
+      <article class="hero-card">
+        <h1 id="hero-title">Build trustless experiences for everyone</h1>
+        <p class="lead">
+          Zero-Trust.Brave experiments with privacy-preserving tooling so builders, educators, and learners can collaborate safely.
+          Start with the ABC and Academie suites and grow into a full library of security-first experiences.
         </p>
-        <div class="button-container">
-            <a href="https://github.com/PietjePuh/zero-trust" class="button button-secondary">Contribute on GitHub</a>
+        <div class="cta-buttons">
+          <a class="cta-primary" href="#tools">Explore the tools</a>
+          <a class="cta-secondary" href="https://github.com/PietjePuh/zero-trust" target="_blank" rel="noopener">View on GitHub</a>
         </div>
+      </article>
+      <article class="hero-card" aria-label="Highlights">
+        <h3>Why zero trust?</h3>
+        <ul>
+          <li>Empower communities with transparent, secure-by-design utilities.</li>
+          <li>Deliver learning journeys with rigorous access control baked in.</li>
+          <li>Iterate faster knowing every module can ship independently.</li>
+        </ul>
+      </article>
     </section>
 
+    <section id="mission" aria-labelledby="mission-title">
+      <h2 id="mission-title">Mission</h2>
+      <div class="grid cards">
+        <article class="card">
+          <h3>Privacy-first collaboration</h3>
+          <p>
+            Create safe environments for contributors by verifying every interaction and keeping sensitive data compartmentalized.
+          </p>
+        </article>
+        <article class="card">
+          <h3>Education that scales</h3>
+          <p>
+            Equip mentors and learners with structured academies where knowledge grows without sacrificing governance or accountability.
+          </p>
+        </article>
+        <article class="card">
+          <h3>Composable tooling</h3>
+          <p>
+            Introduce new capabilities one module at a time. Each tool in the lab integrates cleanly so you can expand when you are ready.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section id="tools" aria-labelledby="tools-title">
+      <h2 id="tools-title">Tool suites you can build on today</h2>
+      <div class="grid cards" role="list">
+        <article class="card" role="listitem">
+          <h3>ABC Toolkit</h3>
+          <p>
+            Automate baseline controls. The ABC toolkit provides hardened templates, checklists, and automation hooks to roll out zero-trust
+            policies across teams with minimal friction.
+          </p>
+          <ul>
+            <li>Identity-aware access policies and playbooks</li>
+            <li>Scriptable guardrails for infrastructure and applications</li>
+            <li>Dashboards to observe adoption and compliance trends</li>
+          </ul>
+        </article>
+        <article class="card" role="listitem">
+          <h3>Academie</h3>
+          <p>
+            A guided learning space for teaching zero-trust principles. Blend live workshops, labs, and certification paths to grow expertise
+            across your community or organization.
+          </p>
+          <ul>
+            <li>Modular curriculum builder with instructor notes</li>
+            <li>Self-paced labs with automated validation</li>
+            <li>Progress analytics to coach learners effectively</li>
+          </ul>
+        </article>
+        <article class="card" role="listitem">
+          <h3>Future modules</h3>
+          <p>
+            Design your roadmap and plug in additional tools as you go—ranging from incident response simulators to privacy-preserving data
+            exchanges.
+          </p>
+          <ul>
+            <li>Space for community-developed utilities</li>
+            <li>Integration guidelines to keep everything interoperable</li>
+            <li>Open issues and ideas welcome on GitHub</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="roadmap" aria-labelledby="roadmap-title">
+      <h2 id="roadmap-title">Roadmap</h2>
+      <ul class="roadmap-list">
+        <li>
+          <span>Now</span>
+          Launch ABC and Academie pilots, collect user feedback, and refine the trust model that underpins every interaction.
+        </li>
+        <li>
+          <span>Next</span>
+          Release integration kits so partners can embed identity verification, secure messaging, and consent-aware data flows.
+        </li>
+        <li>
+          <span>Later</span>
+          Expand into open governance tooling with voting modules, treasury controls, and threat intelligence exchanges.
+        </li>
+      </ul>
+    </section>
+
+    <section id="contact" aria-labelledby="contact-title">
+      <h2 id="contact-title">Stay in the loop</h2>
+      <div class="grid cards">
+        <article class="card">
+          <h3>Contribute</h3>
+          <p>
+            Open issues, propose enhancements, or share your own zero-trust modules. Collaboration keeps the lab innovative and resilient.
+          </p>
+        </article>
+        <article class="card">
+          <h3>Follow updates</h3>
+          <p>
+            Watch the repository on GitHub to receive release notes, roadmap updates, and invitations to community town halls.
+          </p>
+        </article>
+        <article class="card">
+          <h3>Connect with the team</h3>
+          <p>
+            Reach out via <a href="mailto:zero-trust@proton.me">zero-trust@proton.me</a> for partnerships, research collaborations, or speaking engagements.
+          </p>
+        </article>
+      </div>
+    </section>
   </main>
 
   <footer>
-    <p>&copy; Zero Trust Knowledge Base. Open Source & Decentralized.</p>
+    <p>
+      © <span id="year"></span> Zero-Trust.Brave &middot; Built for people who believe privacy and access can coexist.
+    </p>
   </footer>
 
   <script>
-    // Simple script to handle search on the wiki homepage
-    // It redirects to the tools page with the search query for now,
-    // or we could implement a local search if we had more content pages.
-    const heroSearch = document.querySelector('.hero-search .search-input');
-    heroSearch.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            const query = e.target.value;
-            if (query) {
-                // Redirect to tools page search
-                window.location.href = `tools.html?q=${encodeURIComponent(query)}`;
-            }
-        }
-    });
+    document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
