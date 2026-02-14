@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Security Processes - Zero Trust</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header style="padding: 4rem 1rem;">
+    <div class="nav-bar">
+        <a href="index.html">Home</a>
+        <a href="tools.html">Tools</a>
+        <a href="resources.html">Resources</a>
+        <a href="resets.html">Resets</a>
+        <a href="compliance.html">Compliance</a>
+        <a href="policy.html">Policy</a>
+        <a href="processes.html" class="active">Processes</a>
+        <a href="maturity.html">Maturity</a>
+    </div>
+    <h1>Strategic Security Processes</h1>
+    <p>High-maturity operational workflows for Zero Trust and SecOps.</p>
+  </header>
+
+  <main>
+    <div class="resource-category">
+        <h2 class="wiki-section-title">🔄 Zero Trust Implementation Lifecycle</h2>
+        <p>Zero Trust is a journey, not a destination. It follows a continuous improvement loop.</p>
+        <div class="grid-container">
+            <section>
+                <h3>1. Visualize & Define</h3>
+                <p>Identify the <strong>Protect Surface</strong> (DAAS: Data, Applications, Assets, Services). Map the transaction flows across the network.</p>
+            </section>
+            <section>
+                <h3>2. Architect & Policy</h3>
+                <p>Design a Zero Trust architecture tailored to the environment. Write "Policy as Code" (Rego) to enforce granular access.</p>
+            </section>
+            <section>
+                <h3>3. Monitor & Maintain</h3>
+                <p>Continuously inspect and log all traffic. Use AI/ML to detect anomalies in user behavior (UEBA).</p>
+            </section>
+        </div>
+    </div>
+
+    <div class="resource-category">
+        <h2 class="wiki-section-title">🚨 Incident Response (Assume Breach)</h2>
+        <p>In Zero Trust, we shift from "Prevention" to "Detection & Rapid Containment."</p>
+        <div class="tool-flags">
+<strong># 1. Preparation:</strong> Hardened identity, EDR coverage, and SOAR playbooks.
+<strong># 2. Identification:</strong> Correlating telemetry from Identity, Device, and Network.
+<strong># 3. Containment:</strong> Micro-segmentation to isolate the compromised segment instantly.
+<strong># 4. Eradication:</strong> Re-provisioning compromised assets (Immutable Infrastructure).
+<strong># 5. Recovery:</strong> Restoring from validated, secure backups.
+<strong># 6. Lessons Learned:</strong> Updating policies to prevent lateral movement.
+        </div>
+    </div>
+
+    <div class="resource-category">
+        <h2 class="wiki-section-title">🆔 Identity Lifecycle & Governance</h2>
+        <p>Moving from static accounts to dynamic, risk-based access.</p>
+        <ul>
+            <li><strong>JIT (Just-In-Time):</strong> Granting access only for a specific duration.</li>
+            <li><strong>JEA (Just-Enough-Access):</strong> Restricting permissions to the absolute minimum required for the task.</li>
+            <li><strong>SCIM (System for Cross-domain Identity Management):</strong> Automating user provisioning and de-provisioning.</li>
+            <li><strong>Recertification:</strong> Automated monthly review of "High Privilege" accounts.</li>
+        </ul>
+    </div>
+
+    <div class="resource-category">
+        <h2 class="wiki-section-title">🎯 Continuous Security Validation (CSV)</h2>
+        <p>Static annual pentests are insufficient. Use automated validation.</p>
+        <section class="full-width">
+            <h3>BAS (Breach & Attack Simulation)</h3>
+            <p>Automated execution of MITRE ATT&CK techniques against your defenses to find gaps in real-time. This replaces the "snapshot in time" approach with continuous assurance.</p>
+        </section>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; Zero Trust. Hosted with ❤️ on GitHub Pages.</p>
+  </footer>
+  <script src="js/search-data.js"></script>
+  <script src="js/search.js"></script>
+</body>
+</html>
