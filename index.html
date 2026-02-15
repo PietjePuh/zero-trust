@@ -3,6 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="X-Frame-Options" content="DENY" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'" />
   <title>Zero Trust Lab</title>
   <style>
     :root {
@@ -257,7 +261,7 @@
         </p>
         <div class="cta-buttons">
           <a class="cta-primary" href="#tools">Explore the tools</a>
-          <a class="cta-secondary" href="https://github.com/PietjePuh/zero-trust" target="_blank" rel="noopener">View on GitHub</a>
+          <a class="cta-secondary" href="https://github.com/PietjePuh/zero-trust" target="_blank" rel="noopener noreferrer">View on GitHub</a>
         </div>
       </article>
       <article class="hero-card" aria-label="Highlights">
@@ -382,6 +386,7 @@
   <footer>
     <p>
       © <span id="year"></span> Zero-Trust.Brave &middot; Built for people who believe privacy and access can coexist.
+      | <a href="privacy.html">Privacy Policy</a>
     </p>
   </footer>
 
