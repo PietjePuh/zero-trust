@@ -9,3 +9,11 @@
 ## 2026-02-14 - Keyboard Shortcut Discoverability
 **Learning:** Adding keyboard shortcuts (like '/' for search) significantly improves power-user experience, but they are useless if invisible. Updating the placeholder text to include the shortcut (e.g., "Press '/'") is a simple, zero-layout-shift way to boost discoverability.
 **Action:** Always pair keyboard shortcuts with a visual indicator, such as a tooltip or placeholder text, to ensure users know they exist.
+
+## 2024-05-24 - Interactive DOM Injection for Static Sites
+**Learning:** Static sites often lack interactivity for text-heavy content like code blocks. Injecting UI elements (like copy buttons) via JavaScript at runtime is a lightweight way to add significant value without complex build steps or framework overhead.
+**Action:** When enhancing static documentation, look for structured text patterns (like command blocks) that can be wrapped and augmented with interactive controls using `document.createDocumentFragment`.
+
+## 2024-05-24 - Race Conditions in Timed Feedback
+**Learning:** When implementing "Copied!" feedback with a timeout to restore the original icon, rapid user interaction can capture the temporary "success" state as the "original" state if not careful, leading to a broken UI state.
+**Action:** Always store the true original state (e.g., the icon SVG) in a constant or variable outside the event handler scope, rather than reading it from the DOM at the moment of interaction.
