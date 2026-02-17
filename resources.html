@@ -57,7 +57,7 @@
     <div class="search-container">
         <div class="search-wrapper">
             <label for="resourceSearch" class="sr-only">Search Resources</label>
-            <input type="text" id="resourceSearch" class="search-input" placeholder="Search resources (e.g., 'shodan', 'threat', 'learning')..." aria-label="Search Resources">
+            <input type="text" id="resourceSearch" class="search-input" placeholder="Search resources (e.g., 'shodan', 'threat', 'learning')... (Press '/')" aria-label="Search Resources">
             <button id="clearSearch" class="clear-button hidden" aria-label="Clear search" type="button">✕</button>
         </div>
     </div>
@@ -427,6 +427,15 @@
         searchInput.value = query;
         filterResources(query);
     }
+
+    // Keyboard shortcut for search
+    document.addEventListener('keydown', (e) => {
+        const activeTag = document.activeElement.tagName;
+        if (e.key === '/' && activeTag !== 'INPUT' && activeTag !== 'TEXTAREA') {
+            e.preventDefault();
+            searchInput.focus();
+        }
+    });
   </script>
 </body>
 </html>
