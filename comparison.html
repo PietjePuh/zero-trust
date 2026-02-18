@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'">
+  <title>Tool Comparison - Zero Trust</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/theme.js"></script>
+</head>
+<body>
+  <header style="padding: 4rem 1rem;">
+    <div class="nav-bar">
+        <a href="index.html">Home</a>
+        <a href="tools.html">Tools</a>
+        <a href="resources.html">Resources</a>
+        <a href="checklist.html">Checklist</a>
+        <a href="comparison.html" class="active">Compare</a>
+        <button id="themeToggle" type="button" class="theme-toggle" aria-label="Switch to light mode">&#9790;</button>
+    </div>
+    <h1>Zero Trust Tool Comparison</h1>
+    <p>Compare vendors and solutions across key zero-trust capabilities.</p>
+  </header>
+
+  <main>
+
+    <h2>Identity &amp; Access Platforms</h2>
+    <div class="comparison-wrapper">
+        <table class="comparison-table" id="identityTable">
+            <thead>
+                <tr>
+                    <th data-sort="string">Vendor / Tool <span class="sort-indicator"></span></th>
+                    <th data-sort="string">Type <span class="sort-indicator"></span></th>
+                    <th data-sort="string">SSO <span class="sort-indicator"></span></th>
+                    <th data-sort="string">MFA / FIDO2 <span class="sort-indicator"></span></th>
+                    <th data-sort="string">Conditional Access <span class="sort-indicator"></span></th>
+                    <th data-sort="string">SCIM Provisioning <span class="sort-indicator"></span></th>
+                    <th data-sort="string">Open Source <span class="sort-indicator"></span></th>
+                    <th data-sort="string">Pricing <span class="sort-indicator"></span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Microsoft Entra ID</strong></td>
+                    <td>Cloud IDaaS</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-no">No</td>
+                    <td>Free tier / P1 $6/mo / P2 $9/mo</td>
+                </tr>
+                <tr>
+                    <td><strong>Okta</strong></td>
+                    <td>Cloud IDaaS</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-no">No</td>
+                    <td>From $2/user/mo</td>
+                </tr>
+                <tr>
+                    <td><strong>Authentik</strong></td>
+                    <td>Self-hosted IDP</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-yes">Yes</td>
+                    <td>Free (self-hosted)</td>
+                </tr>
+                <tr>
+                    <td><strong>Keycloak</strong></td>
+                    <td>Self-hosted IDP</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-partial">Partial</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-yes">Yes</td>
+                    <td>Free (self-hosted)</td>
+                </tr>
+                <tr>
+                    <td><strong>Google Workspace</strong></td>
+                    <td>Cloud IDaaS</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-no">No</td>
+                    <td>From $6/user/mo</td>
+                </tr>
+                <tr>
+                    <td><strong>JumpCloud</strong></td>
+                    <td>Cloud Directory</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-no">No</td>
+                    <td>Free up to 10 users</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h2>Network &amp; Access Solutions</h2>
+    <div class="comparison-wrapper">
+        <table class="comparison-table" id="networkTable">
+            <thead>
+                <tr>
+                    <th data-sort="string">Vendor / Tool <span class="sort-indicator"></span></th>
+                    <th data-sort="string">Type <span class="sort-indicator"></span></th>
+                    <th data-sort="string">ZTNA <span class="sort-indicator"></span></th>
+                    <th data-sort="string">Micro-segmentation <span class="sort-indicator"></span></th>
+                    <th data-sort="string">WireGuard <span class="sort-indicator"></span></th>
+                    <th data-sort="string">Self-hosted <span class="sort-indicator"></span></th>
+                    <th data-sort="string">Open Source <span class="sort-indicator"></span></th>
+                    <th data-sort="string">Pricing <span class="sort-indicator"></span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Tailscale</strong></td>
+                    <td>Mesh VPN / ZTNA</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-yes">Yes (ACLs)</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-partial">Headscale</td>
+                    <td class="check-partial">Client only</td>
+                    <td>Free up to 100 devices</td>
+                </tr>
+                <tr>
+                    <td><strong>Cloudflare Access</strong></td>
+                    <td>SASE / ZTNA</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-no">No (WARP)</td>
+                    <td class="check-no">No</td>
+                    <td class="check-no">No</td>
+                    <td>Free up to 50 users</td>
+                </tr>
+                <tr>
+                    <td><strong>Zscaler ZPA</strong></td>
+                    <td>SASE / ZTNA</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-no">No</td>
+                    <td class="check-no">No</td>
+                    <td class="check-no">No</td>
+                    <td>Enterprise pricing</td>
+                </tr>
+                <tr>
+                    <td><strong>WireGuard</strong></td>
+                    <td>VPN Protocol</td>
+                    <td class="check-no">No</td>
+                    <td class="check-no">No</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-yes">Yes</td>
+                    <td>Free</td>
+                </tr>
+                <tr>
+                    <td><strong>Palo Alto Prisma</strong></td>
+                    <td>SASE / ZTNA</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-no">No</td>
+                    <td class="check-no">No</td>
+                    <td class="check-no">No</td>
+                    <td>Enterprise pricing</td>
+                </tr>
+                <tr>
+                    <td><strong>NetBird</strong></td>
+                    <td>Mesh VPN / ZTNA</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-yes">Yes (ACLs)</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-yes">Yes</td>
+                    <td>Free up to 5 users</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h2>Endpoint Detection &amp; Response (EDR)</h2>
+    <div class="comparison-wrapper">
+        <table class="comparison-table" id="edrTable">
+            <thead>
+                <tr>
+                    <th data-sort="string">Vendor / Tool <span class="sort-indicator"></span></th>
+                    <th data-sort="string">Platform <span class="sort-indicator"></span></th>
+                    <th data-sort="string">Real-time Detection <span class="sort-indicator"></span></th>
+                    <th data-sort="string">Threat Hunting <span class="sort-indicator"></span></th>
+                    <th data-sort="string">SOAR Integration <span class="sort-indicator"></span></th>
+                    <th data-sort="string">Linux Support <span class="sort-indicator"></span></th>
+                    <th data-sort="string">Open Source <span class="sort-indicator"></span></th>
+                    <th data-sort="string">Pricing <span class="sort-indicator"></span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>CrowdStrike Falcon</strong></td>
+                    <td>Cloud-native</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-no">No</td>
+                    <td>From $8.99/endpoint/mo</td>
+                </tr>
+                <tr>
+                    <td><strong>Microsoft Defender XDR</strong></td>
+                    <td>Cloud-native</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-yes">Yes (Sentinel)</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-no">No</td>
+                    <td>M365 E5 / $5.20/user/mo</td>
+                </tr>
+                <tr>
+                    <td><strong>SentinelOne</strong></td>
+                    <td>Cloud-native</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-no">No</td>
+                    <td>Enterprise pricing</td>
+                </tr>
+                <tr>
+                    <td><strong>Wazuh</strong></td>
+                    <td>Self-hosted</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-partial">Partial</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-yes">Yes</td>
+                    <td>Free (self-hosted)</td>
+                </tr>
+                <tr>
+                    <td><strong>Elastic Security</strong></td>
+                    <td>Self-hosted / Cloud</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-yes">Yes</td>
+                    <td>Free tier / Cloud from $95/mo</td>
+                </tr>
+                <tr>
+                    <td><strong>Velociraptor</strong></td>
+                    <td>Self-hosted</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-partial">Partial</td>
+                    <td class="check-yes">Yes</td>
+                    <td class="check-yes">Yes</td>
+                    <td>Free (self-hosted)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+  </main>
+
+  <footer>
+    <p>&copy; Zero Trust. Hosted on GitHub Pages. | <a href="privacy.html">Privacy Policy</a></p>
+  </footer>
+
+  <script>
+    (function () {
+        'use strict';
+
+        // Sortable table columns
+        var tables = document.querySelectorAll('.comparison-table');
+
+        tables.forEach(function (table) {
+            var headers = table.querySelectorAll('thead th');
+            var tbody = table.querySelector('tbody');
+
+            headers.forEach(function (header, colIndex) {
+                var sortDir = 0; // 0 = unsorted, 1 = asc, -1 = desc
+
+                header.addEventListener('click', function () {
+                    // Reset all other headers in this table
+                    headers.forEach(function (h, i) {
+                        if (i !== colIndex) {
+                            h.querySelector('.sort-indicator').textContent = '';
+                            h.querySelector('.sort-indicator').classList.remove('active');
+                        }
+                    });
+
+                    // Toggle sort direction
+                    sortDir = sortDir === 1 ? -1 : 1;
+
+                    var indicator = header.querySelector('.sort-indicator');
+                    indicator.textContent = sortDir === 1 ? ' \u25B2' : ' \u25BC';
+                    indicator.classList.add('active');
+
+                    // Get rows and sort
+                    var rows = Array.prototype.slice.call(tbody.querySelectorAll('tr'));
+                    rows.sort(function (a, b) {
+                        var aText = a.cells[colIndex].textContent.trim().toLowerCase();
+                        var bText = b.cells[colIndex].textContent.trim().toLowerCase();
+                        if (aText < bText) return -1 * sortDir;
+                        if (aText > bText) return 1 * sortDir;
+                        return 0;
+                    });
+
+                    // Re-append in sorted order
+                    rows.forEach(function (row) {
+                        tbody.appendChild(row);
+                    });
+                });
+            });
+        });
+    })();
+  </script>
+</body>
+</html>
