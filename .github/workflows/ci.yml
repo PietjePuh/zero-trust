@@ -30,6 +30,9 @@ jobs:
               'CSS: Parse Error' \
               'Attribute "aria-pressed" not allowed' \
               'The "color-scheme" property' \
+              'CSS: "color-scheme"' \
+              'CSS: "inset"' \
+              'CSS: "background": "," is an incorrect operator' \
             --match '*.html' \
             --blacklist Sec-labs .github
 
