@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'">
+  <title>Implementation Checklist - Zero Trust</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/theme.js"></script>
+</head>
+<body>
+  <header style="padding: 4rem 1rem;">
+    <div class="nav-bar">
+        <a href="index.html">Home</a>
+        <a href="tools.html">Tools</a>
+        <a href="resources.html">Resources</a>
+        <a href="checklist.html" class="active">Checklist</a>
+        <a href="comparison.html">Compare</a>
+        <button id="themeToggle" type="button" class="theme-toggle" aria-label="Switch to light mode">&#9790;</button>
+    </div>
+    <h1>Zero Trust Implementation Checklist</h1>
+    <p>Track your organization's progress across all zero-trust domains.</p>
+  </header>
+
+  <main>
+    <div class="checklist-overall">
+        <h2>Overall Progress</h2>
+        <p id="overallText">0 of 30 items completed</p>
+        <div class="progress-bar">
+            <div class="progress-fill" id="overallBar" style="width: 0%"></div>
+        </div>
+        <button type="button" class="checklist-reset" id="resetBtn">Reset All Progress</button>
+    </div>
+
+    <!-- Identity -->
+    <div class="checklist-domain" data-domain="identity">
+        <h3>Identity &amp; Access Management</h3>
+        <div class="checklist-progress">
+            <span class="domain-progress-text">0 / 6</span>
+            <div class="progress-bar"><div class="progress-fill domain-bar" style="width: 0%"></div></div>
+        </div>
+        <ul class="checklist-items">
+            <li class="checklist-item"><input type="checkbox" id="id-1"><label for="id-1">Implement phish-resistant MFA (FIDO2/WebAuthn) for all users</label></li>
+            <li class="checklist-item"><input type="checkbox" id="id-2"><label for="id-2">Deploy Single Sign-On (SSO) across all applications</label></li>
+            <li class="checklist-item"><input type="checkbox" id="id-3"><label for="id-3">Enforce Just-In-Time (JIT) access for privileged accounts</label></li>
+            <li class="checklist-item"><input type="checkbox" id="id-4"><label for="id-4">Implement automated user provisioning and deprovisioning (SCIM)</label></li>
+            <li class="checklist-item"><input type="checkbox" id="id-5"><label for="id-5">Configure conditional access policies based on risk signals</label></li>
+            <li class="checklist-item"><input type="checkbox" id="id-6"><label for="id-6">Schedule quarterly access recertification reviews</label></li>
+        </ul>
+    </div>
+
+    <!-- Devices -->
+    <div class="checklist-domain" data-domain="devices">
+        <h3>Devices &amp; Endpoints</h3>
+        <div class="checklist-progress">
+            <span class="domain-progress-text">0 / 6</span>
+            <div class="progress-bar"><div class="progress-fill domain-bar" style="width: 0%"></div></div>
+        </div>
+        <ul class="checklist-items">
+            <li class="checklist-item"><input type="checkbox" id="dev-1"><label for="dev-1">Maintain a complete asset inventory of all endpoints</label></li>
+            <li class="checklist-item"><input type="checkbox" id="dev-2"><label for="dev-2">Deploy EDR (Endpoint Detection and Response) on all managed devices</label></li>
+            <li class="checklist-item"><input type="checkbox" id="dev-3"><label for="dev-3">Enforce device compliance checks before granting access</label></li>
+            <li class="checklist-item"><input type="checkbox" id="dev-4"><label for="dev-4">Implement device health attestation for certificate-based access</label></li>
+            <li class="checklist-item"><input type="checkbox" id="dev-5"><label for="dev-5">Configure automated patch management with SLA enforcement</label></li>
+            <li class="checklist-item"><input type="checkbox" id="dev-6"><label for="dev-6">Establish BYOD policies with containerization or virtual desktops</label></li>
+        </ul>
+    </div>
+
+    <!-- Network -->
+    <div class="checklist-domain" data-domain="network">
+        <h3>Network Security</h3>
+        <div class="checklist-progress">
+            <span class="domain-progress-text">0 / 6</span>
+            <div class="progress-bar"><div class="progress-fill domain-bar" style="width: 0%"></div></div>
+        </div>
+        <ul class="checklist-items">
+            <li class="checklist-item"><input type="checkbox" id="net-1"><label for="net-1">Implement micro-segmentation to isolate critical workloads</label></li>
+            <li class="checklist-item"><input type="checkbox" id="net-2"><label for="net-2">Deploy ZTNA (Zero Trust Network Access) replacing traditional VPN</label></li>
+            <li class="checklist-item"><input type="checkbox" id="net-3"><label for="net-3">Enable encrypted DNS (DoH/DoT) and DNS filtering</label></li>
+            <li class="checklist-item"><input type="checkbox" id="net-4"><label for="net-4">Configure east-west traffic inspection and logging</label></li>
+            <li class="checklist-item"><input type="checkbox" id="net-5"><label for="net-5">Implement Software Defined Perimeter (SDP) for application access</label></li>
+            <li class="checklist-item"><input type="checkbox" id="net-6"><label for="net-6">Deploy network detection and response (NDR) for anomaly detection</label></li>
+        </ul>
+    </div>
+
+    <!-- Applications -->
+    <div class="checklist-domain" data-domain="applications">
+        <h3>Applications &amp; Workloads</h3>
+        <div class="checklist-progress">
+            <span class="domain-progress-text">0 / 6</span>
+            <div class="progress-bar"><div class="progress-fill domain-bar" style="width: 0%"></div></div>
+        </div>
+        <ul class="checklist-items">
+            <li class="checklist-item"><input type="checkbox" id="app-1"><label for="app-1">Implement runtime application self-protection (RASP)</label></li>
+            <li class="checklist-item"><input type="checkbox" id="app-2"><label for="app-2">Enforce API authentication and authorization (OAuth 2.0 / OIDC)</label></li>
+            <li class="checklist-item"><input type="checkbox" id="app-3"><label for="app-3">Deploy WAF (Web Application Firewall) for public-facing apps</label></li>
+            <li class="checklist-item"><input type="checkbox" id="app-4"><label for="app-4">Integrate SAST/DAST scanning into CI/CD pipelines</label></li>
+            <li class="checklist-item"><input type="checkbox" id="app-5"><label for="app-5">Implement container security scanning and runtime policies</label></li>
+            <li class="checklist-item"><input type="checkbox" id="app-6"><label for="app-6">Enforce least-privilege service accounts with secret rotation</label></li>
+        </ul>
+    </div>
+
+    <!-- Data -->
+    <div class="checklist-domain" data-domain="data">
+        <h3>Data Protection</h3>
+        <div class="checklist-progress">
+            <span class="domain-progress-text">0 / 6</span>
+            <div class="progress-bar"><div class="progress-fill domain-bar" style="width: 0%"></div></div>
+        </div>
+        <ul class="checklist-items">
+            <li class="checklist-item"><input type="checkbox" id="data-1"><label for="data-1">Classify all data assets by sensitivity level</label></li>
+            <li class="checklist-item"><input type="checkbox" id="data-2"><label for="data-2">Enforce encryption at rest (AES-256) and in transit (TLS 1.3)</label></li>
+            <li class="checklist-item"><input type="checkbox" id="data-3"><label for="data-3">Deploy DLP (Data Loss Prevention) policies for sensitive data</label></li>
+            <li class="checklist-item"><input type="checkbox" id="data-4"><label for="data-4">Implement database activity monitoring and audit logging</label></li>
+            <li class="checklist-item"><input type="checkbox" id="data-5"><label for="data-5">Configure backup encryption and immutable backup storage</label></li>
+            <li class="checklist-item"><input type="checkbox" id="data-6"><label for="data-6">Establish data retention and destruction policies per classification</label></li>
+        </ul>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; Zero Trust. Hosted on GitHub Pages. | <a href="privacy.html">Privacy Policy</a></p>
+  </footer>
+
+  <script>
+    (function () {
+        'use strict';
+
+        var STORAGE_KEY = 'zt-checklist';
+        var checkboxes = document.querySelectorAll('.checklist-item input[type="checkbox"]');
+        var domains = document.querySelectorAll('.checklist-domain');
+        var overallText = document.getElementById('overallText');
+        var overallBar = document.getElementById('overallBar');
+        var resetBtn = document.getElementById('resetBtn');
+
+        // Load saved state
+        function loadState() {
+            var saved = {};
+            try {
+                saved = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+            } catch (e) {
+                saved = {};
+            }
+            checkboxes.forEach(function (cb) {
+                cb.checked = saved[cb.id] === true;
+                updateItemStyle(cb);
+            });
+        }
+
+        // Save state
+        function saveState() {
+            var state = {};
+            checkboxes.forEach(function (cb) {
+                if (cb.checked) state[cb.id] = true;
+            });
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        }
+
+        // Update visual style for a checkbox's parent
+        function updateItemStyle(cb) {
+            var item = cb.closest('.checklist-item');
+            if (cb.checked) {
+                item.classList.add('completed');
+            } else {
+                item.classList.remove('completed');
+            }
+        }
+
+        // Update progress bars
+        function updateProgress() {
+            var totalChecked = 0;
+            var totalCount = checkboxes.length;
+
+            domains.forEach(function (domain) {
+                var cbs = domain.querySelectorAll('input[type="checkbox"]');
+                var checked = domain.querySelectorAll('input[type="checkbox"]:checked').length;
+                var total = cbs.length;
+                var pct = total > 0 ? Math.round((checked / total) * 100) : 0;
+
+                var bar = domain.querySelector('.domain-bar');
+                var text = domain.querySelector('.domain-progress-text');
+                if (bar) bar.style.width = pct + '%';
+                if (text) text.textContent = checked + ' / ' + total;
+
+                totalChecked += checked;
+            });
+
+            var overallPct = totalCount > 0 ? Math.round((totalChecked / totalCount) * 100) : 0;
+            overallBar.style.width = overallPct + '%';
+            overallText.textContent = totalChecked + ' of ' + totalCount + ' items completed (' + overallPct + '%)';
+        }
+
+        // Event listeners
+        checkboxes.forEach(function (cb) {
+            cb.addEventListener('change', function () {
+                updateItemStyle(cb);
+                saveState();
+                updateProgress();
+            });
+        });
+
+        resetBtn.addEventListener('click', function () {
+            if (!confirm('Are you sure you want to reset all checklist progress?')) return;
+            checkboxes.forEach(function (cb) {
+                cb.checked = false;
+                updateItemStyle(cb);
+            });
+            saveState();
+            updateProgress();
+        });
+
+        // Initialize
+        loadState();
+        updateProgress();
+    })();
+  </script>
+</body>
+</html>

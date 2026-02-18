@@ -9,6 +9,7 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'">
   <title>Security Resources - Zero Trust</title>
   <link rel="stylesheet" href="css/style.css">
+  <script src="js/theme.js"></script>
   <style>
       .resource-category {
           margin-bottom: 3rem;
@@ -47,6 +48,7 @@
         <a href="index.html">Home</a>
         <a href="tools.html">Tools</a>
         <a href="resources.html" class="active">Resources</a>
+        <button id="themeToggle" class="theme-toggle" aria-label="Switch to light mode">&#9790;</button>
     </div>
     <h1>Security Resources</h1>
     <p>A comprehensive directory of search engines, threat intel, and learning platforms.</p>
@@ -61,11 +63,22 @@
             <button id="clearSearch" class="clear-button hidden" aria-label="Clear search" type="button">✕</button>
         </div>
     </div>
+
+    <fieldset class="filter-chips" aria-label="Filter by category">
+        <legend class="sr-only">Filter by category</legend>
+        <button type="button" class="filter-chip active" data-cat="all">All</button>
+        <button type="button" class="filter-chip" data-cat="recon">Search &amp; Recon</button>
+        <button type="button" class="filter-chip" data-cat="threat">Threat Intel</button>
+        <button type="button" class="filter-chip" data-cat="learning">Learning &amp; CTFs</button>
+        <button type="button" class="filter-chip" data-cat="news">News &amp; Blogs</button>
+        <button type="button" class="filter-chip" data-cat="webtools">Web Tools</button>
+    </fieldset>
+
     <div id="noResults" class="no-results hidden">
         <p>No resources found matching your criteria.</p>
     </div>
 
-    <div class="resource-category">
+    <div class="resource-category" data-category="recon">
         <h2 class="wiki-section-title">🔍 Search Engines & Recon</h2>
         <div class="resource-list">
             <a href="https://search.brave.com" target="_blank" rel="noopener noreferrer" class="resource-item">
@@ -135,7 +148,7 @@
         </div>
     </div>
 
-    <div class="resource-category">
+    <div class="resource-category" data-category="threat">
         <h2 class="wiki-section-title">🛡️ Threat Intelligence & Analysis</h2>
         <div class="resource-list">
             <a href="https://www.virustotal.com/gui/home/search" target="_blank" rel="noopener noreferrer" class="resource-item">
@@ -205,7 +218,7 @@
         </div>
     </div>
 
-    <div class="resource-category">
+    <div class="resource-category" data-category="learning">
         <h2 class="wiki-section-title">🎓 Learning & CTFs</h2>
         <div class="resource-list">
              <a href="https://tryhackme.com/" target="_blank" rel="noopener noreferrer" class="resource-item">
@@ -255,7 +268,7 @@
         </div>
     </div>
 
-    <div class="resource-category">
+    <div class="resource-category" data-category="news">
         <h2 class="wiki-section-title">📰 Security News & Blogs</h2>
         <div class="resource-list">
              <a href="https://thehackernews.com" target="_blank" rel="noopener noreferrer" class="resource-item">
@@ -301,7 +314,7 @@
         </div>
     </div>
 
-    <div class="resource-category">
+    <div class="resource-category" data-category="webtools">
         <h2 class="wiki-section-title">🛠️ Web Tools & Utilities</h2>
         <div class="resource-list">
              <a href="https://gchq.github.io/CyberChef/" target="_blank" rel="noopener noreferrer" class="resource-item">
@@ -361,39 +374,64 @@
     <p>&copy; Zero Trust. Hosted on GitHub Pages. | <a href="privacy.html">Privacy Policy</a></p>
   </footer>
 
+  <script src="js/highlight.js"></script>
   <script>
     const searchInput = document.getElementById('resourceSearch');
     const clearBtn = document.getElementById('clearSearch');
     const noResults = document.getElementById('noResults');
     const resourceCategories = document.querySelectorAll('.resource-category');
     const resourceItems = document.querySelectorAll('.resource-item');
+    const filterChips = document.querySelectorAll('.filter-chip');
+    let currentCat = 'all';
 
-    function filterResources(searchTerm) {
-        searchTerm = searchTerm.toLowerCase();
-        let totalVisible = 0;
+    function applyFilters() {
+        var searchTerm = searchInput.value.toLowerCase();
+        var totalVisible = 0;
 
-        // Filter individual items
-        resourceItems.forEach(item => {
-            const title = item.querySelector('.resource-title').textContent.toLowerCase();
-            const domain = item.querySelector('.resource-domain').textContent.toLowerCase();
+        // Clear previous highlights
+        resourceCategories.forEach(function (cat) { SearchHighlight.clear(cat); });
 
-            if (title.includes(searchTerm) || domain.includes(searchTerm)) {
-                item.classList.remove('hidden');
-                totalVisible++;
-            } else {
-                item.classList.add('hidden');
-            }
-        });
-
-        // Handle Empty Categories
-        resourceCategories.forEach(category => {
-            const visibleItems = category.querySelectorAll('.resource-item:not(.hidden)');
-            if (visibleItems.length === 0) {
+        // Filter by category first
+        resourceCategories.forEach(function (category) {
+            var catMatch = currentCat === 'all' || category.getAttribute('data-category') === currentCat;
+            if (!catMatch) {
                 category.classList.add('hidden');
-            } else {
-                category.classList.remove('hidden');
+                return;
+            }
+            category.classList.remove('hidden');
+
+            // Filter individual items within visible categories
+            var items = category.querySelectorAll('.resource-item');
+            var catVisible = 0;
+            items.forEach(function (item) {
+                var title = item.querySelector('.resource-title').textContent.toLowerCase();
+                var domain = item.querySelector('.resource-domain').textContent.toLowerCase();
+
+                if (!searchTerm || title.includes(searchTerm) || domain.includes(searchTerm)) {
+                    item.classList.remove('hidden');
+                    catVisible++;
+                    totalVisible++;
+                } else {
+                    item.classList.add('hidden');
+                }
+            });
+
+            if (catVisible === 0) {
+                category.classList.add('hidden');
             }
         });
+
+        // Apply search highlighting
+        if (searchTerm.length >= 2) {
+            resourceCategories.forEach(function (category) {
+                if (category.classList.contains('hidden')) return;
+                var items = category.querySelectorAll('.resource-item:not(.hidden)');
+                items.forEach(function (item) {
+                    var titleEl = item.querySelector('.resource-title');
+                    if (titleEl) SearchHighlight.apply(titleEl, searchTerm);
+                });
+            });
+        }
 
         // Toggle No Results
         if (totalVisible > 0) {
@@ -410,27 +448,37 @@
         }
     }
 
-    searchInput.addEventListener('input', (e) => {
-        filterResources(e.target.value);
+    // Category filter chips
+    filterChips.forEach(function (chip) {
+        chip.addEventListener('click', function () {
+            filterChips.forEach(function (c) { c.classList.remove('active'); });
+            chip.classList.add('active');
+            currentCat = chip.getAttribute('data-cat');
+            applyFilters();
+        });
     });
 
-    clearBtn.addEventListener('click', () => {
+    searchInput.addEventListener('input', function () {
+        applyFilters();
+    });
+
+    clearBtn.addEventListener('click', function () {
         searchInput.value = '';
-        filterResources('');
+        applyFilters();
         searchInput.focus();
     });
 
     // Check for query parameter
-    const urlParams = new URLSearchParams(window.location.search);
-    const query = urlParams.get('q');
+    var urlParams = new URLSearchParams(window.location.search);
+    var query = urlParams.get('q');
     if (query) {
         searchInput.value = query;
-        filterResources(query);
+        applyFilters();
     }
 
     // Keyboard shortcut for search
-    document.addEventListener('keydown', (e) => {
-        const activeTag = document.activeElement.tagName;
+    document.addEventListener('keydown', function (e) {
+        var activeTag = document.activeElement.tagName;
         if (e.key === '/' && activeTag !== 'INPUT' && activeTag !== 'TEXTAREA') {
             e.preventDefault();
             searchInput.focus();
