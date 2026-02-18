@@ -38,5 +38,15 @@ const searchIndex = [
         title: "Security Tools Index",
         url: "tools.html",
         content: "Nmap Metasploit Burp Suite Wireshark Tailscale Authentik Yubikey FIDO2."
+    },
+    {
+        title: "Implementation Checklist",
+        url: "checklist.html",
+        content: "Zero Trust implementation checklist identity devices network applications data MFA EDR ZTNA DLP encryption."
+    },
+    {
+        title: "Tool Comparison Matrix",
+        url: "comparison.html",
+        content: "Compare vendors tools identity access ZTNA EDR CrowdStrike Microsoft Okta Tailscale Cloudflare Wazuh."
     }
 ];

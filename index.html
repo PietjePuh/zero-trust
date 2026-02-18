@@ -3,11 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
-  <meta http-equiv="X-Frame-Options" content="DENY" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'" />
   <title>Zero Trust Lab</title>
+  <script src="js/theme.js"></script>
   <style>
     :root {
       color-scheme: light dark;
@@ -227,6 +226,76 @@
       color: rgba(246, 247, 251, 0.65);
     }
 
+    /* Light theme overrides */
+    [data-theme="light"] {
+      --bg: #f8f9fa;
+      --bg-alt: rgba(0, 0, 0, 0.05);
+      --text: #1a1a2e;
+      --accent: #0d9488;
+      --accent-dark: #0f766e;
+      --border: rgba(0, 0, 0, 0.12);
+      --shadow: rgba(0, 0, 0, 0.1);
+    }
+
+    [data-theme="light"] body {
+      background: radial-gradient(circle at 15% 15%, rgba(13, 148, 136, 0.1), transparent 45%),
+        radial-gradient(circle at 80% 10%, rgba(236, 72, 153, 0.08), transparent 45%),
+        var(--bg);
+    }
+
+    [data-theme="light"] header {
+      background: rgba(248, 249, 250, 0.85);
+    }
+
+    [data-theme="light"] .hero-card {
+      background: rgba(255, 255, 255, 0.75);
+    }
+
+    [data-theme="light"] .card {
+      background: rgba(255, 255, 255, 0.75);
+    }
+
+    [data-theme="light"] .roadmap-list li {
+      background: rgba(255, 255, 255, 0.7);
+    }
+
+    [data-theme="light"] footer {
+      background: rgba(248, 249, 250, 0.85);
+    }
+
+    [data-theme="light"] p.lead {
+      color: rgba(26, 26, 46, 0.8);
+    }
+
+    [data-theme="light"] .roadmap-list span {
+      color: rgba(26, 26, 46, 0.55);
+    }
+
+    [data-theme="light"] .cta-secondary {
+      border-color: rgba(26, 26, 46, 0.4);
+      color: rgba(26, 26, 46, 0.85);
+    }
+
+    /* Theme Toggle */
+    .theme-toggle {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+      cursor: pointer;
+      padding: 0.4rem 0.6rem;
+      border-radius: 6px;
+      font-size: 1.2rem;
+      line-height: 1;
+      transition: background-color 0.2s, border-color 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .theme-toggle:hover {
+      border-color: var(--accent);
+    }
+
     @media (max-width: 600px) {
       nav ul {
         display: none;
@@ -235,6 +304,13 @@
       main {
         padding-top: 3rem;
       }
+    }
+
+    @media print {
+      * { color: #000 !important; background: #fff !important; box-shadow: none !important; }
+      header { position: static; }
+      .theme-toggle, .cta-buttons { display: none !important; }
+      a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 0.8em; }
     }
   </style>
 </head>
@@ -248,6 +324,7 @@
         <li><a href="#roadmap">Roadmap</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
+      <button id="themeToggle" type="button" class="theme-toggle" aria-label="Switch to light mode">&#9790;</button>
     </nav>
   </header>
 
@@ -300,8 +377,8 @@
 
     <section id="tools" aria-labelledby="tools-title">
       <h2 id="tools-title">Tool suites you can build on today</h2>
-      <div class="grid cards" role="list">
-        <article class="card" role="listitem">
+      <div class="grid cards">
+        <article class="card">
           <h3>ABC Toolkit</h3>
           <p>
             Automate baseline controls. The ABC toolkit provides hardened templates, checklists, and automation hooks to roll out zero-trust
@@ -313,7 +390,7 @@
             <li>Dashboards to observe adoption and compliance trends</li>
           </ul>
         </article>
-        <article class="card" role="listitem">
+        <article class="card">
           <h3>Academie</h3>
           <p>
             A guided learning space for teaching zero-trust principles. Blend live workshops, labs, and certification paths to grow expertise
@@ -325,7 +402,7 @@
             <li>Progress analytics to coach learners effectively</li>
           </ul>
         </article>
-        <article class="card" role="listitem">
+        <article class="card">
           <h3>Future modules</h3>
           <p>
             Design your roadmap and plug in additional tools as you go—ranging from incident response simulators to privacy-preserving data
@@ -392,6 +469,13 @@
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Register Service Worker for offline support
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js').catch(function (err) {
+        console.error('SW registration failed:', err);
+      });
+    }
   </script>
 </body>
 </html>

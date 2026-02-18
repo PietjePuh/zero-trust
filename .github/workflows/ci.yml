@@ -1,0 +1,57 @@
+name: CI - HTML Validation
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate-html:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install html5validator
+        run: pip install html5validator
+
+      - name: Validate HTML files
+        run: |
+          html5validator --root . \
+            --also-check-css \
+            --ignore \
+              'CSS: "backdrop-filter"' \
+              'CSS: Parse Error' \
+              'Attribute "aria-pressed" not allowed' \
+              'The "color-scheme" property' \
+              'CSS: "color-scheme"' \
+              'CSS: "inset"' \
+              'CSS: "background": "," is an incorrect operator' \
+            --match '*.html' \
+            --blacklist Sec-labs .github
+
+      - name: Check for broken internal links
+        run: |
+          echo "Checking internal link targets..."
+          errors=0
+          for file in *.html; do
+            # Extract href values pointing to local .html files
+            hrefs=$(grep -oP 'href="\K[^"#]+\.html' "$file" 2>/dev/null || true)
+            for href in $hrefs; do
+              if [ ! -f "$href" ]; then
+                echo "ERROR: $file references $href which does not exist"
+                errors=$((errors + 1))
+              fi
+            done
+          done
+          if [ $errors -gt 0 ]; then
+            echo "Found $errors broken internal links"
+            exit 1
+          fi
+          echo "All internal links are valid"
