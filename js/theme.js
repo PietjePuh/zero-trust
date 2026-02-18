@@ -41,3 +41,42 @@
         });
     });
 })();
+
+// Back to Top Button Logic
+document.addEventListener('DOMContentLoaded', function () {
+    var backToTopBtn = document.createElement('button');
+    backToTopBtn.className = 'back-to-top';
+    backToTopBtn.ariaLabel = 'Back to top';
+    backToTopBtn.innerHTML = '&#8679;'; // Up arrow
+    backToTopBtn.type = 'button';
+
+    document.body.appendChild(backToTopBtn);
+
+    var toggleVisibility = function () {
+        if (window.scrollY > 300) {
+            backToTopBtn.classList.add('visible');
+        } else {
+            backToTopBtn.classList.remove('visible');
+        }
+    };
+
+    var ticking = false;
+    window.addEventListener('scroll', function () {
+        if (!ticking) {
+            window.requestAnimationFrame(function () {
+                toggleVisibility();
+                ticking = false;
+            });
+            ticking = true;
+        }
+    });
+
+    backToTopBtn.addEventListener('click', function () {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+        // Remove focus from button after click to avoid lingering focus style
+        backToTopBtn.blur();
+    });
+});

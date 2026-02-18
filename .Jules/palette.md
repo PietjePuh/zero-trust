@@ -17,3 +17,7 @@
 ## 2024-05-24 - Global Keyboard Shortcuts Safety
 **Learning:** When implementing global hotkeys (like '/' for search), naive implementations can break typing in other input fields if they don't explicitly check document.activeElement.tagName.
 **Action:** Always wrap global keydown listeners with a check: if (activeTag !== 'INPUT' && activeTag !== 'TEXTAREA').
+
+## 2026-02-18 - Navigation on Long Static Pages
+**Learning:** On long static pages (like tools lists), users lose context of navigation. A simple, persistent 'Back to Top' button restores this context and is a high-value micro-UX improvement.
+**Action:** When designing or enhancing long content pages, always include a mechanism to quickly return to the top navigation.
