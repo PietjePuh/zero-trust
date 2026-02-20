@@ -770,6 +770,40 @@ fieldset.filter-chips {
     font-weight: 700;
 }
 
+/* ===== Back to Top Button ===== */
+.back-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background-color: var(--accent-color);
+    color: var(--bg-color);
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    border: none;
+    box-shadow: 0 4px 12px var(--shadow-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s, transform 0.2s;
+    z-index: 1000;
+    font-size: 1.5rem;
+    padding: 0;
+}
+
+.back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.back-to-top:hover {
+    transform: translateY(-4px);
+    opacity: 0.9;
+}
+
 /* ===== Print-Friendly Styles ===== */
 @media print {
     * {
@@ -798,6 +832,7 @@ fieldset.filter-chips {
     .button-container,
     .clear-button,
     .copy-btn,
+    .back-to-top,
     .checklist-reset,
     footer {
         display: none !important;

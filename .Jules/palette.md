@@ -17,3 +17,7 @@
 ## 2024-05-24 - Global Keyboard Shortcuts Safety
 **Learning:** When implementing global hotkeys (like '/' for search), naive implementations can break typing in other input fields if they don't explicitly check document.activeElement.tagName.
 **Action:** Always wrap global keydown listeners with a check: if (activeTag !== 'INPUT' && activeTag !== 'TEXTAREA').
+
+## 2026-02-14 - Invisible Navigation Aids
+**Learning:** Users on long content pages often struggle to return to the top navigation without excessive scrolling, causing friction.
+**Action:** Implement unobtrusive "Back to Top" buttons that only appear after scrolling, maintaining a clean UI until the functionality is needed.
