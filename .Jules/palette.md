@@ -21,3 +21,7 @@
 ## 2026-02-14 - Invisible Navigation Aids
 **Learning:** Users on long content pages often struggle to return to the top navigation without excessive scrolling, causing friction.
 **Action:** Implement unobtrusive "Back to Top" buttons that only appear after scrolling, maintaining a clean UI until the functionality is needed.
+
+## 2026-02-14 - Client-Side State Persistence
+**Learning:** Static site filters often reset on refresh, causing frustration when sharing links. Syncing filter state with URL parameters via `window.history.replaceState` creates persistent, shareable views without backend logic.
+**Action:** Always implement deep linking for client-side filters (search/categories) to enable bookmarking and sharing of specific resource views.
