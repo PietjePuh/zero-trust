@@ -383,7 +383,24 @@
     const filterChips = document.querySelectorAll('.filter-chip');
     let currentCat = 'all';
 
+    function updateURL() {
+        const url = new URL(window.location);
+        if (currentCat && currentCat !== 'all') {
+            url.searchParams.set('category', currentCat);
+        } else {
+            url.searchParams.delete('category');
+        }
+
+        if (searchInput.value) {
+            url.searchParams.set('q', searchInput.value);
+        } else {
+            url.searchParams.delete('q');
+        }
+        window.history.replaceState({}, '', url);
+    }
+
     function applyFilters() {
+        updateURL();
         var searchTerm = searchInput.value.toLowerCase();
         var totalVisible = 0;
 
@@ -470,8 +487,22 @@
     // Check for query parameter
     var urlParams = new URLSearchParams(window.location.search);
     var query = urlParams.get('q');
+    var categoryParam = urlParams.get('category');
+
+    if (categoryParam) {
+        var targetChip = document.querySelector('.filter-chip[data-cat="' + categoryParam + '"]');
+        if (targetChip) {
+            filterChips.forEach(function (c) { c.classList.remove('active'); });
+            targetChip.classList.add('active');
+            currentCat = categoryParam;
+        }
+    }
+
     if (query) {
         searchInput.value = query;
+    }
+
+    if (query || categoryParam) {
         applyFilters();
     }
 
