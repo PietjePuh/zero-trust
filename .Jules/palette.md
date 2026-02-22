@@ -21,3 +21,7 @@
 ## 2026-02-14 - Invisible Navigation Aids
 **Learning:** Users on long content pages often struggle to return to the top navigation without excessive scrolling, causing friction.
 **Action:** Implement unobtrusive "Back to Top" buttons that only appear after scrolling, maintaining a clean UI until the functionality is needed.
+
+## 2026-02-14 - Deep Linking in Static Sites
+**Learning:** Static site filters (like categories/search) often lack state persistence, causing users to lose context on refresh or share. Using `history.replaceState` is a clean, low-overhead way to add deep linking without a router.
+**Action:** Always implement URL synchronization for any client-side filtering or search mechanism to enable bookmarking and sharing.
