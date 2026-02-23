@@ -306,6 +306,40 @@
       }
     }
 
+    .back-to-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background-color: var(--accent);
+      color: var(--bg);
+      width: 3rem;
+      height: 3rem;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 12px var(--shadow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s, transform 0.2s;
+      z-index: 1000;
+      font-size: 1.5rem;
+      padding: 0;
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .back-to-top:hover {
+      transform: translateY(-4px);
+      background-color: var(--accent-dark);
+      border-color: var(--accent);
+    }
+
     @media print {
       * { color: #000 !important; background: #fff !important; box-shadow: none !important; }
       header { position: static; }
@@ -477,5 +511,6 @@
       });
     }
   </script>
+  <script src="js/ui.js"></script>
 </body>
 </html>
