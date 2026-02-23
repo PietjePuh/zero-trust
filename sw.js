@@ -22,7 +22,8 @@ var URLS_TO_CACHE = [
     './js/theme.js',
     './js/highlight.js',
     './js/search.js',
-    './js/search-data.js'
+    './js/search-data.js',
+    './js/ui.js'
 ];
 
 // Install: pre-cache core assets

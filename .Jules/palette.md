@@ -21,3 +21,7 @@
 ## 2026-02-14 - Invisible Navigation Aids
 **Learning:** Users on long content pages often struggle to return to the top navigation without excessive scrolling, causing friction.
 **Action:** Implement unobtrusive "Back to Top" buttons that only appear after scrolling, maintaining a clean UI until the functionality is needed.
+
+## 2026-02-14 - Styling Consistency in Mixed Static Sites
+**Learning:** Static sites may mix inline styles (for performance on landing pages like `index.html`) with external stylesheets (for other content pages). When adding global UI components, verify both contexts to avoid unstyled content.
+**Action:** Ensure global styles are either duplicated in the inline block or the external sheet is universally linked, testing both scenarios.
