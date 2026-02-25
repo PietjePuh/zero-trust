@@ -25,3 +25,7 @@
 ## 2026-02-14 - Styling Consistency in Mixed Static Sites
 **Learning:** Static sites may mix inline styles (for performance on landing pages like `index.html`) with external stylesheets (for other content pages). When adding global UI components, verify both contexts to avoid unstyled content.
 **Action:** Ensure global styles are either duplicated in the inline block or the external sheet is universally linked, testing both scenarios.
+
+## 2026-02-25 - URL State Synchronization in Static Sites
+**Learning:** Users expect to be able to share or bookmark their search/filter results, even on static sites. Implementing `history.replaceState` with `URLSearchParams` provides a seamless "app-like" experience without server-side routing.
+**Action:** Always sync client-side filter states (search, categories) to the URL query parameters to enable deep linking.
