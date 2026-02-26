@@ -25,9 +25,9 @@
 
   <main>
     <div class="checklist-overall">
-        <h2>Overall Progress</h2>
+        <h2 id="progress-overall">Overall Progress</h2>
         <p id="overallText">0 of 30 items completed</p>
-        <div class="progress-bar">
+        <div class="progress-bar" role="progressbar" aria-labelledby="progress-overall" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
             <div class="progress-fill" id="overallBar" style="width: 0%"></div>
         </div>
         <button type="button" class="checklist-reset" id="resetBtn">Reset All Progress</button>
@@ -35,10 +35,10 @@
 
     <!-- Identity -->
     <div class="checklist-domain" data-domain="identity">
-        <h3>Identity &amp; Access Management</h3>
+        <h3 id="progress-identity">Identity &amp; Access Management</h3>
         <div class="checklist-progress">
             <span class="domain-progress-text">0 / 6</span>
-            <div class="progress-bar"><div class="progress-fill domain-bar" style="width: 0%"></div></div>
+            <div class="progress-bar" role="progressbar" aria-labelledby="progress-identity" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><div class="progress-fill domain-bar" style="width: 0%"></div></div>
         </div>
         <ul class="checklist-items">
             <li class="checklist-item"><input type="checkbox" id="id-1"><label for="id-1">Implement phish-resistant MFA (FIDO2/WebAuthn) for all users</label></li>
@@ -52,10 +52,10 @@
 
     <!-- Devices -->
     <div class="checklist-domain" data-domain="devices">
-        <h3>Devices &amp; Endpoints</h3>
+        <h3 id="progress-devices">Devices &amp; Endpoints</h3>
         <div class="checklist-progress">
             <span class="domain-progress-text">0 / 6</span>
-            <div class="progress-bar"><div class="progress-fill domain-bar" style="width: 0%"></div></div>
+            <div class="progress-bar" role="progressbar" aria-labelledby="progress-devices" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><div class="progress-fill domain-bar" style="width: 0%"></div></div>
         </div>
         <ul class="checklist-items">
             <li class="checklist-item"><input type="checkbox" id="dev-1"><label for="dev-1">Maintain a complete asset inventory of all endpoints</label></li>
@@ -69,10 +69,10 @@
 
     <!-- Network -->
     <div class="checklist-domain" data-domain="network">
-        <h3>Network Security</h3>
+        <h3 id="progress-network">Network Security</h3>
         <div class="checklist-progress">
             <span class="domain-progress-text">0 / 6</span>
-            <div class="progress-bar"><div class="progress-fill domain-bar" style="width: 0%"></div></div>
+            <div class="progress-bar" role="progressbar" aria-labelledby="progress-network" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><div class="progress-fill domain-bar" style="width: 0%"></div></div>
         </div>
         <ul class="checklist-items">
             <li class="checklist-item"><input type="checkbox" id="net-1"><label for="net-1">Implement micro-segmentation to isolate critical workloads</label></li>
@@ -86,10 +86,10 @@
 
     <!-- Applications -->
     <div class="checklist-domain" data-domain="applications">
-        <h3>Applications &amp; Workloads</h3>
+        <h3 id="progress-applications">Applications &amp; Workloads</h3>
         <div class="checklist-progress">
             <span class="domain-progress-text">0 / 6</span>
-            <div class="progress-bar"><div class="progress-fill domain-bar" style="width: 0%"></div></div>
+            <div class="progress-bar" role="progressbar" aria-labelledby="progress-applications" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><div class="progress-fill domain-bar" style="width: 0%"></div></div>
         </div>
         <ul class="checklist-items">
             <li class="checklist-item"><input type="checkbox" id="app-1"><label for="app-1">Implement runtime application self-protection (RASP)</label></li>
@@ -103,10 +103,10 @@
 
     <!-- Data -->
     <div class="checklist-domain" data-domain="data">
-        <h3>Data Protection</h3>
+        <h3 id="progress-data">Data Protection</h3>
         <div class="checklist-progress">
             <span class="domain-progress-text">0 / 6</span>
-            <div class="progress-bar"><div class="progress-fill domain-bar" style="width: 0%"></div></div>
+            <div class="progress-bar" role="progressbar" aria-labelledby="progress-data" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><div class="progress-fill domain-bar" style="width: 0%"></div></div>
         </div>
         <ul class="checklist-items">
             <li class="checklist-item"><input type="checkbox" id="data-1"><label for="data-1">Classify all data assets by sensitivity level</label></li>
@@ -180,7 +180,10 @@
 
                 var bar = domain.querySelector('.domain-bar');
                 var text = domain.querySelector('.domain-progress-text');
-                if (bar) bar.style.width = pct + '%';
+                if (bar) {
+                    bar.style.width = pct + '%';
+                    bar.parentElement.setAttribute('aria-valuenow', pct);
+                }
                 if (text) text.textContent = checked + ' / ' + total;
 
                 totalChecked += checked;
@@ -188,6 +191,7 @@
 
             var overallPct = totalCount > 0 ? Math.round((totalChecked / totalCount) * 100) : 0;
             overallBar.style.width = overallPct + '%';
+            overallBar.parentElement.setAttribute('aria-valuenow', overallPct);
             overallText.textContent = totalChecked + ' of ' + totalCount + ' items completed (' + overallPct + '%)';
         }
 
