@@ -30,9 +30,9 @@ const searchIndex = [
         content: "Memory safety stack overflow RCE ASLR DEP Rust Go memory safe languages."
     },
     {
-        title: "Account Recovery Resets",
+        title: "Zero Trust Password Reset Portal",
         url: "resets.html",
-        content: "Google Microsoft Apple Facebook Instagram Twitter Github password reset links."
+        content: "Zero Trust architecture secure password resets MFA identity verification TOTP hardware security keys biometrics session timeout troubleshooting best practices account recovery links."
     },
     {
         title: "Security Tools Index",
