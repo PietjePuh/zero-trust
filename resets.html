@@ -5,10 +5,40 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'">
-  <title>Account Recovery & Reset Links - Zero Trust</title>
+  <title>Zero Trust Password Reset Portal</title>
   <link rel="stylesheet" href="css/style.css">
   <script src="js/theme.js"></script>
   <style>
+      .last-updated {
+          font-size: 0.9rem;
+          color: var(--text-muted);
+          margin-bottom: 2rem;
+          text-align: center;
+      }
+      .toc-container {
+          background-color: var(--secondary-bg);
+          border: 1px solid var(--border-color);
+          border-radius: 8px;
+          padding: 1.5rem;
+          margin-bottom: 3rem;
+      }
+      .toc-title {
+          font-size: 1.2rem;
+          font-weight: 600;
+          margin-top: 0;
+          margin-bottom: 1rem;
+          color: var(--accent-color);
+      }
+      .toc-list {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          gap: 0.5rem;
+          list-style: none;
+          padding: 0;
+      }
+      .toc-list li a::before {
+          content: "→ ";
+      }
       .resource-category {
           margin-bottom: 3rem;
       }
@@ -56,14 +86,111 @@
         <a href="maturity.html">Maturity</a>
         <button id="themeToggle" type="button" class="theme-toggle" aria-label="Switch to light mode">&#9790;</button>
     </div>
-    <h1>Account Recovery Links</h1>
-    <p>Direct links to official password reset and account recovery pages.</p>
+    <h1>Zero Trust Password Reset Portal</h1>
+    <p>Secure identity recovery and password management within a Zero Trust framework.</p>
   </header>
 
   <main>
+    <div class="last-updated">Last Updated: October 26, 2023</div>
 
-    <div class="resource-category">
-        <h2 class="wiki-section-title">📧 Email & Productivity</h2>
+    <nav class="toc-container" aria-label="Table of Contents">
+        <h2 class="toc-title">Table of Contents</h2>
+        <ul class="toc-list">
+            <li><a href="#overview">Overview</a></li>
+            <li><a href="#reset-process">Step-by-Step Reset Process</a></li>
+            <li><a href="#security-features">Security Features</a></li>
+            <li><a href="#troubleshooting">Troubleshooting</a></li>
+            <li><a href="#best-practices">Best Practices</a></li>
+            <li><a href="#recovery-links">Common Service Recovery Links</a></li>
+        </ul>
+    </nav>
+
+    <div id="overview" class="resource-category">
+        <h2 class="wiki-section-title">Overview</h2>
+        <p>Zero Trust is a security framework based on the principle of "never trust, always verify." Unlike traditional security models that assume everything inside an organization's network is safe, Zero Trust requires continuous validation of every user and device attempting to access resources, regardless of their location. This approach is essential in today's landscape of remote work and sophisticated cyber threats.</p>
+        <p>Secure password resets are a critical component of a Zero Trust architecture. In a traditional model, a password reset might rely on a single factor, such as an email link. In a Zero Trust framework, the reset process itself must be verified through multiple, independent channels to ensure that the person requesting the reset is indeed the authorized user. This prevents attackers from using compromised secondary accounts to gain control of primary identities.</p>
+    </div>
+
+    <div id="reset-process" class="resource-category">
+        <h2 class="wiki-section-title">Step-by-Step Reset Process</h2>
+        <div class="grid-container">
+            <section>
+                <h3>1. Initiation & MFA</h3>
+                <p>Enter your username or email on the reset portal. You will be prompted to solve a CAPTCHA and provide a second factor of authentication (MFA) before proceeding.</p>
+                <p><em>[Screenshot: MFA Prompt]</em></p>
+            </section>
+            <section>
+                <h3>2. Identity Verification</h3>
+                <p>After MFA, you must verify your identity using a pre-registered hardware key or a biometric scan. If these are unavailable, a one-time code will be sent to your registered mobile device.</p>
+                <p><em>[Screenshot: Identity Verification Step]</em></p>
+            </section>
+            <section>
+                <h3>3. Password Complexity</h3>
+                <p>Create a new password that meets our complexity requirements: minimum 16 characters, including uppercase, lowercase, numbers, and symbols. Passwords must not contain personal information.</p>
+                <p><em>[Screenshot: New Password Requirements]</em></p>
+            </section>
+            <section>
+                <h3>4. Account Recovery Options</h3>
+                <p>Upon a successful reset, you will be prompted to review and update your account recovery options, including backup codes and emergency contact information.</p>
+                <p><em>[Screenshot: Recovery Options Review]</em></p>
+            </section>
+        </div>
+    </div>
+
+    <div id="security-features" class="resource-category">
+        <h2 class="wiki-section-title">Security Features</h2>
+        <ul>
+            <li><strong>Time-based One-Time Passwords (TOTP):</strong> We support industry-standard TOTP apps (e.g., Google Authenticator, Authy) for secure, time-sensitive MFA.</li>
+            <li><strong>Hardware Security Keys:</strong> Support for FIDO2/WebAuthn hardware keys like YubiKeys provides the highest level of protection against phishing.</li>
+            <li><strong>Biometric Verification:</strong> Integrated support for Windows Hello, Apple FaceID/TouchID, and Android Biometrics for seamless, secure access.</li>
+            <li><strong>Session Timeout Protocols:</strong> Reset sessions automatically expire after 10 minutes of inactivity to prevent unauthorized access on shared devices.</li>
+        </ul>
+    </div>
+
+    <div id="troubleshooting" class="resource-category">
+        <h2 class="wiki-section-title">Troubleshooting</h2>
+        <div class="grid-container">
+            <section>
+                <h3>Common Errors</h3>
+                <ul>
+                    <li><strong>"MFA Token Expired":</strong> Ensure your device's time is synchronized. Try generating a new code.</li>
+                    <li><strong>"Hardware Key Not Recognized":</strong> Check your USB connection or NFC proximity. Ensure your browser is up to date.</li>
+                </ul>
+            </section>
+            <section>
+                <h3>Support & Emergency</h3>
+                <p><strong>IT Support:</strong> Contact the help desk at <a href="mailto:support@zero-trust.pw">support@zero-trust.pw</a> or call +1 (555) 012-3456.</p>
+                <p><strong>Emergency Access:</strong> If you are locked out of all factors, please contact your supervisor to initiate the manual identity verification protocol.</p>
+            </section>
+        </div>
+    </div>
+
+    <div id="best-practices" class="resource-category">
+        <h2 class="wiki-section-title">Best Practices</h2>
+        <div class="grid-container">
+            <section>
+                <h3>Password Creation</h3>
+                <ul>
+                    <li>Use a passphrase of 4+ random words.</li>
+                    <li>Use a dedicated password manager.</li>
+                    <li>Never reuse passwords across different services.</li>
+                </ul>
+            </section>
+            <section>
+                <h3>Recognizing Phishing</h3>
+                <ul>
+                    <li>Check the URL: Ensure you are on <strong>zero-trust.pw</strong>.</li>
+                    <li>We will never ask for your password or MFA code via email or phone.</li>
+                    <li>Be wary of "urgent" requests to reset your password.</li>
+                </ul>
+            </section>
+        </div>
+    </div>
+
+    <div id="recovery-links" class="resource-category">
+        <h2 class="wiki-section-title">Common Service Recovery Links</h2>
+        <p>Direct links to official password reset and account recovery pages for third-party services.</p>
+        <h3 style="margin-top: 2rem;">📧 Email & Productivity</h3>
         <div class="resource-list">
             <a href="https://accounts.google.com/signin/recovery" target="_blank" rel="noopener noreferrer" class="resource-item">
                 <span class="resource-title">Google / Gmail</span>
@@ -190,7 +317,24 @@
         </div>
     </div>
 
+    <div id="feedback" class="resource-category" style="text-align: center; border-top: 1px solid var(--border-color); padding-top: 3rem;">
+        <h2 class="wiki-section-title">Was this page helpful?</h2>
+        <div id="feedback-controls">
+            <button class="button" onclick="handleFeedback('yes')" aria-label="Yes, this page was helpful">Yes</button>
+            <button class="button button-secondary" onclick="handleFeedback('no')" aria-label="No, this page was not helpful">No</button>
+        </div>
+        <p id="feedback-thanks" class="hidden">Thank you for your feedback! It helps us improve our documentation.</p>
+    </div>
   </main>
+
+  <script>
+    function handleFeedback(response) {
+        document.getElementById('feedback-controls').classList.add('hidden');
+        document.getElementById('feedback-thanks').classList.remove('hidden');
+        // In a real application, you would send this response to a server
+        console.log('User feedback received:', response);
+    }
+  </script>
 
   <footer>
     <p>&copy; Zero Trust. Hosted on GitHub Pages. | <a href="privacy.html">Privacy Policy</a></p>
