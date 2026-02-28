@@ -346,6 +346,18 @@
       .theme-toggle, .cta-buttons { display: none !important; }
       a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 0.8em; }
     }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border-width: 0;
+    }
   </style>
 </head>
 <body>
@@ -455,15 +467,15 @@
       <h2 id="roadmap-title">Roadmap</h2>
       <ul class="roadmap-list">
         <li>
-          <span>Now</span>
+          <span>Now<span class="sr-only">:</span></span>
           Launch ABC and Academie pilots, collect user feedback, and refine the trust model that underpins every interaction.
         </li>
         <li>
-          <span>Next</span>
+          <span>Next<span class="sr-only">:</span></span>
           Release integration kits so partners can embed identity verification, secure messaging, and consent-aware data flows.
         </li>
         <li>
-          <span>Later</span>
+          <span>Later<span class="sr-only">:</span></span>
           Expand into open governance tooling with voting modules, treasury controls, and threat intelligence exchanges.
         </li>
       </ul>

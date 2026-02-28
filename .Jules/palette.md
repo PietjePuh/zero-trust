@@ -29,6 +29,7 @@
 ## 2026-02-14 - Semantic Progress Bars
 **Learning:** Visual progress bars implemented with `div` widths are invisible to screen readers, who only hear the static text (e.g., "0 / 6").
 **Action:** Always add `role="progressbar"`, `aria-valuemin`, `aria-valuemax`, and dynamically update `aria-valuenow` via JavaScript to ensure state changes are announced.
-## 2026-02-27 - Toggle Button State Management
-**Learning:** Interactive filter chips that function as toggle buttons often lack `aria-pressed` attributes, leaving screen reader users unaware of the current selection state.
-**Action:** When using buttons for filtering, always manage `aria-pressed` state (true/false) in the click handler to explicitly communicate activation status.
+
+## 2026-02-14 - Screen Reader Cadence for Inline Lists
+**Learning:** When inline elements (like labels and descriptions) are placed together, screen readers may read them as a run-on sentence without pausing.
+**Action:** Use a visually hidden punctuation mark (e.g., `<span class="sr-only">:</span>`) after the label to force a natural pause for screen readers without altering the visual design.
