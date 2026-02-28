@@ -26,6 +26,9 @@
 **Learning:** Static sites may mix inline styles (for performance on landing pages like `index.html`) with external stylesheets (for other content pages). When adding global UI components, verify both contexts to avoid unstyled content.
 **Action:** Ensure global styles are either duplicated in the inline block or the external sheet is universally linked, testing both scenarios.
 
+## 2026-02-14 - Semantic Progress Bars
+**Learning:** Visual progress bars implemented with `div` widths are invisible to screen readers, who only hear the static text (e.g., "0 / 6").
+**Action:** Always add `role="progressbar"`, `aria-valuemin`, `aria-valuemax`, and dynamically update `aria-valuenow` via JavaScript to ensure state changes are announced.
 ## 2026-02-27 - Toggle Button State Management
 **Learning:** Interactive filter chips that function as toggle buttons often lack `aria-pressed` attributes, leaving screen reader users unaware of the current selection state.
 **Action:** When using buttons for filtering, always manage `aria-pressed` state (true/false) in the click handler to explicitly communicate activation status.
