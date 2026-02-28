@@ -33,6 +33,11 @@
       .option:hover {
           border-color: var(--accent-color);
       }
+      .option:focus-visible {
+          outline: none;
+          border-color: var(--accent-color);
+          box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.3);
+      }
       .option.selected {
           border-color: var(--success-color);
           background-color: rgba(35, 134, 54, 0.1);
@@ -68,32 +73,32 @@
   <main>
     <div id="quiz">
         <div class="question-card" data-pillar="Identity">
-            <h3>Identity: How is MFA implemented?</h3>
-            <div class="options">
-                <div class="option" data-score="1">Traditional Passwords / No MFA</div>
-                <div class="option" data-score="2">SMS/Email OTP (Basic MFA)</div>
-                <div class="option" data-score="3">App-based / Push Notifications</div>
-                <div class="option" data-score="4">Phish-resistant (FIDO2 / Yubikey)</div>
+            <h3 id="question-identity">Identity: How is MFA implemented?</h3>
+            <div class="options" role="radiogroup" aria-labelledby="question-identity">
+                <div class="option" data-score="1" role="radio" aria-checked="false" tabindex="0">Traditional Passwords / No MFA</div>
+                <div class="option" data-score="2" role="radio" aria-checked="false" tabindex="-1">SMS/Email OTP (Basic MFA)</div>
+                <div class="option" data-score="3" role="radio" aria-checked="false" tabindex="-1">App-based / Push Notifications</div>
+                <div class="option" data-score="4" role="radio" aria-checked="false" tabindex="-1">Phish-resistant (FIDO2 / Yubikey)</div>
             </div>
         </div>
 
         <div class="question-card" data-pillar="Network">
-            <h3>Network: How is access managed?</h3>
-            <div class="options">
-                <div class="option" data-score="1">Flat network / Perimeter-based</div>
-                <div class="option" data-score="2">Macro-segmentation (VLANs)</div>
-                <div class="option" data-score="3">Micro-segmentation / VPN-based</div>
-                <div class="option" data-score="4">Software Defined Perimeter (ZTNA)</div>
+            <h3 id="question-network">Network: How is access managed?</h3>
+            <div class="options" role="radiogroup" aria-labelledby="question-network">
+                <div class="option" data-score="1" role="radio" aria-checked="false" tabindex="0">Flat network / Perimeter-based</div>
+                <div class="option" data-score="2" role="radio" aria-checked="false" tabindex="-1">Macro-segmentation (VLANs)</div>
+                <div class="option" data-score="3" role="radio" aria-checked="false" tabindex="-1">Micro-segmentation / VPN-based</div>
+                <div class="option" data-score="4" role="radio" aria-checked="false" tabindex="-1">Software Defined Perimeter (ZTNA)</div>
             </div>
         </div>
 
         <div class="question-card" data-pillar="Device">
-            <h3>Device: How do you verify device health?</h3>
-            <div class="options">
-                <div class="option" data-score="1">Not verified / Bring Your Own Device</div>
-                <div class="option" data-score="2">Asset Inventory only</div>
-                <div class="option" data-score="3">Compliance check at login</div>
-                <div class="option" data-score="4">Continuous health monitoring (EDR)</div>
+            <h3 id="question-device">Device: How do you verify device health?</h3>
+            <div class="options" role="radiogroup" aria-labelledby="question-device">
+                <div class="option" data-score="1" role="radio" aria-checked="false" tabindex="0">Not verified / Bring Your Own Device</div>
+                <div class="option" data-score="2" role="radio" aria-checked="false" tabindex="-1">Asset Inventory only</div>
+                <div class="option" data-score="3" role="radio" aria-checked="false" tabindex="-1">Compliance check at login</div>
+                <div class="option" data-score="4" role="radio" aria-checked="false" tabindex="-1">Continuous health monitoring (EDR)</div>
             </div>
         </div>
 
@@ -114,11 +119,50 @@
   <script src="js/search.js"></script>
   <script>
       const options = document.querySelectorAll('.option');
+
+      function selectOption(optionEl) {
+          const parent = optionEl.parentElement;
+          // Deselect others in the same card
+          parent.querySelectorAll('.option').forEach(o => {
+              o.classList.remove('selected');
+              o.setAttribute('aria-checked', 'false');
+              o.setAttribute('tabindex', '-1');
+          });
+          // Select this one
+          optionEl.classList.add('selected');
+          optionEl.setAttribute('aria-checked', 'true');
+          optionEl.setAttribute('tabindex', '0');
+      }
+
       options.forEach(option => {
           option.addEventListener('click', function() {
-              // Deselect others in the same card
-              this.parentElement.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
-              this.classList.add('selected');
+              selectOption(this);
+          });
+
+          option.addEventListener('keydown', function(e) {
+              if (e.key === ' ' || e.key === 'Enter') {
+                  e.preventDefault();
+                  selectOption(this);
+              }
+
+              // Arrow key navigation within the radiogroup
+              const parent = this.parentElement;
+              const siblings = Array.from(parent.querySelectorAll('.option'));
+              const currentIndex = siblings.indexOf(this);
+
+              let nextIndex = null;
+              if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+                  nextIndex = (currentIndex + 1) % siblings.length;
+              } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+                  nextIndex = (currentIndex - 1 + siblings.length) % siblings.length;
+              }
+
+              if (nextIndex !== null) {
+                  e.preventDefault();
+                  const nextOption = siblings[nextIndex];
+                  selectOption(nextOption);
+                  nextOption.focus();
+              }
           });
       });
 
