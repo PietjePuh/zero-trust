@@ -32,3 +32,7 @@
 ## 2026-02-27 - Toggle Button State Management
 **Learning:** Interactive filter chips that function as toggle buttons often lack `aria-pressed` attributes, leaving screen reader users unaware of the current selection state.
 **Action:** When using buttons for filtering, always manage `aria-pressed` state (true/false) in the click handler to explicitly communicate activation status.
+
+## 2026-03-04 - Custom Radio Group Accessibility
+**Learning:** When using `div` elements to create custom radio button groups (e.g., in `maturity.html`), they are inaccessible by default. Screen readers won't announce them as options, and keyboard users cannot navigate or select them.
+**Action:** Always add `role="radiogroup"` to the container, `role="radio"`, `aria-checked`, and a roving `tabindex` to the options. Additionally, implement keyboard event listeners to support Arrow keys for navigation and Space/Enter for selection.
