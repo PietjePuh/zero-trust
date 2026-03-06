@@ -431,6 +431,15 @@ code {
 }
 
 /* Accessibility & Search Improvements */
+*:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+}
+
+.search-input:focus-visible {
+    outline: none;
+}
+
 .sr-only {
     position: absolute;
     width: 1px;
