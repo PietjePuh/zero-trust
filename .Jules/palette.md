@@ -32,3 +32,6 @@
 ## 2026-02-27 - Toggle Button State Management
 **Learning:** Interactive filter chips that function as toggle buttons often lack `aria-pressed` attributes, leaving screen reader users unaware of the current selection state.
 **Action:** When using buttons for filtering, always manage `aria-pressed` state (true/false) in the click handler to explicitly communicate activation status.
+## 2026-03-05 - Semantic Custom Radio Buttons
+**Learning:** When using `div` elements to create interactive multiple-choice lists (like the quiz options in `maturity.html`), they are completely invisible to screen readers and inaccessible to keyboard users unless explicitly given semantic meaning and keyboard event handlers.
+**Action:** Always wrap custom radio button groups in a container with `role="radiogroup"`, add `role="radio"` to the options, and implement a roving `tabindex` with Space/Enter and Arrow key support to ensure accessibility.
