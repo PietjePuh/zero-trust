@@ -36,3 +36,6 @@
 ## 2026-03-01 - Accessible Custom Radio Button Groups
 **Learning:** When using custom `div` elements to create radio button groups (e.g., interactive quizzes like `maturity.html`), simply adding click events is not enough for accessibility or keyboard users.
 **Action:** Always add `role="radiogroup"` to the container (linked via `aria-labelledby`), `role="radio"` and `aria-checked` to items, and implement a roving `tabindex` with Arrow key, Space, and Enter event listeners to ensure full keyboard navigation and screen reader support.
+## 2026-02-27 - Custom Radio Group Accessibility
+**Learning:** When using `div` elements to create custom radio button groups (e.g., in quizzes or assessments), they lack native keyboard support and semantic meaning, breaking navigation for keyboard and screen reader users.
+**Action:** Always add `role="radiogroup"` to the container, `role="radio"` and `aria-checked` to options, and implement roving `tabindex` along with Space/Enter and Arrow key navigation in JavaScript.
