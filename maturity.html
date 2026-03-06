@@ -42,6 +42,10 @@
           border-color: var(--success-color);
           background-color: rgba(35, 134, 54, 0.1);
       }
+      .option:focus-visible {
+          outline: 2px solid var(--accent-color);
+          outline-offset: 2px;
+      }
       #result-container {
           text-align: center;
           padding: 3rem;
@@ -73,6 +77,8 @@
   <main>
     <div id="quiz">
         <div class="question-card" data-pillar="Identity">
+            <h3 id="heading-identity">Identity: How is MFA implemented?</h3>
+            <div class="options" role="radiogroup" aria-labelledby="heading-identity">
             <h3 id="question-identity">Identity: How is MFA implemented?</h3>
             <div class="options" role="radiogroup" aria-labelledby="question-identity">
                 <div class="option" data-score="1" role="radio" aria-checked="false" tabindex="0">Traditional Passwords / No MFA</div>
