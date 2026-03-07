@@ -39,3 +39,7 @@
 ## 2026-02-27 - Custom Radio Group Accessibility
 **Learning:** When using `div` elements to create custom radio button groups (e.g., in quizzes or assessments), they lack native keyboard support and semantic meaning, breaking navigation for keyboard and screen reader users.
 **Action:** Always add `role="radiogroup"` to the container, `role="radio"` and `aria-checked` to options, and implement roving `tabindex` along with Space/Enter and Arrow key navigation in JavaScript.
+
+## 2026-03-07 - Accessible Table Sort Headers
+**Learning:** Interactive table headers that allow sorting are often implemented as clickable `<th>` elements but lack semantic meaning as buttons. Without keyboard support and ARIA roles, these controls are invisible to screen reader users and inaccessible to keyboard users.
+**Action:** When implementing sortable table headers, always add `tabindex="0"`, `role="button"`, an explicit `aria-label`, and dynamic management of the `aria-sort` attribute (setting to `ascending`, `descending`, or removing it). Ensure `Enter` and `Space` keys trigger the sort action.
