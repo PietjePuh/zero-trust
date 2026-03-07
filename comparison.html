@@ -285,17 +285,25 @@
             headers.forEach(function (header, colIndex) {
                 var sortDir = 0; // 0 = unsorted, 1 = asc, -1 = desc
 
-                header.addEventListener('click', function () {
+                // UX Enhancement: Accessibility attributes and keyboard support
+                header.setAttribute('tabindex', '0');
+                header.setAttribute('role', 'button');
+                header.setAttribute('aria-label', 'Sort by ' + header.textContent.trim());
+
+                function handleSort() {
                     // Reset all other headers in this table
                     headers.forEach(function (h, i) {
                         if (i !== colIndex) {
                             h.querySelector('.sort-indicator').textContent = '';
                             h.querySelector('.sort-indicator').classList.remove('active');
+                            h.removeAttribute('aria-sort');
                         }
                     });
 
                     // Toggle sort direction
                     sortDir = sortDir === 1 ? -1 : 1;
+
+                    header.setAttribute('aria-sort', sortDir === 1 ? 'ascending' : 'descending');
 
                     var indicator = header.querySelector('.sort-indicator');
                     indicator.textContent = sortDir === 1 ? ' \u25B2' : ' \u25BC';
@@ -315,6 +323,15 @@
                     rows.forEach(function (row) {
                         tbody.appendChild(row);
                     });
+                }
+
+                header.addEventListener('click', handleSort);
+
+                header.addEventListener('keydown', function (e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        handleSort();
+                    }
                 });
             });
         });
