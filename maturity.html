@@ -182,7 +182,13 @@
           const average = totalScore / 3;
 
           document.getElementById('quiz').style.display = 'none';
-          document.getElementById('result-container').style.display = 'block';
+
+          const resultContainer = document.getElementById('result-container');
+          resultContainer.style.display = 'block';
+
+          // Manage focus for accessibility
+          resultContainer.setAttribute('tabindex', '-1');
+          resultContainer.focus();
 
           const badge = document.getElementById('maturity-badge');
           const desc = document.getElementById('maturity-desc');

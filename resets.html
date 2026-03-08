@@ -330,7 +330,11 @@
   <script>
     function handleFeedback(response) {
         document.getElementById('feedback-controls').classList.add('hidden');
-        document.getElementById('feedback-thanks').classList.remove('hidden');
+        const thanks = document.getElementById('feedback-thanks');
+        thanks.classList.remove('hidden');
+        // Manage focus for accessibility
+        thanks.setAttribute('tabindex', '-1');
+        thanks.focus();
         // In a real application, you would send this response to a server
         console.log('User feedback received:', response);
     }
