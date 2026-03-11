@@ -43,3 +43,7 @@
 ## 2026-03-07 - Accessible Table Sort Headers
 **Learning:** Interactive table headers that allow sorting are often implemented as clickable `<th>` elements but lack semantic meaning as buttons. Without keyboard support and ARIA roles, these controls are invisible to screen reader users and inaccessible to keyboard users.
 **Action:** When implementing sortable table headers, always add `tabindex="0"`, `role="button"`, an explicit `aria-label`, and dynamic management of the `aria-sort` attribute (setting to `ascending`, `descending`, or removing it). Ensure `Enter` and `Space` keys trigger the sort action.
+
+## 2026-03-08 - Focus Management for Dynamic Content
+**Learning:** When dynamically replacing interactive content (like showing a result after a button click, or replacing form buttons with a success message), keyboard and screen reader focus is lost because the active element disappears. This leaves users disoriented at the top of the page.
+**Action:** When replacing content and hiding the currently focused element, explicitly shift focus to the new container or message by adding `tabindex="-1"` and calling `.focus()` via JavaScript.

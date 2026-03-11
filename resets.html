@@ -323,14 +323,16 @@
             <button class="button" onclick="handleFeedback('yes')" aria-label="Yes, this page was helpful">Yes</button>
             <button class="button button-secondary" onclick="handleFeedback('no')" aria-label="No, this page was not helpful">No</button>
         </div>
-        <p id="feedback-thanks" class="hidden">Thank you for your feedback! It helps us improve our documentation.</p>
+        <p id="feedback-thanks" class="hidden" tabindex="-1">Thank you for your feedback! It helps us improve our documentation.</p>
     </div>
   </main>
 
   <script>
     function handleFeedback(response) {
         document.getElementById('feedback-controls').classList.add('hidden');
-        document.getElementById('feedback-thanks').classList.remove('hidden');
+        const thanksMessage = document.getElementById('feedback-thanks');
+        thanksMessage.classList.remove('hidden');
+        thanksMessage.focus();
         // In a real application, you would send this response to a server
         console.log('User feedback received:', response);
     }
