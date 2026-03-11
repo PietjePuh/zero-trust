@@ -109,7 +109,7 @@
         <button id="calculate-btn" class="button" style="width: 100%;">Calculate Maturity Level</button>
     </div>
 
-    <div id="result-container">
+    <div id="result-container" tabindex="-1">
         <h2>Your Maturity Level:</h2>
         <div id="maturity-badge" class="maturity-badge"></div>
         <p id="maturity-desc" style="margin-top: 2rem;"></p>
@@ -205,6 +205,8 @@
               badge.style.color = 'white';
               desc.textContent = 'You have achieved a fully dynamic, identity-centric environment with continuous validation.';
           }
+
+          document.getElementById('result-container').focus();
       });
   </script>
 
