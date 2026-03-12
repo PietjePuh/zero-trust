@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.className = 'back-to-top';
     btn.innerHTML = '↑';
     btn.setAttribute('aria-label', 'Back to top');
+    btn.setAttribute('title', 'Back to top');
     document.body.appendChild(btn);
 
     const toggleVisible = () => {

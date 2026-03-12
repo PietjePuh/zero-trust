@@ -58,7 +58,7 @@
         <div class="search-wrapper">
             <label for="resourceSearch" class="sr-only">Search Resources</label>
             <input type="text" id="resourceSearch" class="search-input" placeholder="Search resources (e.g., 'shodan', 'threat', 'learning')... (Press '/')" aria-label="Search Resources">
-            <button id="clearSearch" class="clear-button hidden" aria-label="Clear search" type="button">✕</button>
+            <button id="clearSearch" class="clear-button hidden" aria-label="Clear search" title="Clear search" type="button">✕</button>
         </div>
     </div>
 
@@ -75,6 +75,7 @@
     <div id="noResults" class="no-results hidden">
         <p>No resources found matching your criteria.</p>
     </div>
+    <div id="searchAnnouncer" class="sr-only" aria-live="polite"></div>
 
     <div class="resource-category" data-category="recon">
         <h2 class="wiki-section-title">🔍 Search Engines & Recon</h2>
@@ -448,11 +449,20 @@
             });
         }
 
+        // Announcer Element
+        var announcer = document.getElementById('searchAnnouncer');
+
         // Toggle No Results
         if (totalVisible > 0) {
             noResults.classList.add('hidden');
+            if (announcer) {
+                announcer.textContent = totalVisible + ' resources found.';
+            }
         } else {
             noResults.classList.remove('hidden');
+            if (announcer) {
+                announcer.textContent = 'No resources found matching your criteria.';
+            }
         }
 
         // Toggle Clear Button

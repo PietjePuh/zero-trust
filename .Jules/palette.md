@@ -47,3 +47,7 @@
 ## 2026-03-08 - Focus Management for Dynamic Content
 **Learning:** When dynamically replacing interactive content (like showing a result after a button click, or replacing form buttons with a success message), keyboard and screen reader focus is lost because the active element disappears. This leaves users disoriented at the top of the page.
 **Action:** When replacing content and hiding the currently focused element, explicitly shift focus to the new container or message by adding `tabindex="-1"` and calling `.focus()` via JavaScript.
+
+## 2026-03-08 - Announcing Dynamic Filter Results
+**Learning:** Client-side list filtering updates the UI instantly, providing immediate visual feedback for sighted users (e.g., "3 results found" or "No results"). However, without ARIA live regions, this dynamic change is completely invisible to screen reader users, leaving them unaware of the filter's effect or result count.
+**Action:** Always pair dynamic client-side filtering with a visually hidden `div` using `aria-live="polite"`. Update its `textContent` whenever the filter state changes to announce the new result count or an empty state message to assistive technologies.
