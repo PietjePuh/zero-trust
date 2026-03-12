@@ -22,6 +22,7 @@
         if (btn) {
             btn.textContent = theme === 'dark' ? '\u263E' : '\u2600'; // moon / sun
             btn.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+            btn.setAttribute('title', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
         }
     }
 
