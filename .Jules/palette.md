@@ -47,3 +47,7 @@
 ## 2026-03-08 - Focus Management for Dynamic Content
 **Learning:** When dynamically replacing interactive content (like showing a result after a button click, or replacing form buttons with a success message), keyboard and screen reader focus is lost because the active element disappears. This leaves users disoriented at the top of the page.
 **Action:** When replacing content and hiding the currently focused element, explicitly shift focus to the new container or message by adding `tabindex="-1"` and calling `.focus()` via JavaScript.
+
+## 2026-03-09 - Accessible Tooltips for Icon-only Buttons
+**Learning:** Adding `aria-label` to icon-only buttons (like theme toggles or clear search buttons) makes them accessible to screen readers, but mouse users may still be confused about their function.
+**Action:** Always pair `aria-label` with the native `title` attribute on icon-only buttons to ensure a native browser tooltip appears on hover, improving discoverability for visual users.
