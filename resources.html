@@ -46,7 +46,7 @@
         <a href="index.html">Home</a>
         <a href="tools.html">Tools</a>
         <a href="resources.html" class="active">Resources</a>
-        <button id="themeToggle" class="theme-toggle" aria-label="Switch to light mode">&#9790;</button>
+        <button id="themeToggle" type="button" class="theme-toggle" aria-label="Switch to light mode" title="Switch to light mode">&#9790;</button>
     </div>
     <h1>Security Resources</h1>
     <p>A comprehensive directory of search engines, threat intel, and learning platforms.</p>
@@ -58,18 +58,19 @@
         <div class="search-wrapper">
             <label for="resourceSearch" class="sr-only">Search Resources</label>
             <input type="text" id="resourceSearch" class="search-input" placeholder="Search resources (e.g., 'shodan', 'threat', 'learning')... (Press '/')" aria-label="Search Resources">
-            <button id="clearSearch" class="clear-button hidden" aria-label="Clear search" type="button">✕</button>
+            <button id="clearSearch" class="clear-button hidden" aria-label="Clear search" title="Clear search" type="button">✕</button>
+            <div id="searchAnnouncement" class="sr-only" aria-live="polite"></div>
         </div>
     </div>
 
     <fieldset class="filter-chips" aria-label="Filter by category">
         <legend class="sr-only">Filter by category</legend>
-        <button type="button" class="filter-chip active" data-cat="all">All</button>
-        <button type="button" class="filter-chip" data-cat="recon">Search &amp; Recon</button>
-        <button type="button" class="filter-chip" data-cat="threat">Threat Intel</button>
-        <button type="button" class="filter-chip" data-cat="learning">Learning &amp; CTFs</button>
-        <button type="button" class="filter-chip" data-cat="news">News &amp; Blogs</button>
-        <button type="button" class="filter-chip" data-cat="webtools">Web Tools</button>
+        <button type="button" class="filter-chip active" data-cat="all" aria-pressed="true">All</button>
+        <button type="button" class="filter-chip" data-cat="recon" aria-pressed="false">Search &amp; Recon</button>
+        <button type="button" class="filter-chip" data-cat="threat" aria-pressed="false">Threat Intel</button>
+        <button type="button" class="filter-chip" data-cat="learning" aria-pressed="false">Learning &amp; CTFs</button>
+        <button type="button" class="filter-chip" data-cat="news" aria-pressed="false">News &amp; Blogs</button>
+        <button type="button" class="filter-chip" data-cat="webtools" aria-pressed="false">Web Tools</button>
     </fieldset>
 
     <div id="noResults" class="no-results hidden">
@@ -381,6 +382,7 @@
     const resourceCategories = document.querySelectorAll('.resource-category');
     const resourceItems = document.querySelectorAll('.resource-item');
     const filterChips = document.querySelectorAll('.filter-chip');
+    const searchAnnouncement = document.getElementById('searchAnnouncement');
     let currentCat = 'all';
 
     function updateURL() {
@@ -462,13 +464,20 @@
         } else {
             clearBtn.classList.add('hidden');
         }
+
+        // Announce results
+        searchAnnouncement.textContent = totalVisible > 0 ? totalVisible + " resources found." : "No resources found.";
     }
 
     // Category filter chips
     filterChips.forEach(function (chip) {
         chip.addEventListener('click', function () {
-            filterChips.forEach(function (c) { c.classList.remove('active'); });
+            filterChips.forEach(function (c) {
+                c.classList.remove('active');
+                c.setAttribute('aria-pressed', 'false');
+            });
             chip.classList.add('active');
+            chip.setAttribute('aria-pressed', 'true');
             currentCat = chip.getAttribute('data-cat');
             applyFilters();
         });
@@ -495,8 +504,10 @@
         filterChips.forEach(function (c) {
             if (c.getAttribute('data-cat') === currentCat) {
                 c.classList.add('active');
+                c.setAttribute('aria-pressed', 'true');
             } else {
                 c.classList.remove('active');
+                c.setAttribute('aria-pressed', 'false');
             }
         });
     }
