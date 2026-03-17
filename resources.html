@@ -64,12 +64,12 @@
 
     <fieldset class="filter-chips" aria-label="Filter by category">
         <legend class="sr-only">Filter by category</legend>
-        <button type="button" class="filter-chip active" data-cat="all">All</button>
-        <button type="button" class="filter-chip" data-cat="recon">Search &amp; Recon</button>
-        <button type="button" class="filter-chip" data-cat="threat">Threat Intel</button>
-        <button type="button" class="filter-chip" data-cat="learning">Learning &amp; CTFs</button>
-        <button type="button" class="filter-chip" data-cat="news">News &amp; Blogs</button>
-        <button type="button" class="filter-chip" data-cat="webtools">Web Tools</button>
+        <button type="button" class="filter-chip active" data-cat="all" aria-pressed="true">All</button>
+        <button type="button" class="filter-chip" data-cat="recon" aria-pressed="false">Search &amp; Recon</button>
+        <button type="button" class="filter-chip" data-cat="threat" aria-pressed="false">Threat Intel</button>
+        <button type="button" class="filter-chip" data-cat="learning" aria-pressed="false">Learning &amp; CTFs</button>
+        <button type="button" class="filter-chip" data-cat="news" aria-pressed="false">News &amp; Blogs</button>
+        <button type="button" class="filter-chip" data-cat="webtools" aria-pressed="false">Web Tools</button>
     </fieldset>
 
     <div id="noResults" class="no-results hidden">
@@ -467,8 +467,12 @@
     // Category filter chips
     filterChips.forEach(function (chip) {
         chip.addEventListener('click', function () {
-            filterChips.forEach(function (c) { c.classList.remove('active'); });
+            filterChips.forEach(function (c) {
+                c.classList.remove('active');
+                c.setAttribute('aria-pressed', 'false');
+            });
             chip.classList.add('active');
+            chip.setAttribute('aria-pressed', 'true');
             currentCat = chip.getAttribute('data-cat');
             applyFilters();
         });
@@ -495,8 +499,10 @@
         filterChips.forEach(function (c) {
             if (c.getAttribute('data-cat') === currentCat) {
                 c.classList.add('active');
+                c.setAttribute('aria-pressed', 'true');
             } else {
                 c.classList.remove('active');
+                c.setAttribute('aria-pressed', 'false');
             }
         });
     }
