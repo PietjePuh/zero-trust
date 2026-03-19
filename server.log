@@ -1,0 +1,5 @@
+127.0.0.1 - - [19/Mar/2026 14:07:58] "GET /resources.html HTTP/1.1" 200 -
+127.0.0.1 - - [19/Mar/2026 14:07:58] "GET /css/style.css HTTP/1.1" 200 -
+127.0.0.1 - - [19/Mar/2026 14:07:58] "GET /js/theme.js HTTP/1.1" 200 -
+127.0.0.1 - - [19/Mar/2026 14:07:58] "GET /js/ui.js HTTP/1.1" 200 -
+127.0.0.1 - - [19/Mar/2026 14:07:58] "GET /js/highlight.js HTTP/1.1" 200 -
