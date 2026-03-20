@@ -59,6 +59,7 @@
             <label for="resourceSearch" class="sr-only">Search Resources</label>
             <input type="text" id="resourceSearch" class="search-input" placeholder="Search resources (e.g., 'shodan', 'threat', 'learning')... (Press '/')" aria-label="Search Resources">
             <button id="clearSearch" class="clear-button hidden" aria-label="Clear search" type="button">✕</button>
+            <div id="searchAnnouncement" class="sr-only" aria-live="polite"></div>
         </div>
     </div>
 
@@ -381,6 +382,7 @@
     const resourceCategories = document.querySelectorAll('.resource-category');
     const resourceItems = document.querySelectorAll('.resource-item');
     const filterChips = document.querySelectorAll('.filter-chip');
+    const searchAnnouncement = document.getElementById('searchAnnouncement');
     let currentCat = 'all';
 
     function updateURL() {
@@ -462,6 +464,9 @@
         } else {
             clearBtn.classList.add('hidden');
         }
+
+        // Announce results
+        searchAnnouncement.textContent = totalVisible > 0 ? totalVisible + " resources found." : "No resources found.";
     }
 
     // Category filter chips
