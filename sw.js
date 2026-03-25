@@ -1,9 +1,9 @@
 /**
  * Service Worker for Zero Trust Knowledge Base.
- * Cache-first strategy for static assets with network fallback.
+ * Network-first strategy for HTML files, cache-first (stale-while-revalidate) for static assets.
  */
 
-var CACHE_NAME = 'zt-cache-v1';
+var CACHE_NAME = 'zt-cache-20260325';
 
 var URLS_TO_CACHE = [
     './',
@@ -31,8 +31,6 @@ self.addEventListener('install', function (event) {
     event.waitUntil(
         caches.open(CACHE_NAME).then(function (cache) {
             return cache.addAll(URLS_TO_CACHE);
-        }).then(function () {
-            return self.skipWaiting();
         })
     );
 });
@@ -43,7 +41,7 @@ self.addEventListener('activate', function (event) {
         caches.keys().then(function (cacheNames) {
             return Promise.all(
                 cacheNames.filter(function (name) {
-                    return name !== CACHE_NAME;
+                    return name.startsWith('zt-cache-') && name !== CACHE_NAME;
                 }).map(function (name) {
                     return caches.delete(name);
                 })
@@ -54,7 +52,14 @@ self.addEventListener('activate', function (event) {
     );
 });
 
-// Fetch: cache-first, then network
+// Handle messages from the client
+self.addEventListener('message', function (event) {
+    if (event.data && event.data.type === 'SKIP_WAITING') {
+        self.skipWaiting();
+    }
+});
+
+// Fetch strategy
 self.addEventListener('fetch', function (event) {
     // Only handle GET requests
     if (event.request.method !== 'GET') return;
@@ -62,10 +67,28 @@ self.addEventListener('fetch', function (event) {
     // Only handle same-origin requests
     if (!event.request.url.startsWith(self.location.origin)) return;
 
-    event.respondWith(
-        caches.match(event.request).then(function (cachedResponse) {
-            if (cachedResponse) {
-                // Return cache hit, but also update cache in background
+    var url = new URL(event.request.url);
+    var isHtml = url.pathname.endsWith('.html') || url.pathname.endsWith('/') || !url.pathname.includes('.');
+
+    if (isHtml) {
+        // Network-first for HTML files
+        event.respondWith(
+            fetch(event.request).then(function (networkResponse) {
+                if (networkResponse && networkResponse.status === 200) {
+                    var responseClone = networkResponse.clone();
+                    caches.open(CACHE_NAME).then(function (cache) {
+                        cache.put(event.request, responseClone);
+                    });
+                }
+                return networkResponse;
+            }).catch(function () {
+                return caches.match(event.request);
+            })
+        );
+    } else {
+        // Cache-first (stale-while-revalidate) for static assets
+        event.respondWith(
+            caches.match(event.request).then(function (cachedResponse) {
                 var fetchPromise = fetch(event.request).then(function (networkResponse) {
                     if (networkResponse && networkResponse.status === 200) {
                         var responseClone = networkResponse.clone();
@@ -75,22 +98,11 @@ self.addEventListener('fetch', function (event) {
                     }
                     return networkResponse;
                 }).catch(function () {
-                    // Network failed, that is fine - we have the cache
+                    // Fail silently, we'll use the cache
                 });
 
-                return cachedResponse;
-            }
-
-            // Not in cache, try network
-            return fetch(event.request).then(function (networkResponse) {
-                if (networkResponse && networkResponse.status === 200) {
-                    var responseClone = networkResponse.clone();
-                    caches.open(CACHE_NAME).then(function (cache) {
-                        cache.put(event.request, responseClone);
-                    });
-                }
-                return networkResponse;
-            });
-        })
-    );
+                return cachedResponse || fetchPromise;
+            })
+        );
+    }
 });
