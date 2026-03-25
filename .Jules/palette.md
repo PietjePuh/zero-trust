@@ -55,3 +55,7 @@
 ## 2026-03-10 - Dynamic Search Announcements
 **Learning:** Client-side list filtering happens instantly visually, but screen reader users get no feedback about the number of results, leaving them unsure if their search worked or how many items to tab through.
 **Action:** For client-side list filtering (like search inputs), use an `aria-live="polite"` element (visually hidden) to dynamically announce the number of visible results after the filtering logic executes.
+
+## 2024-03-24 - Sticky Header Anchor Offset
+**Learning:** When using sticky headers, native anchor links (`<a href="#section">`) cause the target element to scroll underneath the header, hiding content and disorienting users.
+**Action:** Always pair `position: sticky` headers with `scroll-padding-top` on the `html` element to offset the scroll position, and add `scroll-behavior: smooth` for better context.
