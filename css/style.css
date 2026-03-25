@@ -839,6 +839,7 @@ fieldset.filter-chips {
     .filter-chips,
     .filter-btn,
     .button-container,
+    .cta-buttons,
     .clear-button,
     .copy-btn,
     .back-to-top,
@@ -854,6 +855,8 @@ fieldset.filter-chips {
 
     section,
     .card,
+    .hero-card,
+    .roadmap-list li,
     .tool-card,
     .resource-item,
     .checklist-item {
@@ -916,5 +919,245 @@ fieldset.filter-chips {
 
     h1, h2, h3 {
         page-break-after: avoid;
+    }
+}
+
+/* ===== Home Page Specific Styles ===== */
+
+.home-page {
+    background: radial-gradient(circle at 15% 15%, rgba(79, 209, 197, 0.15), transparent 45%),
+                radial-gradient(circle at 80% 10%, rgba(236, 72, 153, 0.18), transparent 45%),
+                var(--bg-color);
+}
+
+[data-theme="light"] .home-page {
+    background: radial-gradient(circle at 15% 15%, rgba(13, 148, 136, 0.1), transparent 45%),
+                radial-gradient(circle at 80% 10%, rgba(236, 72, 153, 0.08), transparent 45%),
+                var(--bg-color);
+}
+
+.home-page header {
+    position: sticky;
+    top: 0;
+    backdrop-filter: blur(16px);
+    background: rgba(12, 13, 17, 0.7);
+    border-bottom: 1px solid var(--border-color);
+    z-index: 1000;
+    padding: 0;
+    text-align: left;
+    box-shadow: none;
+}
+
+[data-theme="light"] .home-page header {
+    background: rgba(248, 249, 250, 0.85);
+}
+
+.home-page .nav-bar {
+    position: static;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 1rem 1.5rem;
+    width: auto;
+}
+
+.home-page .nav-bar .brand {
+    font-weight: 700;
+    font-size: 1.1rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text-color);
+    margin-left: 0;
+}
+
+.home-page .nav-bar .nav-links {
+    display: flex;
+    gap: 1rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.home-page main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 4rem 1.5rem 6rem;
+}
+
+.home-page section {
+    margin-bottom: 4rem;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    display: block;
+    border-radius: 0;
+}
+
+.home-page section:hover {
+    transform: none;
+    box-shadow: none;
+    border-color: transparent;
+}
+
+.home-page h1 {
+    font-size: clamp(2.5rem, 3.5vw + 1rem, 3.75rem);
+    margin-bottom: 1rem;
+    color: var(--text-color);
+    text-shadow: none;
+}
+
+.home-page h2 {
+    font-size: clamp(2rem, 2vw + 1rem, 2.6rem);
+    margin-bottom: 1.25rem;
+    border-bottom: none;
+    color: var(--accent-color);
+    padding-bottom: 0;
+}
+
+.home-page h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.home-page p.lead {
+    font-size: 1.15rem;
+    max-width: 650px;
+    color: var(--text-color);
+    opacity: 0.85;
+}
+
+.hero {
+    display: grid;
+    gap: 2.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    align-items: center;
+}
+
+.hero-card {
+    background: rgba(12, 13, 17, 0.65);
+    border: 1px solid var(--border-color);
+    border-radius: 24px;
+    padding: 2rem;
+    box-shadow: 0 25px 45px -25px var(--shadow-color);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+[data-theme="light"] .hero-card {
+    background: rgba(255, 255, 255, 0.75);
+}
+
+.hero-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(79, 209, 197, 0.2), rgba(236, 72, 153, 0.12));
+    opacity: 0.6;
+    z-index: -1;
+}
+
+.cta-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.cta-buttons a {
+    padding: 0.85rem 1.5rem;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    font-weight: 600;
+    transition: transform 0.2s ease, background 0.2s ease, border 0.2s ease;
+}
+
+.cta-primary {
+    background: var(--accent-color);
+    color: var(--bg-color) !important;
+    box-shadow: 0 14px 32px -16px rgba(79, 209, 197, 0.9);
+}
+
+.cta-secondary {
+    border-color: var(--border-color);
+    color: var(--text-color) !important;
+    background: transparent;
+}
+
+.cta-buttons a:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+
+.home-page .grid {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.home-page .grid.cards {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.home-page .card {
+    background: rgba(12, 13, 17, 0.65);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 1.75rem;
+    box-shadow: 0 16px 32px -22px var(--shadow-color);
+    transition: transform 0.2s ease, border 0.2s ease;
+    display: block;
+}
+
+[data-theme="light"] .home-page .card {
+    background: rgba(255, 255, 255, 0.75);
+}
+
+.home-page .card:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent-color);
+    box-shadow: 0 16px 32px -22px var(--shadow-color);
+}
+
+.roadmap-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 1rem;
+}
+
+.roadmap-list li {
+    border-left: 3px solid var(--accent-color);
+    padding: 1rem 1.5rem;
+    background: rgba(12, 13, 17, 0.6);
+    border-radius: 12px;
+    margin-bottom: 0;
+}
+
+.roadmap-list li::before {
+    content: none;
+}
+
+[data-theme="light"] .roadmap-list li {
+    background: rgba(255, 255, 255, 0.7);
+}
+
+.roadmap-list span {
+    display: block;
+    font-size: 0.75rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 0.4rem;
+}
+
+@media (max-width: 600px) {
+    .home-page .nav-bar .nav-links {
+        display: none;
     }
 }
