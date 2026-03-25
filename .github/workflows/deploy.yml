@@ -1,8 +1,12 @@
 name: Deploy to GitHub Pages
 
+# DISABLED - tokens depleted, re-enable when budget restored
+# Original triggers:
+# on:
+#   push:
+#     branches: [main]
+#   workflow_dispatch:
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -18,7 +22,7 @@ jobs:
   deploy:
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: $ steps.deployment.outputs.page_url 
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

@@ -1,10 +1,14 @@
 name: Claude Code Agent
 
+# DISABLED - tokens depleted, re-enable when budget restored
+# Original triggers:
+# on:
+#   issues:
+#     types: [opened, labeled]
+#   issue_comment:
+#     types: [created]
 on:
-  issues:
-    types: [opened, labeled]
-  issue_comment:
-    types: [created]
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -26,7 +30,7 @@ jobs:
           fetch-depth: 0
       - uses: anthropics/claude-code-action@v1
         with:
-          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          claude_code_oauth_token: $ secrets.CLAUDE_CODE_OAUTH_TOKEN 
           claude_args: "--model claude-sonnet-4-20250514 --max-turns 50 --allowed-tools Bash Edit Read Write Glob Grep WebFetch"
           prompt: |
             You are an autonomous coding agent. Read any CLAUDE.md or README.md for project context.
