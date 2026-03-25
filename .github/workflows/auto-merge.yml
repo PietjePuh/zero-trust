@@ -1,10 +1,14 @@
 name: Auto-Merge Bot PRs
 
+# DISABLED - tokens depleted, re-enable when budget restored
+# Original triggers:
+# on:
+#   pull_request:
+#     types: [opened, synchronize, labeled]
+#   check_suite:
+#     types: [completed]
 on:
-  pull_request:
-    types: [opened, synchronize, labeled]
-  check_suite:
-    types: [completed]
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -23,9 +27,9 @@ jobs:
     steps:
       - name: Approve and merge
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: $ secrets.GITHUB_TOKEN 
         run: |
-          PR=${{ github.event.pull_request.number }}
-          REPO=${{ github.repository }}
+          PR=$ github.event.pull_request.number 
+          REPO=$ github.repository 
           gh pr review "$PR" --repo "$REPO" --approve --body "Auto-approved" 2>/dev/null || true
           gh pr merge "$PR" --repo "$REPO" --squash --auto 2>&1 || echo "Auto-merge enabled"
