@@ -59,3 +59,7 @@
 ## 2024-03-24 - Sticky Header Anchor Offset
 **Learning:** When using sticky headers, native anchor links (`<a href="#section">`) cause the target element to scroll underneath the header, hiding content and disorienting users.
 **Action:** Always pair `position: sticky` headers with `scroll-padding-top` on the `html` element to offset the scroll position, and add `scroll-behavior: smooth` for better context.
+
+## 2026-03-20 - Invisible Skip Navigation Links
+**Learning:** Users relying on keyboard navigation face significant friction when forced to tab through long, repetitive navigation menus on every page load before reaching the main content. This is a common accessibility issue on static sites without built-in routing.
+**Action:** Always implement a "Skip to main content" link as the first focusable element inside the body. Visually hide it by default, but make it appear on focus. Ensure the target `<main>` element has `id="main-content"` and `tabindex="-1"` so it can programmatically receive focus without breaking tab order.
