@@ -4,13 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'">
   <title>Implementation Checklist - Zero Trust</title>
   <link rel="stylesheet" href="css/style.css">
   <script src="js/theme.js"></script>
 </head>
 <body>
-  <header style="padding: 4rem 1rem;">
+  <header class="page-header">
     <div class="nav-bar">
         <a href="index.html">Home</a>
         <a href="tools.html">Tools</a>
@@ -28,7 +28,7 @@
         <h2 id="progress-overall">Overall Progress</h2>
         <p id="overallText">0 of 30 items completed</p>
         <div class="progress-bar" role="progressbar" aria-labelledby="progress-overall" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-            <div class="progress-fill" id="overallBar" style="width: 0%"></div>
+            <div class="progress-fill" id="overallBar"></div>
         </div>
         <button type="button" class="checklist-reset" id="resetBtn">Reset All Progress</button>
     </div>
@@ -38,7 +38,7 @@
         <h3 id="progress-identity">Identity &amp; Access Management</h3>
         <div class="checklist-progress">
             <span class="domain-progress-text">0 / 6</span>
-            <div class="progress-bar" role="progressbar" aria-labelledby="progress-identity" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><div class="progress-fill domain-bar" style="width: 0%"></div></div>
+            <div class="progress-bar" role="progressbar" aria-labelledby="progress-identity" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><div class="progress-fill domain-bar"></div></div>
         </div>
         <ul class="checklist-items">
             <li class="checklist-item"><input type="checkbox" id="id-1"><label for="id-1">Implement phish-resistant MFA (FIDO2/WebAuthn) for all users</label></li>
@@ -55,7 +55,7 @@
         <h3 id="progress-devices">Devices &amp; Endpoints</h3>
         <div class="checklist-progress">
             <span class="domain-progress-text">0 / 6</span>
-            <div class="progress-bar" role="progressbar" aria-labelledby="progress-devices" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><div class="progress-fill domain-bar" style="width: 0%"></div></div>
+            <div class="progress-bar" role="progressbar" aria-labelledby="progress-devices" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><div class="progress-fill domain-bar"></div></div>
         </div>
         <ul class="checklist-items">
             <li class="checklist-item"><input type="checkbox" id="dev-1"><label for="dev-1">Maintain a complete asset inventory of all endpoints</label></li>
@@ -72,7 +72,7 @@
         <h3 id="progress-network">Network Security</h3>
         <div class="checklist-progress">
             <span class="domain-progress-text">0 / 6</span>
-            <div class="progress-bar" role="progressbar" aria-labelledby="progress-network" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><div class="progress-fill domain-bar" style="width: 0%"></div></div>
+            <div class="progress-bar" role="progressbar" aria-labelledby="progress-network" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><div class="progress-fill domain-bar"></div></div>
         </div>
         <ul class="checklist-items">
             <li class="checklist-item"><input type="checkbox" id="net-1"><label for="net-1">Implement micro-segmentation to isolate critical workloads</label></li>
@@ -89,7 +89,7 @@
         <h3 id="progress-applications">Applications &amp; Workloads</h3>
         <div class="checklist-progress">
             <span class="domain-progress-text">0 / 6</span>
-            <div class="progress-bar" role="progressbar" aria-labelledby="progress-applications" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><div class="progress-fill domain-bar" style="width: 0%"></div></div>
+            <div class="progress-bar" role="progressbar" aria-labelledby="progress-applications" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><div class="progress-fill domain-bar"></div></div>
         </div>
         <ul class="checklist-items">
             <li class="checklist-item"><input type="checkbox" id="app-1"><label for="app-1">Implement runtime application self-protection (RASP)</label></li>
@@ -106,7 +106,7 @@
         <h3 id="progress-data">Data Protection</h3>
         <div class="checklist-progress">
             <span class="domain-progress-text">0 / 6</span>
-            <div class="progress-bar" role="progressbar" aria-labelledby="progress-data" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><div class="progress-fill domain-bar" style="width: 0%"></div></div>
+            <div class="progress-bar" role="progressbar" aria-labelledby="progress-data" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><div class="progress-fill domain-bar"></div></div>
         </div>
         <ul class="checklist-items">
             <li class="checklist-item"><input type="checkbox" id="data-1"><label for="data-1">Classify all data assets by sensitivity level</label></li>
@@ -123,102 +123,7 @@
     <p>&copy; Zero Trust. Hosted on GitHub Pages. | <a href="privacy.html">Privacy Policy</a></p>
   </footer>
 
-  <script>
-    (function () {
-        'use strict';
-
-        var STORAGE_KEY = 'zt-checklist';
-        var checkboxes = document.querySelectorAll('.checklist-item input[type="checkbox"]');
-        var domains = document.querySelectorAll('.checklist-domain');
-        var overallText = document.getElementById('overallText');
-        var overallBar = document.getElementById('overallBar');
-        var resetBtn = document.getElementById('resetBtn');
-
-        // Load saved state
-        function loadState() {
-            var saved = {};
-            try {
-                saved = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
-            } catch (e) {
-                saved = {};
-            }
-            checkboxes.forEach(function (cb) {
-                cb.checked = saved[cb.id] === true;
-                updateItemStyle(cb);
-            });
-        }
-
-        // Save state
-        function saveState() {
-            var state = {};
-            checkboxes.forEach(function (cb) {
-                if (cb.checked) state[cb.id] = true;
-            });
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-        }
-
-        // Update visual style for a checkbox's parent
-        function updateItemStyle(cb) {
-            var item = cb.closest('.checklist-item');
-            if (cb.checked) {
-                item.classList.add('completed');
-            } else {
-                item.classList.remove('completed');
-            }
-        }
-
-        // Update progress bars
-        function updateProgress() {
-            var totalChecked = 0;
-            var totalCount = checkboxes.length;
-
-            domains.forEach(function (domain) {
-                var cbs = domain.querySelectorAll('input[type="checkbox"]');
-                var checked = domain.querySelectorAll('input[type="checkbox"]:checked').length;
-                var total = cbs.length;
-                var pct = total > 0 ? Math.round((checked / total) * 100) : 0;
-
-                var bar = domain.querySelector('.domain-bar');
-                var text = domain.querySelector('.domain-progress-text');
-                if (bar) {
-                    bar.style.width = pct + '%';
-                    bar.parentElement.setAttribute('aria-valuenow', pct);
-                }
-                if (text) text.textContent = checked + ' / ' + total;
-
-                totalChecked += checked;
-            });
-
-            var overallPct = totalCount > 0 ? Math.round((totalChecked / totalCount) * 100) : 0;
-            overallBar.style.width = overallPct + '%';
-            overallBar.parentElement.setAttribute('aria-valuenow', overallPct);
-            overallText.textContent = totalChecked + ' of ' + totalCount + ' items completed (' + overallPct + '%)';
-        }
-
-        // Event listeners
-        checkboxes.forEach(function (cb) {
-            cb.addEventListener('change', function () {
-                updateItemStyle(cb);
-                saveState();
-                updateProgress();
-            });
-        });
-
-        resetBtn.addEventListener('click', function () {
-            if (!confirm('Are you sure you want to reset all checklist progress?')) return;
-            checkboxes.forEach(function (cb) {
-                cb.checked = false;
-                updateItemStyle(cb);
-            });
-            saveState();
-            updateProgress();
-        });
-
-        // Initialize
-        loadState();
-        updateProgress();
-    })();
-  </script>
+  <script src="js/checklist.js"></script>
   <script src="js/ui.js"></script>
 </body>
 </html>

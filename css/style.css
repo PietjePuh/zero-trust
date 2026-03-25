@@ -69,6 +69,14 @@ header {
     position: relative;
 }
 
+header.page-header {
+    padding: 4rem 1rem;
+}
+
+.mt-2 {
+    margin-top: 2rem;
+}
+
 /* Nav */
 .nav-bar {
     position: absolute;

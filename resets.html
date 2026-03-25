@@ -4,77 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'">
   <title>Zero Trust Password Reset Portal</title>
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/resets.css">
   <script src="js/theme.js"></script>
-  <style>
-      .last-updated {
-          font-size: 0.9rem;
-          color: var(--text-muted);
-          margin-bottom: 2rem;
-          text-align: center;
-      }
-      .toc-container {
-          background-color: var(--secondary-bg);
-          border: 1px solid var(--border-color);
-          border-radius: 8px;
-          padding: 1.5rem;
-          margin-bottom: 3rem;
-      }
-      .toc-title {
-          font-size: 1.2rem;
-          font-weight: 600;
-          margin-top: 0;
-          margin-bottom: 1rem;
-          color: var(--accent-color);
-      }
-      .toc-list {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-          gap: 0.5rem;
-          list-style: none;
-          padding: 0;
-      }
-      .toc-list li a::before {
-          content: "→ ";
-      }
-      .resource-category {
-          margin-bottom: 3rem;
-      }
-      .resource-list {
-          display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-          gap: 1.5rem;
-      }
-      .resource-item {
-          background-color: var(--secondary-bg);
-          border: 1px solid var(--border-color);
-          border-radius: 6px;
-          padding: 1rem;
-          transition: transform 0.2s, border-color 0.2s;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-      }
-      .resource-item:hover {
-          transform: translateY(-3px);
-          border-color: var(--accent-color);
-      }
-      .resource-title {
-          font-weight: 600;
-          color: var(--accent-color);
-          margin-bottom: 0.25rem;
-          display: block;
-      }
-      .resource-domain {
-          font-size: 0.8rem;
-          color: #8b949e;
-      }
-  </style>
 </head>
 <body>
-  <header style="padding: 4rem 1rem;">
+  <header class="page-header">
     <div class="nav-bar">
         <a href="index.html">Home</a>
         <a href="tools.html">Tools</a>
@@ -190,7 +127,7 @@
     <div id="recovery-links" class="resource-category">
         <h2 class="wiki-section-title">Common Service Recovery Links</h2>
         <p>Direct links to official password reset and account recovery pages for third-party services.</p>
-        <h3 style="margin-top: 2rem;">📧 Email & Productivity</h3>
+        <h3 class="mt-2">📧 Email & Productivity</h3>
         <div class="resource-list">
             <a href="https://accounts.google.com/signin/recovery" target="_blank" rel="noopener noreferrer" class="resource-item">
                 <span class="resource-title">Google / Gmail</span>
@@ -317,32 +254,22 @@
         </div>
     </div>
 
-    <div id="feedback" class="resource-category" style="text-align: center; border-top: 1px solid var(--border-color); padding-top: 3rem;">
+    <div id="feedback" class="resource-category">
         <h2 class="wiki-section-title">Was this page helpful?</h2>
         <div id="feedback-controls">
-            <button class="button" onclick="handleFeedback('yes')" aria-label="Yes, this page was helpful">Yes</button>
-            <button class="button button-secondary" onclick="handleFeedback('no')" aria-label="No, this page was not helpful">No</button>
+            <button id="feedback-yes" class="button" aria-label="Yes, this page was helpful">Yes</button>
+            <button id="feedback-no" class="button button-secondary" aria-label="No, this page was not helpful">No</button>
         </div>
         <p id="feedback-thanks" class="hidden" tabindex="-1">Thank you for your feedback! It helps us improve our documentation.</p>
     </div>
   </main>
-
-  <script>
-    function handleFeedback(response) {
-        document.getElementById('feedback-controls').classList.add('hidden');
-        const thanksMessage = document.getElementById('feedback-thanks');
-        thanksMessage.classList.remove('hidden');
-        thanksMessage.focus();
-        // In a real application, you would send this response to a server
-        console.log('User feedback received:', response);
-    }
-  </script>
 
   <footer>
     <p>&copy; Zero Trust. Hosted on GitHub Pages. | <a href="privacy.html">Privacy Policy</a></p>
   </footer>
   <script src="js/search-data.js"></script>
   <script src="js/search.js"></script>
+  <script src="js/resets.js"></script>
   <script src="js/ui.js"></script>
 </body>
 </html>

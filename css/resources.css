@@ -1,0 +1,29 @@
+.resource-category {
+    margin-bottom: 3rem;
+}
+.resource-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+.resource-item {
+    background-color: var(--secondary-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 1rem;
+    transition: transform 0.2s, border-color 0.2s;
+}
+.resource-item:hover {
+    transform: translateY(-3px);
+    border-color: var(--accent-color);
+}
+.resource-title {
+    font-weight: 600;
+    color: var(--accent-color);
+    margin-bottom: 0.5rem;
+    display: block;
+}
+.resource-domain {
+    font-size: 0.8rem;
+    color: #8b949e;
+}
