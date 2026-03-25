@@ -1,183 +1,1679 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="description" content="Zero Trust Lab - A comprehensive, static security wiki for security professionals. Explore privacy-first tools, learning paths, and security-first experiences.">
-  <meta property="og:title" content="Zero Trust Lab - Knowledge Base">
-  <meta property="og:description" content="Zero Trust Lab - A comprehensive, static security wiki for security professionals. Explore privacy-first tools, learning paths, and security-first experiences.">
-  <meta property="og:image" content="favicon.png">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <link rel="icon" type="image/png" href="favicon.png">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="referrer" content="strict-origin-when-cross-origin" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'" />
-  <title>Zero Trust Lab</title>
-  <link rel="stylesheet" href="css/style.css">
-  <script src="js/theme.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZERO-TRUST.PW — Cybersecurity Resource Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-dark: #0a0e17;
+            --bg-darker: #050609;
+            --bg-card: #0f1419;
+            --cyan: #00f0ff;
+            --green: #00ff88;
+            --magenta: #ff006e;
+            --purple: #a000ff;
+            --text-primary: #e0e6ff;
+            --text-secondary: #a0aac0;
+            --border: #1a2332;
+            --border-accent: #2d3d5a;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--bg-darker) 0%, var(--bg-dark) 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4 {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--cyan);
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(180deg, rgba(15, 20, 25, 0.95) 0%, rgba(10, 14, 23, 0.9) 100%);
+            border-bottom: 2px solid var(--border-accent);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 8px 32px rgba(0, 240, 255, 0.1);
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--cyan);
+            text-shadow: 0 0 20px rgba(0, 240, 255, 0.7);
+            letter-spacing: 0.1em;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 0;
+            list-style: none;
+        }
+
+        .nav-tabs button {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            border-bottom: 2px solid transparent;
+        }
+
+        .nav-tabs button:hover {
+            color: var(--cyan);
+        }
+
+        .nav-tabs button.active {
+            color: var(--cyan);
+            border-bottom-color: var(--cyan);
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+        }
+
+        /* Search Bar */
+        .search-container {
+            flex: 1;
+            max-width: 500px;
+            margin: 0 2rem;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 4px;
+            color: var(--text-primary);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: var(--cyan);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+            background: var(--bg-darker);
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            margin-bottom: 4rem;
+            padding: 3rem 0;
+            border-bottom: 2px solid var(--border-accent);
+        }
+
+        .hero h1 {
+            background: linear-gradient(90deg, var(--cyan), var(--green), var(--magenta), var(--cyan));
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: glitch 3s ease-in-out infinite;
+            margin-bottom: 0.5rem;
+        }
+
+        @keyframes glitch {
+            0%, 100% { background-position: 0% center; }
+            50% { background-position: 100% center; }
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            letter-spacing: 0.05em;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            padding: 1.5rem;
+            border-radius: 4px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            border-color: var(--cyan);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .stat-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--green);
+            text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Filters */
+        .filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-select {
+            padding: 0.75rem 1rem;
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 4px;
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-select:hover, .filter-select:focus {
+            border-color: var(--cyan);
+            outline: none;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+        }
+
+        /* Grid Layouts */
+        .tools-grid, .bookmarks-grid, .glossary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .tool-card, .bookmark-card, .glossary-card {
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 4px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .tool-card:hover, .bookmark-card:hover, .glossary-card:hover {
+            border-color: var(--cyan);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .tool-name, .bookmark-name, .glossary-term {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+            color: var(--cyan);
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .tool-description, .bookmark-purpose {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .tool-meta {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: rgba(0, 240, 255, 0.1);
+            border: 1px solid var(--cyan);
+            border-radius: 3px;
+            font-size: 0.8rem;
+            color: var(--cyan);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .badge.green {
+            border-color: var(--green);
+            background: rgba(0, 255, 136, 0.1);
+            color: var(--green);
+        }
+
+        .badge.magenta {
+            border-color: var(--magenta);
+            background: rgba(255, 0, 110, 0.1);
+            color: var(--magenta);
+        }
+
+        .bookmark-url {
+            color: var(--green);
+            text-decoration: none;
+            font-size: 0.9rem;
+            word-break: break-all;
+            transition: all 0.2s ease;
+        }
+
+        .bookmark-url:hover {
+            text-decoration: underline;
+            text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+        }
+
+        .glossary-definition {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        /* Frameworks Section */
+        .framework-container {
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 4px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .framework-container:hover {
+            border-color: var(--cyan);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
+        }
+
+        .framework-title {
+            color: var(--green);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        /* Kill Chain Flow */
+        .kill-chain {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .kill-chain-step {
+            flex: 1;
+            min-width: 140px;
+            padding: 1rem;
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.1), rgba(0, 255, 136, 0.1));
+            border: 1px solid var(--cyan);
+            border-radius: 4px;
+            text-align: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--cyan);
+        }
+
+        .kill-chain-step::after {
+            content: '→';
+            display: block;
+            margin: 0.5rem 0;
+            color: var(--green);
+            font-size: 1.5rem;
+        }
+
+        .kill-chain-step:last-child::after {
+            content: '';
+        }
+
+        /* Diamond Model */
+        .diamond {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 2rem 0;
+        }
+
+        .diamond-shape {
+            position: relative;
+            width: 300px;
+            height: 300px;
+        }
+
+        .diamond-vertex {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.15), rgba(0, 255, 136, 0.15));
+            border: 2px solid var(--cyan);
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-align: center;
+            color: var(--cyan);
+        }
+
+        .diamond-vertex.top {
+            top: 0;
+            left: 100px;
+        }
+
+        .diamond-vertex.right {
+            top: 100px;
+            right: 0;
+        }
+
+        .diamond-vertex.bottom {
+            bottom: 0;
+            left: 100px;
+        }
+
+        .diamond-vertex.left {
+            top: 100px;
+            left: 0;
+        }
+
+        .diamond-lines {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        .diamond-line {
+            position: absolute;
+            border: 1px dashed var(--green);
+        }
+
+        .diamond-line.top-right {
+            top: 50px;
+            left: 50px;
+            width: 141px;
+            height: 141px;
+            border-left: none;
+            border-bottom: none;
+            border-top-right-radius: 200px;
+        }
+
+        .diamond-line.right-bottom {
+            top: 50px;
+            right: 50px;
+            width: 141px;
+            height: 141px;
+            border-right: none;
+            border-bottom: none;
+            border-bottom-left-radius: 200px;
+            transform: scaleX(-1);
+        }
+
+        /* Tactics Grid */
+        .tactics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .tactic {
+            padding: 1rem;
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.1), rgba(255, 0, 110, 0.1));
+            border: 1px solid var(--magenta);
+            border-radius: 4px;
+            text-align: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--magenta);
+        }
+
+        /* Functions Grid */
+        .functions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .function-box {
+            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(160, 0, 255, 0.1));
+            border: 2px solid var(--green);
+            border-radius: 4px;
+            text-align: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+            color: var(--green);
+            font-size: 0.95rem;
+        }
+
+        /* Principles Grid */
+        .principles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .principle {
+            padding: 1.25rem;
+            background: linear-gradient(135deg, rgba(160, 0, 255, 0.1), rgba(0, 240, 255, 0.1));
+            border: 1px solid var(--purple);
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .principle strong {
+            color: var(--purple);
+        }
+
+        /* Pyramid */
+        .pyramid-container {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+
+        .pyramid {
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .pyramid-level {
+            padding: 1.25rem;
+            margin: 0.5rem auto;
+            text-align: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+            color: white;
+            border-radius: 4px;
+            border: 2px solid;
+        }
+
+        .level-1 {
+            width: 90%;
+            background: linear-gradient(135deg, rgba(255, 0, 110, 0.3), rgba(255, 0, 110, 0.1));
+            border-color: var(--magenta);
+            color: var(--magenta);
+        }
+
+        .level-2 {
+            width: 75%;
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.3), rgba(0, 240, 255, 0.1));
+            border-color: var(--cyan);
+            color: var(--cyan);
+        }
+
+        .level-3 {
+            width: 60%;
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.3), rgba(0, 255, 136, 0.1));
+            border-color: var(--green);
+            color: var(--green);
+        }
+
+        .level-4 {
+            width: 45%;
+            background: linear-gradient(135deg, rgba(160, 0, 255, 0.3), rgba(160, 0, 255, 0.1));
+            border-color: var(--purple);
+            color: var(--purple);
+        }
+
+        .level-5 {
+            width: 30%;
+            background: linear-gradient(135deg, rgba(255, 165, 0, 0.3), rgba(255, 165, 0, 0.1));
+            border-color: #ffa500;
+            color: #ffa500;
+        }
+
+        /* Table Layout */
+        .table-container {
+            overflow-x: auto;
+            margin-top: 2rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+
+        table th {
+            background: var(--bg-card);
+            border: 1px solid var(--border-accent);
+            padding: 1rem;
+            text-align: left;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+            color: var(--cyan);
+        }
+
+        table td {
+            border: 1px solid var(--border);
+            padding: 0.75rem 1rem;
+        }
+
+        table tr:hover {
+            background: rgba(0, 240, 255, 0.05);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+            border-top: 2px solid var(--border-accent);
+            color: var(--text-secondary);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .search-container {
+                width: 100%;
+                max-width: 100%;
+                margin: 1rem 0 0 0;
+            }
+
+            .nav-tabs {
+                flex-wrap: wrap;
+            }
+
+            .nav-tabs button {
+                padding: 0.75rem 1rem;
+                font-size: 0.85rem;
+            }
+
+            .tools-grid, .bookmarks-grid, .glossary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .kill-chain {
+                flex-direction: column;
+            }
+
+            .kill-chain-step::after {
+                content: '↓';
+            }
+
+            .kill-chain-step:last-child::after {
+                content: '';
+            }
+
+            .tactics-grid, .functions-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .diamond-shape {
+                width: 200px;
+                height: 200px;
+            }
+
+            .diamond-vertex {
+                width: 70px;
+                height: 70px;
+                font-size: 0.75rem;
+            }
+
+            .diamond-vertex.top {
+                left: 65px;
+            }
+
+            .diamond-vertex.bottom {
+                left: 65px;
+            }
+
+            .diamond-vertex.left {
+                top: 65px;
+            }
+
+            .diamond-vertex.right {
+                top: 65px;
+            }
+
+            .diamond-line.top-right {
+                width: 100px;
+                height: 100px;
+                top: 35px;
+                left: 35px;
+            }
+
+            .diamond-line.right-bottom {
+                width: 100px;
+                height: 100px;
+                top: 35px;
+                right: 35px;
+            }
+        }
+
+        /* No results message */
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-secondary);
+        }
+
+        .no-results p {
+            font-size: 1.1rem;
+        }
+
+        /* Hidden class */
+        .hidden {
+            display: none !important;
+        }
+    </style>
 </head>
-<body class="home-page">
-  <header>
-    <nav class="nav-bar">
-      <a href="index.html" class="brand">Zero Trust Lab</a>
-      <ul class="nav-links">
-        <li><a href="index.html" class="active">Home</a></li>
-        <li><a href="tools.html">Tools</a></li>
-        <li><a href="resources.html">Resources</a></li>
-        <li><a href="checklist.html">Checklist</a></li>
-      </ul>
-      <button id="themeToggle" type="button" class="theme-toggle" aria-label="Switch to light mode" title="Switch to light mode">&#9790;</button>
-    </nav>
-  </header>
-
-  <main id="main-content" tabindex="-1">
-    <section class="hero" aria-labelledby="hero-title">
-      <article class="hero-card">
-        <h1 id="hero-title">Build trustless experiences for everyone</h1>
-        <p class="lead">
-          Zero-Trust.Brave experiments with privacy-preserving tooling so builders, educators, and learners can collaborate safely.
-          Start with the ABC and Academie suites and grow into a full library of security-first experiences.
-        </p>
-        <div class="cta-buttons">
-          <a class="cta-primary" href="tools.html">Explore the tools</a>
-          <a class="cta-secondary" href="https://github.com/PietjePuh/zero-trust" target="_blank" rel="noopener noreferrer">View on GitHub</a>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">ZERO-TRUST.PW</div>
+            <div class="search-container">
+                <input type="text" class="search-box" id="globalSearch" placeholder="Search tools, bookmarks, terms...">
+            </div>
+            <nav>
+                <ul class="nav-tabs">
+                    <button class="nav-btn active" data-tab="dashboard">Dashboard</button>
+                    <button class="nav-btn" data-tab="tools">Tools</button>
+                    <button class="nav-btn" data-tab="bookmarks">Bookmarks</button>
+                    <button class="nav-btn" data-tab="frameworks">Frameworks</button>
+                    <button class="nav-btn" data-tab="glossary">Glossary</button>
+                </ul>
+            </nav>
         </div>
-      </article>
-      <article class="hero-card" aria-label="Highlights">
-        <h3>Why zero trust?</h3>
-        <ul>
-          <li>Empower communities with transparent, secure-by-design utilities.</li>
-          <li>Deliver learning journeys with rigorous access control baked in.</li>
-          <li>Iterate faster knowing every module can ship independently.</li>
-        </ul>
-      </article>
-    </section>
+    </header>
 
-    <section id="mission" aria-labelledby="mission-title">
-      <h2 id="mission-title">Mission</h2>
-      <div class="grid cards">
-        <article class="card">
-          <h3>Privacy-first collaboration</h3>
-          <p>
-            Create safe environments for contributors by verifying every interaction and keeping sensitive data compartmentalized.
-          </p>
-        </article>
-        <article class="card">
-          <h3>Education that scales</h3>
-          <p>
-            Equip mentors and learners with structured academies where knowledge grows without sacrificing governance or accountability.
-          </p>
-        </article>
-        <article class="card">
-          <h3>Composable tooling</h3>
-          <p>
-            Introduce new capabilities one module at a time. Each tool in the lab integrates cleanly so you can expand when you are ready.
-          </p>
-        </article>
-      </div>
-    </section>
+    <main>
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="section active">
+            <div class="hero">
+                <h1>ZERO-TRUST.PW</h1>
+                <p>Security Operations Resource Hub</p>
+                <div class="stats">
+                    <div class="stat-card">
+                        <div class="stat-number">187+</div>
+                        <div class="stat-label">Tools</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">173+</div>
+                        <div class="stat-label">Intel Sources</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">44+</div>
+                        <div class="stat-label">Glossary Terms</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">6+</div>
+                        <div class="stat-label">Frameworks</div>
+                    </div>
+                </div>
+            </div>
 
-    <section id="tools" aria-labelledby="tools-title">
-      <h2 id="tools-title">Tool suites you can build on today</h2>
-      <div class="grid cards">
-        <article class="card">
-          <h3>ABC Toolkit</h3>
-          <p>
-            Automate baseline controls. The ABC toolkit provides hardened templates, checklists, and automation hooks to roll out zero-trust
-            policies across teams with minimal friction.
-          </p>
-          <ul>
-            <li>Identity-aware access policies and playbooks</li>
-            <li>Scriptable guardrails for infrastructure and applications</li>
-            <li>Dashboards to observe adoption and compliance trends</li>
-          </ul>
-        </article>
-        <article class="card">
-          <h3>Academie</h3>
-          <p>
-            A guided learning space for teaching zero-trust principles. Blend live workshops, labs, and certification paths to grow expertise
-            across your community or organization.
-          </p>
-          <ul>
-            <li>Modular curriculum builder with instructor notes</li>
-            <li>Self-paced labs with automated validation</li>
-            <li>Progress analytics to coach learners effectively</li>
-          </ul>
-        </article>
-        <article class="card">
-          <h3>Future modules</h3>
-          <p>
-            Design your roadmap and plug in additional tools as you go—ranging from incident response simulators to privacy-preserving data
-            exchanges.
-          </p>
-          <ul>
-            <li>Space for community-developed utilities</li>
-            <li>Integration guidelines to keep everything interoperable</li>
-            <li>Open issues and ideas welcome on GitHub</li>
-          </ul>
-        </article>
-      </div>
-    </section>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 3rem;">
+                <div class="tool-card" style="cursor: pointer;" onclick="switchTab('tools')">
+                    <div class="tool-name">→ Explore Tools</div>
+                    <div class="tool-description">187 penetration testing, forensics, and security analysis tools</div>
+                </div>
+                <div class="tool-card" style="cursor: pointer;" onclick="switchTab('bookmarks')">
+                    <div class="tool-name">→ View Bookmarks</div>
+                    <div class="tool-description">173+ curated intelligence sources and research platforms</div>
+                </div>
+                <div class="tool-card" style="cursor: pointer;" onclick="switchTab('frameworks')">
+                    <div class="tool-name">→ Study Frameworks</div>
+                    <div class="tool-description">Industry-standard attack and defense models</div>
+                </div>
+                <div class="tool-card" style="cursor: pointer;" onclick="switchTab('glossary')">
+                    <div class="tool-name">→ Glossary</div>
+                    <div class="tool-description">44+ essential cybersecurity terms and concepts</div>
+                </div>
+            </div>
+        </section>
 
-    <section id="roadmap" aria-labelledby="roadmap-title">
-      <h2 id="roadmap-title">Roadmap</h2>
-      <ul class="roadmap-list">
-        <li>
-          <span>Now</span>
-          Launch ABC and Academie pilots, collect user feedback, and refine the trust model that underpins every interaction.
-        </li>
-        <li>
-          <span>Next</span>
-          Release integration kits so partners can embed identity verification, secure messaging, and consent-aware data flows.
-        </li>
-        <li>
-          <span>Later</span>
-          Expand into open governance tooling with voting modules, treasury controls, and threat intelligence exchanges.
-        </li>
-      </ul>
-    </section>
+        <!-- Tools Section -->
+        <section id="tools" class="section">
+            <h2>Security Tools & Utilities</h2>
 
-    <section id="contact" aria-labelledby="contact-title">
-      <h2 id="contact-title">Stay in the loop</h2>
-      <div class="grid cards">
-        <article class="card">
-          <h3>Contribute</h3>
-          <p>
-            Open issues, propose enhancements, or share your own zero-trust modules. Collaboration keeps the lab innovative and resilient.
-          </p>
-        </article>
-        <article class="card">
-          <h3>Follow updates</h3>
-          <p>
-            Watch the repository on GitHub to receive release notes, roadmap updates, and invitations to community town halls.
-          </p>
-        </article>
-        <article class="card">
-          <h3>Connect with the team</h3>
-          <p>
-            Reach out via github for partnerships, research collaborations, or speaking engagements.
-          </p>
-        </article>
-      </div>
-    </section>
-  </main>
+            <div class="filters">
+                <select class="filter-select" id="categoryFilter" onchange="filterTools()">
+                    <option value="">All Categories</option>
+                    <option value="Brute Force">Brute Force</option>
+                    <option value="Hash Cracking">Hash Cracking</option>
+                    <option value="Password Cracking">Password Cracking</option>
+                    <option value="Archive Cracking">Archive Cracking</option>
+                    <option value="PDF Cracking">PDF Cracking</option>
+                    <option value="Hash Conversion">Hash Conversion</option>
+                    <option value="Kerberos">Kerberos</option>
+                    <option value="Credential Capture">Credential Capture</option>
+                    <option value="Credential Extraction">Credential Extraction</option>
+                    <option value="Hash Identification">Hash Identification</option>
+                    <option value="Network Scanner">Network Scanner</option>
+                    <option value="Port Scanner">Port Scanner</option>
+                    <option value="Packet Tool">Packet Tool</option>
+                    <option value="Fingerprinting">Fingerprinting</option>
+                    <option value="Remote Access">Remote Access</option>
+                    <option value="Web Scanner">Web Scanner</option>
+                    <option value="Directory Enumeration">Directory Enumeration</option>
+                    <option value="Web Fuzzer">Web Fuzzer</option>
+                    <option value="SQL Injection">SQL Injection</option>
+                    <option value="CMS Scanner">CMS Scanner</option>
+                    <option value="Wordlist">Wordlist</option>
+                    <option value="Web Analysis">Web Analysis</option>
+                    <option value="Web Security">Web Security</option>
+                    <option value="Web Testing">Web Testing</option>
+                    <option value="Packet Analysis">Packet Analysis</option>
+                    <option value="Network Forensics">Network Forensics</option>
+                    <option value="IDS">IDS</option>
+                    <option value="IDS/IPS">IDS/IPS</option>
+                    <option value="Network Analysis">Network Analysis</option>
+                    <option value="Memory Forensics">Memory Forensics</option>
+                    <option value="Binary Analysis">Binary Analysis</option>
+                    <option value="Reverse Engineering">Reverse Engineering</option>
+                    <option value="File Analysis">File Analysis</option>
+                    <option value="PDF Analysis">PDF Analysis</option>
+                    <option value="Malware Detection">Malware Detection</option>
+                    <option value="IOC Scanning">IOC Scanning</option>
+                    <option value="Forensics">Forensics</option>
+                    <option value="Memory Dump">Memory Dump</option>
+                    <option value="Hex Editor">Hex Editor</option>
+                    <option value="System Tools">System Tools</option>
+                    <option value="Registry Analysis">Registry Analysis</option>
+                    <option value="Log Analysis">Log Analysis</option>
+                    <option value="Process Analysis">Process Analysis</option>
+                    <option value="Registry Tools">Registry Tools</option>
+                    <option value="Subdomain OSINT">Subdomain OSINT</option>
+                    <option value="Recon">Recon</option>
+                    <option value="OSINT">OSINT</option>
+                    <option value="DNS OSINT">DNS OSINT</option>
+                    <option value="Threat Intel">Threat Intel</option>
+                    <option value="Domain OSINT">Domain OSINT</option>
+                    <option value="Subdomain Finder">Subdomain Finder</option>
+                    <option value="API Security">API Security</option>
+                    <option value="Certificate OSINT">Certificate OSINT</option>
+                    <option value="Breach OSINT">Breach OSINT</option>
+                    <option value="Vulnerability Scanner">Vulnerability Scanner</option>
+                    <option value="SSL/TLS Testing">SSL/TLS Testing</option>
+                    <option value="Cryptography">Cryptography</option>
+                    <option value="Code Security">Code Security</option>
+                    <option value="SAST">SAST</option>
+                    <option value="SSH Auditing">SSH Auditing</option>
+                    <option value="Wireless">Wireless</option>
+                    <option value="Network Attack">Network Attack</option>
+                    <option value="SIEM">SIEM</option>
+                    <option value="Cloud Security">Cloud Security</option>
+                    <option value="Endpoint Security">Endpoint Security</option>
+                    <option value="Automation">Automation</option>
+                    <option value="Exploitation">Exploitation</option>
+                    <option value="Payload">Payload</option>
+                    <option value="Post-Exploitation">Post-Exploitation</option>
+                    <option value="Phishing">Phishing</option>
+                    <option value="Penetration Testing">Penetration Testing</option>
+                    <option value="Exploit Search">Exploit Search</option>
+                    <option value="Social Engineering">Social Engineering</option>
+                    <option value="Email Analysis">Email Analysis</option>
+                    <option value="Data Analysis">Data Analysis</option>
+                    <option value="Text Analysis">Text Analysis</option>
+                    <option value="Disk Tools">Disk Tools</option>
+                    <option value="Hash Tools">Hash Tools</option>
+                    <option value="File Tools">File Tools</option>
+                    <option value="Utility">Utility</option>
+                    <option value="Incident Response">Incident Response</option>
+                    <option value="Malware Analysis">Malware Analysis</option>
+                    <option value="Malware Repository">Malware Repository</option>
+                    <option value="Framework">Framework</option>
+                    <option value="IOC Database">IOC Database</option>
+                    <option value="Network Defense">Network Defense</option>
+                    <option value="Fuzzing">Fuzzing</option>
+                    <option value="Containers">Containers</option>
+                    <option value="Virtualization">Virtualization</option>
+                    <option value="Linux Environment">Linux Environment</option>
+                    <option value="Monitoring">Monitoring</option>
+                    <option value="Reporting">Reporting</option>
+                    <option value="AI Tool">AI Tool</option>
+                    <option value="Certificates">Certificates</option>
+                    <option value="Database">Database</option>
+                    <option value="Privacy">Privacy</option>
+                </select>
+                <select class="filter-select" id="osFilter" onchange="filterTools()">
+                    <option value="">All Platforms</option>
+                    <option value="Cross-platform">Cross-platform</option>
+                    <option value="Linux">Linux</option>
+                    <option value="Windows">Windows</option>
+                    <option value="Web">Web</option>
+                </select>
+            </div>
 
-  <footer>
-    <p>
-      © <span id="year"></span> Zero-Trust.Brave &middot; Built for people who believe privacy and access can coexist.
-      | <a href="privacy.html">Privacy Policy</a>
-    </p>
-  </footer>
+            <div class="tools-grid" id="toolsGrid"></div>
+            <div class="no-results hidden" id="toolsNoResults">
+                <p>No tools found matching your search criteria.</p>
+            </div>
+        </section>
 
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
+        <!-- Bookmarks Section -->
+        <section id="bookmarks" class="section">
+            <h2>Intelligence Sources & Bookmarks</h2>
 
-    // Register Service Worker for offline support
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js').catch(function (err) {
-        console.error('SW registration failed:', err);
-      });
-    }
-  </script>
-  <script src="js/ui.js"></script>
+            <div class="filters">
+                <select class="filter-select" id="bookmarkCategoryFilter" onchange="filterBookmarks()">
+                    <option value="">All Categories</option>
+                    <option value="News Feeds">News Feeds</option>
+                    <option value="CVE Databases">CVE Databases</option>
+                    <option value="Threat Intel Platforms">Threat Intel Platforms</option>
+                    <option value="Malware Analysis">Malware Analysis</option>
+                    <option value="Training">Training</option>
+                    <option value="OSINT Tools">OSINT Tools</option>
+                    <option value="OS Distributions">OS Distributions</option>
+                    <option value="Bug Bounty">Bug Bounty</option>
+                    <option value="Email Security">Email Security</option>
+                    <option value="Infrastructure Research">Infrastructure Research</option>
+                    <option value="Specialized">Specialized</option>
+                    <option value="Breach Monitoring">Breach Monitoring</option>
+                    <option value="Endpoint">Endpoint</option>
+                    <option value="Standards">Standards</option>
+                </select>
+            </div>
+
+            <div class="bookmarks-grid" id="bookmarksGrid"></div>
+            <div class="no-results hidden" id="bookmarksNoResults">
+                <p>No bookmarks found matching your search criteria.</p>
+            </div>
+        </section>
+
+        <!-- Frameworks Section -->
+        <section id="frameworks" class="section">
+            <h2>Security Frameworks & Models</h2>
+
+            <!-- Cyber Kill Chain -->
+            <div class="framework-container">
+                <h3 class="framework-title">Cyber Kill Chain (Lockheed Martin)</h3>
+                <p>The attack lifecycle from reconnaissance to objectives</p>
+                <div class="kill-chain">
+                    <div class="kill-chain-step">1. Reconnaissance</div>
+                    <div class="kill-chain-step">2. Weaponization</div>
+                    <div class="kill-chain-step">3. Delivery</div>
+                    <div class="kill-chain-step">4. Exploitation</div>
+                    <div class="kill-chain-step">5. Installation</div>
+                    <div class="kill-chain-step">6. C&C</div>
+                    <div class="kill-chain-step">7. Actions</div>
+                </div>
+            </div>
+
+            <!-- MITRE ATT&CK -->
+            <div class="framework-container">
+                <h3 class="framework-title">MITRE ATT&CK Framework</h3>
+                <p>Comprehensive adversary tactics and techniques based on real-world observations</p>
+                <div class="tactics-grid">
+                    <div class="tactic">Reconnaissance</div>
+                    <div class="tactic">Resource Development</div>
+                    <div class="tactic">Initial Access</div>
+                    <div class="tactic">Execution</div>
+                    <div class="tactic">Persistence</div>
+                    <div class="tactic">Privilege Escalation</div>
+                    <div class="tactic">Defense Evasion</div>
+                    <div class="tactic">Credential Access</div>
+                    <div class="tactic">Discovery</div>
+                    <div class="tactic">Lateral Movement</div>
+                    <div class="tactic">Collection</div>
+                    <div class="tactic">Command & Control</div>
+                    <div class="tactic">Exfiltration</div>
+                    <div class="tactic">Impact</div>
+                </div>
+            </div>
+
+            <!-- Diamond Model -->
+            <div class="framework-container">
+                <h3 class="framework-title">Diamond Model of Intrusion Analysis</h3>
+                <p>Four-corner model for analyzing intrusions and threats</p>
+                <div class="diamond">
+                    <div class="diamond-shape">
+                        <div class="diamond-lines">
+                            <div class="diamond-line top-right"></div>
+                            <div class="diamond-line right-bottom"></div>
+                        </div>
+                        <div class="diamond-vertex top">Adversary</div>
+                        <div class="diamond-vertex right">Infrastructure</div>
+                        <div class="diamond-vertex bottom">Victim</div>
+                        <div class="diamond-vertex left">Capability</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NIST Framework -->
+            <div class="framework-container">
+                <h3 class="framework-title">NIST Cybersecurity Framework</h3>
+                <p>Five core functions for managing cybersecurity</p>
+                <div class="functions-grid">
+                    <div class="function-box">Identify</div>
+                    <div class="function-box">Protect</div>
+                    <div class="function-box">Detect</div>
+                    <div class="function-box">Respond</div>
+                    <div class="function-box">Recover</div>
+                </div>
+            </div>
+
+            <!-- Zero Trust Principles -->
+            <div class="framework-container">
+                <h3 class="framework-title">Zero Trust Architecture</h3>
+                <p>Core principles for implementing zero trust security models</p>
+                <div class="principles-grid">
+                    <div class="principle"><strong>Never trust,</strong> always verify</div>
+                    <div class="principle"><strong>Least privilege</strong> access</div>
+                    <div class="principle"><strong>Assume breach</strong> posture</div>
+                    <div class="principle"><strong>Verify explicitly</strong> with strong auth</div>
+                    <div class="principle"><strong>Micro-segmentation</strong> of networks</div>
+                    <div class="principle"><strong>Continuous monitoring</strong> and validation</div>
+                </div>
+            </div>
+
+            <!-- Pyramid of Pain -->
+            <div class="framework-container">
+                <h3 class="framework-title">Pyramid of Pain (David Bianco)</h3>
+                <p>IOC value hierarchy for defenders</p>
+                <div class="pyramid-container">
+                    <div class="pyramid">
+                        <div class="pyramid-level level-1">Hash Values</div>
+                        <div class="pyramid-level level-2">IP Addresses</div>
+                        <div class="pyramid-level level-3">Domain Names</div>
+                        <div class="pyramid-level level-4">Network/Host Artifacts</div>
+                        <div class="pyramid-level level-5">Tools & TTPs</div>
+                    </div>
+                </div>
+                <p style="text-align: center; color: var(--text-secondary); font-size: 0.9rem; margin-top: 1rem;">Bottom = easy to change, Top = hard to change (more valuable)</p>
+            </div>
+        </section>
+
+        <!-- Glossary Section -->
+        <section id="glossary" class="section">
+            <h2>Cybersecurity Glossary</h2>
+
+            <div class="filters">
+                <select class="filter-select" id="glossaryCategoryFilter" onchange="filterGlossary()">
+                    <option value="">All Categories</option>
+                    <option value="Frameworks & Compliance">Frameworks & Compliance</option>
+                    <option value="Cloud Security">Cloud Security</option>
+                    <option value="Identity & Access">Identity & Access</option>
+                    <option value="Threat Detection">Threat Detection</option>
+                    <option value="Network">Network</option>
+                    <option value="Forensics & IR">Forensics & IR</option>
+                    <option value="Vulnerability">Vulnerability</option>
+                    <option value="Encryption">Encryption</option>
+                </select>
+            </div>
+
+            <div class="glossary-grid" id="glossaryGrid"></div>
+            <div class="no-results hidden" id="glossaryNoResults">
+                <p>No glossary terms found matching your search criteria.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>ZERO-TRUST.PW — Security Operations Resource Hub | © 2026</p>
+        <p style="margin-top: 0.5rem; font-size: 0.85rem;">A reference hub for security practitioners and researchers</p>
+    </footer>
+
+    <script>
+        // Data
+        const tools = [
+            // Password Cracking & Credential Testing
+            { name: 'thc-hydra', description: 'Fast network login cracker (50+ protocols)', os: 'Cross-platform', category: 'Brute Force' },
+            { name: 'John the Ripper', description: 'Password hash cracking', os: 'Cross-platform', category: 'Hash Cracking' },
+            { name: 'Hashcat', description: 'GPU-accelerated hash cracking', os: 'Cross-platform', category: 'Hash Cracking' },
+            { name: 'fcrackzip', description: 'ZIP file password cracker', os: 'Cross-platform', category: 'Archive Cracking' },
+            { name: 'pdfcrack', description: 'PDF password recovery', os: 'Linux', category: 'PDF Cracking' },
+            { name: 'Brutus', description: 'Brute force authentication tool', os: 'Windows', category: 'Brute Force' },
+            { name: 'Rainbow Crack', description: 'Rainbow table generator/lookup', os: 'Cross-platform', category: 'Hash Cracking' },
+            { name: 'Crunch', description: 'Wordlist generator', os: 'Linux', category: 'Wordlist' },
+            { name: 'ssh2john', description: 'SSH key converter to John format', os: 'Linux', category: 'Hash Conversion' },
+            { name: 'Zip2John', description: 'ZIP to John format converter', os: 'Linux', category: 'Hash Conversion' },
+            { name: 'rar2john', description: 'RAR to John format converter', os: 'Linux', category: 'Hash Conversion' },
+            { name: 'KerbCrack', description: 'Kerberos password cracker', os: 'Windows', category: 'Kerberos' },
+            { name: 'Responder', description: 'LLMNR/mDNS/NBNS responder', os: 'Linux', category: 'Credential Capture' },
+            { name: 'pwdump', description: 'Windows password dumper', os: 'Windows', category: 'Credential Extraction' },
+            { name: 'Hashalot', description: 'Hash type identifier', os: 'Linux', category: 'Hash Identification' },
+            { name: 'Brute spray', description: 'Credential spraying tool', os: 'Cross-platform', category: 'Brute Force' },
+
+            // Network Scanning & Discovery
+            { name: 'Nmap', description: 'Network mapper & port scanner', os: 'Cross-platform', category: 'Network Scanner' },
+            { name: 'MASSCAN', description: 'High-speed TCP port scanner', os: 'Cross-platform', category: 'Port Scanner' },
+            { name: 'Hping3', description: 'ICMP/TCP/UDP packet generator', os: 'Cross-platform', category: 'Packet Tool' },
+            { name: 'p0f', description: 'Passive OS fingerprinting', os: 'Linux', category: 'Fingerprinting' },
+            { name: 'mosh', description: 'Mobile shell for lossy connections', os: 'Cross-platform', category: 'Remote Access' },
+
+            // Web Application Security
+            { name: 'Nikto', description: 'Web server vulnerability scanner', os: 'Cross-platform', category: 'Web Scanner' },
+            { name: 'DIRB', description: 'Web content scanner (dictionary-based)', os: 'Linux', category: 'Directory Enumeration' },
+            { name: 'dirsearch', description: 'Web path & directory scanner', os: 'Cross-platform', category: 'Directory Enumeration' },
+            { name: 'ffuf', description: 'Fast web fuzzer', os: 'Cross-platform', category: 'Web Fuzzer' },
+            { name: 'feroxbuster', description: 'Fast web directory scanner', os: 'Cross-platform', category: 'Directory Enumeration' },
+            { name: 'sqlmap', description: 'SQL injection testing framework', os: 'Cross-platform', category: 'SQL Injection' },
+            { name: 'wpscan', description: 'WordPress vulnerability scanner', os: 'Cross-platform', category: 'CMS Scanner' },
+            { name: 'CeWL', description: 'Custom wordlist generator from websites', os: 'Linux', category: 'Wordlist' },
+            { name: 'securityheaders', description: 'HTTP security header analyzer', os: 'Web', category: 'Web Analysis' },
+            { name: 'csp-evaluator', description: 'CSP policy analyzer', os: 'Web', category: 'Web Security' },
+            { name: 'Caido', description: 'Web security testing platform', os: 'Cross-platform', category: 'Web Testing' },
+
+            // Network Analysis & Packet Capture
+            { name: 'Wireshark', description: 'Network protocol analyzer', os: 'Cross-platform', category: 'Packet Analysis' },
+            { name: 'Tshark', description: 'CLI packet capture & analysis', os: 'Cross-platform', category: 'Packet Analysis' },
+            { name: 'TCPDUMP', description: 'CLI packet capture tool', os: 'Linux', category: 'Packet Capture' },
+            { name: 'NetworkMiner', description: 'Network forensics tool', os: 'Cross-platform', category: 'Network Forensics' },
+            { name: 'Zeek', description: 'Network flow analysis', os: 'Linux', category: 'IDS' },
+            { name: 'Snort', description: 'Network IDS/IPS', os: 'Cross-platform', category: 'IDS/IPS' },
+            { name: 'Snort3', description: 'Next-generation Snort', os: 'Linux', category: 'IDS/IPS' },
+            { name: 'Suricata', description: 'Network IDS/IPS/NSM', os: 'Cross-platform', category: 'IDS/IPS' },
+            { name: 'brim', description: 'Packet analysis GUI', os: 'Cross-platform', category: 'Packet Analysis' },
+            { name: 'RITA', description: 'Network traffic analysis', os: 'Cross-platform', category: 'Network Analysis' },
+
+            // Malware Analysis & Reverse Engineering
+            { name: 'Volatility', description: 'Memory dump analysis', os: 'Cross-platform', category: 'Memory Forensics' },
+            { name: 'PEStudio', description: 'PE file analyzer', os: 'Windows', category: 'Binary Analysis' },
+            { name: 'radare2', description: 'Reverse engineering framework', os: 'Cross-platform', category: 'Reverse Engineering' },
+            { name: 'Binwalk', description: 'Binary file analyzer', os: 'Linux', category: 'Binary Analysis' },
+            { name: 'oletools', description: 'OLE/Office file analysis', os: 'Cross-platform', category: 'File Analysis' },
+            { name: 'pdf-parser', description: 'PDF file parser', os: 'Linux', category: 'PDF Analysis' },
+            { name: 'YARA', description: 'Malware pattern matching', os: 'Cross-platform', category: 'Malware Detection' },
+            { name: 'MalChela', description: 'Malware repository search', os: 'Web', category: 'Malware Analysis' },
+            { name: 'Loki', description: 'IOC scanner', os: 'Cross-platform', category: 'IOC Scanning' },
+            { name: 'Fenrir', description: 'Bash-based IOC scanner', os: 'Linux', category: 'IOC Scanning' },
+
+            // Digital Forensics
+            { name: 'Autopsy', description: 'Digital forensics platform', os: 'Cross-platform', category: 'Forensics' },
+            { name: 'Sleuthkit', description: 'Digital forensics library', os: 'Cross-platform', category: 'Forensics' },
+            { name: 'REMnux', description: 'Malware analysis Linux distribution', os: 'Linux', category: 'Forensics' },
+            { name: 'DumpIt', description: 'Memory capture tool', os: 'Windows', category: 'Memory Dump' },
+            { name: 'HxD', description: 'Hex editor & memory viewer', os: 'Windows', category: 'Hex Editor' },
+            { name: 'Sysinternals', description: 'Windows system utilities', os: 'Windows', category: 'System Tools' },
+            { name: 'EZ tools', description: 'Windows forensics collection', os: 'Windows', category: 'Forensics' },
+            { name: 'AmcacheParser', description: 'Windows Amcache parser', os: 'Windows', category: 'Registry Analysis' },
+            { name: 'Timeline Explorer', description: 'Windows event log viewer', os: 'Windows', category: 'Log Analysis' },
+            { name: 'Process Explorer', description: 'Advanced process manager', os: 'Windows', category: 'Process Analysis' },
+            { name: 'regshot', description: 'Registry snapshot tool', os: 'Windows', category: 'Registry Tools' },
+
+            // OSINT & Reconnaissance
+            { name: 'Sublist3r', description: 'Subdomain enumeration tool', os: 'Cross-platform', category: 'Subdomain OSINT' },
+            { name: 'theHarvester', description: 'Email & subdomain harvester', os: 'Cross-platform', category: 'Recon' },
+            { name: 'SpiderFoot', description: 'OSINT automation framework', os: 'Cross-platform', category: 'OSINT' },
+            { name: 'phoneinfoga', description: 'Phone number intelligence', os: 'Cross-platform', category: 'OSINT' },
+            { name: 'holehe', description: 'Email account enumeration', os: 'Cross-platform', category: 'OSINT' },
+            { name: 'Hunchly', description: 'Web investigator extension', os: 'Web', category: 'OSINT' },
+            { name: 'rapiddns', description: 'DNS history lookup', os: 'Web', category: 'DNS OSINT' },
+            { name: 'threatminer', description: 'Threat intelligence platform', os: 'Web', category: 'Threat Intel' },
+            { name: 'criminalip', description: 'IP/domain threat intelligence', os: 'Web', category: 'Threat Intel' },
+            { name: 'intelx.io', description: 'Dark web & leaked data search', os: 'Web', category: 'OSINT' },
+            { name: '8ksec', description: 'Cybersecurity research', os: 'Web', category: 'Threat Intel' },
+            { name: 'deepstrike.io', description: 'Threat intelligence platform', os: 'Web', category: 'Threat Intel' },
+            { name: 'domaintools.com', description: 'Domain research platform', os: 'Web', category: 'Domain OSINT' },
+            { name: 'securitytrails.com', description: 'Domain & IP history', os: 'Web', category: 'Domain OSINT' },
+            { name: 'hunterhow', description: 'Subdomain finder', os: 'Web', category: 'Subdomain Finder' },
+            { name: 'bevigil.com', description: 'API security testing', os: 'Web', category: 'API Security' },
+            { name: 'CTFR', description: 'Certificate Transparency finder', os: 'Web', category: 'Certificate OSINT' },
+            { name: 'whatsapp.checkleaked.cc', description: 'Leak database search', os: 'Web', category: 'Breach OSINT' },
+
+            // Vulnerability Assessment
+            { name: 'Nessus', description: 'Enterprise vulnerability scanner', os: 'Cross-platform', category: 'Vulnerability Scanner' },
+            { name: 'OpenVAS', description: 'Open-source vulnerability scanner', os: 'Linux', category: 'Vulnerability Scanner' },
+            { name: 'testssl.sh', description: 'TLS/SSL vulnerability tester', os: 'Linux', category: 'SSL/TLS Testing' },
+            { name: 'sslscan', description: 'SSL/TLS cipher scanner', os: 'Cross-platform', category: 'SSL/TLS Testing' },
+            { name: 'openssl', description: 'Cryptography toolkit', os: 'Cross-platform', category: 'Cryptography' },
+            { name: 'Snyk', description: 'SAST/SCA vulnerability scanner', os: 'Cross-platform', category: 'Code Security' },
+            { name: 'SonarQube', description: 'Code quality & security analysis', os: 'Cross-platform', category: 'SAST' },
+            { name: 'ssh-audit', description: 'SSH server security audit', os: 'Cross-platform', category: 'SSH Auditing' },
+
+            // Wireless Security
+            { name: 'Aircrack', description: 'Wireless password cracking suite', os: 'Linux', category: 'Wireless' },
+            { name: 'reaver', description: 'WPS/WPA password cracker', os: 'Linux', category: 'Wireless' },
+            { name: 'wifiphisher', description: 'Wireless phishing attack framework', os: 'Linux', category: 'Wireless' },
+            { name: 'bettercap', description: 'Man-in-the-middle framework', os: 'Cross-platform', category: 'Network Attack' },
+
+            // Cloud & Infrastructure
+            { name: 'Microsoft Sentinel', description: 'Cloud SIEM platform', os: 'Web', category: 'SIEM' },
+            { name: 'Zscaler', description: 'Cloud security platform', os: 'Web', category: 'Cloud Security' },
+            { name: 'ivanti.com', description: 'Endpoint security', os: 'Web', category: 'Endpoint Security' },
+            { name: 'Swimlane', description: 'Security automation platform', os: 'Web', category: 'Automation' },
+
+            // Exploitation & Post-Exploitation
+            { name: 'Metasploit', description: 'Penetration testing framework', os: 'Cross-platform', category: 'Exploitation' },
+            { name: 'msfvenom', description: 'Metasploit payload generator', os: 'Cross-platform', category: 'Payload' },
+            { name: 'evil-winrm', description: 'WinRM exploitation tool', os: 'Linux', category: 'Post-Exploitation' },
+            { name: 'crackmapexec', description: 'Network enumeration & exploitation', os: 'Linux', category: 'Post-Exploitation' },
+            { name: 'impacket-scripts', description: 'Post-exploitation toolkit', os: 'Cross-platform', category: 'Post-Exploitation' },
+            { name: 'evilginx2', description: 'Man-in-the-middle framework', os: 'Linux', category: 'Phishing' },
+            { name: 'gophish', description: 'Phishing framework', os: 'Cross-platform', category: 'Phishing' },
+            { name: 'KnockMail', description: 'Email verification tool', os: 'Linux', category: 'OSINT' },
+            { name: 'airstrike', description: 'Penetration testing suite', os: 'Linux', category: 'Penetration Testing' },
+            { name: 'searchsploit', description: 'Exploit database search', os: 'Linux', category: 'Exploit Search' },
+            { name: 'b3acon', description: 'Beacon payload generator', os: 'Linux', category: 'Payload' },
+            { name: 'social-engineer-toolkit', description: 'Social engineering framework', os: 'Cross-platform', category: 'Social Engineering' },
+            { name: 'eml_analyzer', description: 'Email analysis tool', os: 'Linux', category: 'Email Analysis' },
+
+            // Analysis & Utilities
+            { name: 'CyberChef', description: 'Encoding/decoding toolkit', os: 'Web', category: 'Data Analysis' },
+            { name: 'Regexr', description: 'Regex pattern tester', os: 'Web', category: 'Text Analysis' },
+            { name: 'ncdu', description: 'Disk usage analyzer', os: 'Linux', category: 'System Tools' },
+            { name: 'WinDirStat', description: 'Disk space visualizer', os: 'Windows', category: 'System Tools' },
+            { name: 'Hash-identifier', description: 'Hash type guesser', os: 'Linux', category: 'Hash Tools' },
+            { name: 'hashid', description: 'Hash identifier', os: 'Cross-platform', category: 'Hash Tools' },
+            { name: 'hashdeep', description: 'File hash calculator', os: 'Cross-platform', category: 'Hash Tools' },
+            { name: 'md5_checksum', description: 'MD5 hash calculator', os: 'Windows', category: 'Hash Tools' },
+            { name: 'Name that Hash', description: 'Hash type identifier', os: 'Web', category: 'Hash Tools' },
+            { name: 'mailheader.org', description: 'Email header analyzer', os: 'Web', category: 'Email Analysis' },
+            { name: 'Srihash.org', description: 'SRI hash generator', os: 'Web', category: 'Integrity Verification' },
+            { name: 'CFF Explorer', description: 'PE file explorer', os: 'Windows', category: 'Binary Analysis' },
+            { name: 'EZViewer', description: 'File viewer utility', os: 'Windows', category: 'File Tools' },
+            { name: 'Dirname', description: 'Directory name extractor', os: 'Linux', category: 'File Tools' },
+            { name: 'Rlwrap', description: 'Readline wrapper', os: 'Linux', category: 'Utility' },
+            { name: 'TimeApp', description: 'Time synchronization tool', os: 'Cross-platform', category: 'System Tools' },
+
+            // Forensic & Threat Hunting
+            { name: 'TheHive', description: 'Incident response platform', os: 'Cross-platform', category: 'Incident Response' },
+            { name: 'ReversingLabs', description: 'Malware analysis platform', os: 'Web', category: 'Malware Analysis' },
+            { name: 'hudsonrock.com', description: 'Data breach intelligence', os: 'Web', category: 'Threat Intel' },
+            { name: 'AlienVault OTX', description: 'Threat intelligence platform', os: 'Web', category: 'Threat Intel' },
+            { name: 'Pulsedive', description: 'Threat intelligence search', os: 'Web', category: 'Threat Intel' },
+            { name: 'dmarcian.com', description: 'DMARC analyzer', os: 'Web', category: 'Email Security' },
+            { name: 'The Record by Recorded Future', description: 'Threat intelligence news', os: 'Web', category: 'Threat Intel' },
+            { name: 'ThreatFox', description: 'IoC database', os: 'Web', category: 'IOC Database' },
+            { name: 'MalwareBazaar', description: 'Malware sample repository', os: 'Web', category: 'Malware Repository' },
+            { name: 'VirusShare', description: 'Malware sample database', os: 'Web', category: 'Malware Repository' },
+            { name: 'MITRE ATT&CK', description: 'Adversary tactics framework', os: 'Web', category: 'Framework' },
+            { name: 'maltrail', description: 'Malware traffic detection', os: 'Linux', category: 'Network Defense' },
+            { name: 'bulk_extractor', description: 'Forensic data extraction', os: 'Linux', category: 'Forensics' },
+            { name: 'AFL++', description: 'Fuzzing tool', os: 'Linux', category: 'Fuzzing' },
+            { name: 'ANY.RUN', description: 'Malware sandbox', os: 'Web', category: 'Malware Analysis' },
+
+            // Container & Virtualization
+            { name: 'Docker', description: 'Container platform', os: 'Cross-platform', category: 'Containers' },
+            { name: 'VirtualBox', description: 'Virtual machine platform', os: 'Cross-platform', category: 'Virtualization' },
+            { name: 'VMware Workstation', description: 'Virtual machine platform', os: 'Windows', category: 'Virtualization' },
+            { name: 'Kali Linux WSL2', description: 'Kali on Windows', os: 'Windows', category: 'Linux Environment' },
+            { name: 'Balena-io/etcher', description: 'USB image writer', os: 'Cross-platform', category: 'System Tools' },
+            { name: 'WSL', description: 'Windows Subsystem for Linux', os: 'Windows', category: 'Linux Environment' },
+
+            // Other
+            { name: 'joesandbox', description: 'Malware analysis sandbox', os: 'Web', category: 'Malware Analysis' },
+            { name: 'Tor Browser', description: 'Anonymous browser', os: 'Cross-platform', category: 'Privacy' },
+            { name: 'mysql', description: 'MySQL database client', os: 'Cross-platform', category: 'Database' },
+            { name: 'Telnet', description: 'Remote access protocol', os: 'Cross-platform', category: 'Remote Access' },
+            { name: 'Socat', description: 'Netcat-like utility', os: 'Linux', category: 'Utility' },
+            { name: 'ptunnel', description: 'ICMP tunnel tool', os: 'Linux', category: 'Utility' },
+            { name: 'Auditd', description: 'Linux audit daemon', os: 'Linux', category: 'System Tools' },
+            { name: 'pspy', description: 'Process spy (unprivileged)', os: 'Linux', category: 'System Tools' },
+            { name: 'Nagios', description: 'IT monitoring system', os: 'Cross-platform', category: 'Monitoring' },
+            { name: 'Dradis', description: 'Security assessment reporting', os: 'Cross-platform', category: 'Reporting' },
+            { name: 'ollama', description: 'Local LLM runner', os: 'Cross-platform', category: 'AI Tool' },
+            { name: 'letsencrypt.org', description: 'SSL certificate provider', os: 'Web', category: 'Certificates' },
+            { name: 'certbot', description: "Let's Encrypt client", os: 'Cross-platform', category: 'Certificates' }
+        ];
+
+        const bookmarks = [
+            // News Feeds
+            { name: 'Exploit-DB', url: 'https://www.exploit-db.com', category: 'News Feeds', purpose: 'Exploit database and vulnerability research' },
+            { name: 'Cisco Talos Blog', url: 'https://blog.talosintelligence.com', category: 'News Feeds', purpose: 'Security research and threat updates' },
+            { name: 'Threatpost', url: 'https://threatpost.com', category: 'News Feeds', purpose: 'Cybersecurity news and analysis' },
+            { name: 'Bleeping Computer', url: 'https://www.bleepingcomputer.com', category: 'News Feeds', purpose: 'Breaking cybersecurity news' },
+            { name: 'The Hacker News', url: 'https://thehackernews.com', category: 'News Feeds', purpose: 'Security and hacking news' },
+            { name: 'Hackread', url: 'https://www.hackread.com', category: 'News Feeds', purpose: 'Cybercrime and security news' },
+            { name: 'We Live Security', url: 'https://www.welivesecurity.com', category: 'News Feeds', purpose: 'ESET threat research blog' },
+            { name: 'Dark Reading', url: 'https://www.darkreading.com', category: 'News Feeds', purpose: 'Enterprise security news' },
+            { name: 'Iron Geek', url: 'https://www.irongeek.com', category: 'News Feeds', purpose: 'Security tools and tutorials' },
+            { name: 'Security Affairs', url: 'https://securityaffairs.com', category: 'News Feeds', purpose: 'Cybersecurity news' },
+            { name: 'CSO Online', url: 'https://www.csoonline.com', category: 'News Feeds', purpose: 'Chief Security Officer perspective' },
+            { name: 'Krebs on Security', url: 'https://krebsonsecurity.com', category: 'News Feeds', purpose: 'Investigative security journalism' },
+            { name: 'Hackaday', url: 'https://hackaday.com', category: 'News Feeds', purpose: 'Hardware security and hacking' },
+            { name: 'Security Boulevard', url: 'https://securityboulevard.com', category: 'News Feeds', purpose: 'Cybersecurity community news' },
+
+            // CVE Databases
+            { name: 'CVEdetails.com', url: 'https://www.cvedetails.com', category: 'CVE Databases', purpose: 'CVE vulnerability details' },
+            { name: 'CISA Known Exploited', url: 'https://www.cisa.gov/known-exploited-vulnerabilities', category: 'CVE Databases', purpose: 'Known exploited vulnerabilities' },
+            { name: 'NVD (NIST)', url: 'https://nvd.nist.gov', category: 'CVE Databases', purpose: 'National Vulnerability Database' },
+            { name: 'Vulnmachines.com', url: 'https://www.vulnmachines.com', category: 'CVE Databases', purpose: 'Vulnerability machine learning' },
+
+            // Threat Intel Platforms
+            { name: 'Pulsedive', url: 'https://pulsedive.com', category: 'Threat Intel Platforms', purpose: 'Threat intelligence search engine' },
+            { name: 'AlienVault OTX', url: 'https://otx.alienvault.com', category: 'Threat Intel Platforms', purpose: 'Open threat exchange platform' },
+            { name: 'MITRE ATT&CK', url: 'https://attack.mitre.org', category: 'Threat Intel Platforms', purpose: 'Adversary tactics framework' },
+            { name: 'ThreatFox', url: 'https://threatfox.abuse.ch', category: 'Threat Intel Platforms', purpose: 'IOC sharing platform' },
+            { name: 'IBM X-Force Exchange', url: 'https://exchange.xforce.ibmcloud.com', category: 'Threat Intel Platforms', purpose: 'IBM threat intelligence sharing' },
+            { name: 'Cisco Talos', url: 'https://talosintelligence.com', category: 'Threat Intel Platforms', purpose: 'Cisco threat intelligence' },
+            { name: 'CriminalIP', url: 'https://criminalip.io', category: 'Threat Intel Platforms', purpose: 'IP and domain threat intelligence' },
+            { name: 'HudsonRock', url: 'https://hudsonrock.com', category: 'Threat Intel Platforms', purpose: 'Data breach intelligence' },
+            { name: 'ThreatMiner', url: 'https://www.threatminer.org', category: 'Threat Intel Platforms', purpose: 'Threat intelligence and research' },
+            { name: 'The Record by Recorded Future', url: 'https://therecord.media', category: 'Threat Intel Platforms', purpose: 'Threat intelligence news' },
+            { name: 'SOC Prime', url: 'https://socprime.com', category: 'Threat Intel Platforms', purpose: 'Detection engineering platform' },
+            { name: 'Threat Map (Checkpoint)', url: 'https://threatmap.checkpoint.com', category: 'Threat Intel Platforms', purpose: 'Real-time threat visualization' },
+
+            // Malware Analysis
+            { name: 'Hybrid Analysis', url: 'https://www.hybrid-analysis.com', category: 'Malware Analysis', purpose: 'Malware analysis sandbox' },
+            { name: 'ANY.RUN', url: 'https://any.run', category: 'Malware Analysis', purpose: 'Interactive malware analysis' },
+            { name: 'Joe Sandbox', url: 'https://www.joesandbox.com', category: 'Malware Analysis', purpose: 'Malware analysis platform' },
+            { name: 'VirusShare', url: 'https://virusshare.com', category: 'Malware Analysis', purpose: 'Malware sample repository' },
+            { name: 'MalwareBazaar', url: 'https://bazaar.abuse.ch', category: 'Malware Analysis', purpose: 'Malware sample sharing' },
+            { name: 'Malpedia', url: 'https://malpedia.caad.fkie.fraunhofer.de', category: 'Malware Analysis', purpose: 'Malware knowledge base' },
+            { name: 'URLhaus', url: 'https://urlhaus.abuse.ch', category: 'Malware Analysis', purpose: 'Malicious URL database' },
+            { name: 'Malshare', url: 'https://malshare.com', category: 'Malware Analysis', purpose: 'Malware sample repository' },
+            { name: 'ReversingLabs', url: 'https://www.reversinglabs.com', category: 'Malware Analysis', purpose: 'Malware analysis platform' },
+            { name: 'Abuse.ch', url: 'https://abuse.ch', category: 'Malware Analysis', purpose: 'Malware tracking platform' },
+            { name: 'Malware Traffic Analysis', url: 'https://www.malware-traffic-analysis.net', category: 'Malware Analysis', purpose: 'PCAP analysis and malware samples' },
+            { name: 'MetaDefender', url: 'https://www.metadefender.com', category: 'Malware Analysis', purpose: 'Multi-engine malware scanning' },
+
+            // Training
+            { name: 'Offsec', url: 'https://www.offsec.com', category: 'Training', purpose: 'Penetration testing and security training' },
+            { name: 'HackerOne', url: 'https://www.hackerone.com', category: 'Training', purpose: 'Bug bounty platform' },
+            { name: 'Bugcrowd', url: 'https://www.bugcrowd.com', category: 'Training', purpose: 'Bug bounty and security research' },
+            { name: 'TryHackMe', url: 'https://tryhackme.com', category: 'Training', purpose: 'Interactive cybersecurity training' },
+            { name: 'Root-me', url: 'https://www.root-me.org', category: 'Training', purpose: 'Hacking challenges and CTF' },
+            { name: 'HackTheBox', url: 'https://www.hackthebox.com', category: 'Training', purpose: 'Penetration testing practice' },
+            { name: 'VulnHub', url: 'https://www.vulnhub.com', category: 'Training', purpose: 'Vulnerable VMs for learning' },
+            { name: 'PortSwigger', url: 'https://portswigger.net', category: 'Training', purpose: 'Web security training and tools' },
+            { name: 'Pentesterlab', url: 'https://pentesterlab.com', category: 'Training', purpose: 'Hands-on penetration testing' },
+            { name: 'Ethical Hacks Academy', url: 'https://www.ehacd.org', category: 'Training', purpose: 'Ethical hacking certification' },
+            { name: 'Kali Linux Tutorial', url: 'https://www.kali.org', category: 'Training', purpose: 'Kali Linux distribution' },
+            { name: 'Cyberhelmets Academy', url: 'https://www.cyberhelmets.com', category: 'Training', purpose: 'Cybersecurity training' },
+            { name: 'Hak5', url: 'https://hak5.org', category: 'Training', purpose: 'Security research and tools' },
+
+            // OSINT Tools
+            { name: 'SpiderFoot', url: 'https://www.spiderfoot.net', category: 'OSINT Tools', purpose: 'OSINT automation framework' },
+            { name: 'TheHarvester', url: 'https://github.com/laramies/theHarvester', category: 'OSINT Tools', purpose: 'Email and subdomain harvester' },
+            { name: 'Sublist3r', url: 'https://github.com/aboul3la/Sublist3r', category: 'OSINT Tools', purpose: 'Subdomain enumeration' },
+            { name: 'Find Subdomains', url: 'https://findsubdomains.com', category: 'OSINT Tools', purpose: 'Subdomain discovery' },
+            { name: 'SecurityTrails', url: 'https://securitytrails.com', category: 'OSINT Tools', purpose: 'Domain and IP history' },
+            { name: 'DomainTools', url: 'https://www.domaintools.com', category: 'OSINT Tools', purpose: 'Domain research platform' },
+            { name: 'crt.sh', url: 'https://crt.sh', category: 'OSINT Tools', purpose: 'Certificate transparency search' },
+            { name: 'Hunter.how', url: 'https://hunter.how', category: 'OSINT Tools', purpose: 'Email and domain finder' },
+            { name: 'Sowsearch', url: 'https://www.sowsearch.info', category: 'OSINT Tools', purpose: 'Email finder' },
+            { name: 'Phoneinfoga', url: 'https://github.com/sundowndev/phoneinfoga', category: 'OSINT Tools', purpose: 'Phone number OSINT' },
+            { name: 'Holehe', url: 'https://github.com/megadose/holehe', category: 'OSINT Tools', purpose: 'Email account enumeration' },
+            { name: 'Hunchly', url: 'https://www.hunch.ly', category: 'OSINT Tools', purpose: 'Web investigator extension' },
+            { name: 'Browserling', url: 'https://www.browserling.com', category: 'OSINT Tools', purpose: 'Live browser testing' },
+            { name: 'MXToolbox', url: 'https://mxtoolbox.com', category: 'OSINT Tools', purpose: 'MX records and DNS lookup' },
+            { name: 'Epieos', url: 'https://epieos.com', category: 'OSINT Tools', purpose: 'Email and Google Account OSINT' },
+            { name: 'Facecheck', url: 'https://www.facecheck.id', category: 'OSINT Tools', purpose: 'Reverse image and face search' },
+            { name: 'SocInvestigation', url: 'https://www.socinvestigation.com', category: 'OSINT Tools', purpose: 'Social media investigation' },
+            { name: 'Web Check', url: 'https://web-check.xyz', category: 'OSINT Tools', purpose: 'Website analysis' },
+            { name: 'MailHeader', url: 'https://mailheader.org', category: 'OSINT Tools', purpose: 'Email header analysis' },
+            { name: 'Wayback Machine', url: 'https://web.archive.org', category: 'OSINT Tools', purpose: 'Internet Archive' },
+
+            // OS Distributions
+            { name: 'Kali Linux', url: 'https://www.kali.org', category: 'OS Distributions', purpose: 'Penetration testing distribution' },
+            { name: 'Parrot Security', url: 'https://www.parrotsec.org', category: 'OS Distributions', purpose: 'Security and DFIR OS' },
+            { name: 'Ubuntu', url: 'https://ubuntu.com', category: 'OS Distributions', purpose: 'General purpose Linux' },
+            { name: 'REMnux', url: 'https://remnux.org', category: 'OS Distributions', purpose: 'Malware analysis OS' },
+
+            // Bug Bounty
+            { name: 'HackerOne', url: 'https://www.hackerone.com', category: 'Bug Bounty', purpose: 'Bug bounty platform' },
+            { name: 'Bugcrowd', url: 'https://www.bugcrowd.com', category: 'Bug Bounty', purpose: 'Crowdsourced security' },
+            { name: 'Intigriti', url: 'https://www.intigriti.com', category: 'Bug Bounty', purpose: 'Bug bounty platform' },
+            { name: 'Pentester Tools', url: 'https://tools.pentesterlab.com', category: 'Bug Bounty', purpose: 'Security research tools' },
+            { name: 'YesWeHack', url: 'https://www.yeswehack.com', category: 'Bug Bounty', purpose: 'Bug bounty platform' },
+
+            // Email Security
+            { name: 'DMARC.org (dmarcian.com)', url: 'https://dmarcian.com', category: 'Email Security', purpose: 'DMARC analyzer' },
+            { name: 'URL Scan', url: 'https://urlscan.io', category: 'Email Security', purpose: 'URL and website scanner' },
+            { name: 'PhishTank', url: 'https://phishtank.com', category: 'Email Security', purpose: 'Phishing website database' },
+            { name: 'OpenPhish', url: 'https://openphish.com', category: 'Email Security', purpose: 'Phishing detection' },
+
+            // Infrastructure Research
+            { name: 'Shodan', url: 'https://www.shodan.io', category: 'Infrastructure Research', purpose: 'Internet-connected device search' },
+            { name: 'Censys', url: 'https://censys.io', category: 'Infrastructure Research', purpose: 'Internet census data' },
+            { name: 'BGPView', url: 'https://bgpview.io', category: 'Infrastructure Research', purpose: 'BGP and ASN information' },
+            { name: 'IPinfo', url: 'https://ipinfo.io', category: 'Infrastructure Research', purpose: 'IP address information' },
+            { name: 'AbuseIPDB', url: 'https://www.abuseipdb.com', category: 'Infrastructure Research', purpose: 'IP abuse reporting' },
+            { name: 'MaxMind', url: 'https://www.maxmind.com', category: 'Infrastructure Research', purpose: 'IP geolocation' },
+            { name: 'IP2Proxy', url: 'https://www.ip2location.com/ip2proxy', category: 'Infrastructure Research', purpose: 'Proxy detection' },
+            { name: 'Fortiguard', url: 'https://fortiguard.com', category: 'Infrastructure Research', purpose: 'Threat intelligence' },
+            { name: 'BrightCloud', url: 'https://www.brightcloud.com', category: 'Infrastructure Research', purpose: 'URL categorization' },
+
+            // Specialized
+            { name: 'CRDF', url: 'https://www.cyberriskdefenseframework.com', category: 'Specialized', purpose: 'Cyber risk framework' },
+            { name: 'CIRCL.lu', url: 'https://www.circl.lu', category: 'Specialized', purpose: 'Computer Incident Response Center' },
+            { name: 'ANSSI', url: 'https://www.anssi.gouv.fr', category: 'Specialized', purpose: 'French cyber security authority' },
+            { name: 'Recorded Future', url: 'https://www.recordedfuture.com', category: 'Specialized', purpose: 'Intelligence and risk' },
+            { name: 'Wprecon', url: 'https://github.com/blackcrw/wprecon', category: 'Specialized', purpose: 'WordPress reconnaissance' },
+
+            // Breach Monitoring
+            { name: 'Have I Been Pwned', url: 'https://haveibeenpwned.com', category: 'Breach Monitoring', purpose: 'Breach notification service' },
+            { name: 'IntelX.io', url: 'https://intelx.io', category: 'Breach Monitoring', purpose: 'Dark web and leak search' },
+            { name: 'Scylla.sh', url: 'https://scylla.sh', category: 'Breach Monitoring', purpose: 'Leak database' },
+            { name: 'WhatsApp Checker', url: 'https://whatsapp.checkleaked.cc', category: 'Breach Monitoring', purpose: 'Breach database search' },
+            { name: 'Breach Database', url: 'https://www.breachdatabase.com', category: 'Breach Monitoring', purpose: 'Breach records' },
+
+            // Endpoint
+            { name: 'Windows Defender', url: 'https://www.microsoft.com/defender', category: 'Endpoint', purpose: 'Microsoft antivirus' },
+            { name: 'Sophos', url: 'https://www.sophos.com', category: 'Endpoint', purpose: 'Endpoint security' },
+            { name: 'Trend Micro', url: 'https://www.trendmicro.com', category: 'Endpoint', purpose: 'Endpoint protection' },
+
+            // Standards
+            { name: 'CIS Benchmarks', url: 'https://www.cisecurity.org/cis-benchmarks/', category: 'Standards', purpose: 'Security configuration standards' },
+            { name: 'OWASP', url: 'https://owasp.org', category: 'Standards', purpose: 'Web application security' },
+            { name: 'NIST', url: 'https://www.nist.gov/cyberframework', category: 'Standards', purpose: 'Cybersecurity framework' }
+        ];
+
+        const glossary = [
+            // Frameworks & Compliance
+            { term: 'GRC', definition: 'Governance, Risk, and Compliance — integrated approach to managing organizational governance, enterprise risk, and compliance', category: 'Frameworks & Compliance' },
+            { term: 'GDPR', definition: 'General Data Protection Regulation — EU regulation on data protection and privacy', category: 'Frameworks & Compliance' },
+            { term: 'NIS2', definition: 'Network and Information Security Directive 2 — EU directive on cybersecurity requirements', category: 'Frameworks & Compliance' },
+            { term: 'RMF', definition: 'Risk Management Framework — NIST framework for managing IT security risks', category: 'Frameworks & Compliance' },
+            { term: 'CAF', definition: 'Cloud Adoption Framework — AWS framework for cloud migration', category: 'Frameworks & Compliance' },
+            { term: 'HITRUST CSF', definition: 'Health Information Trust Alliance Common Security Framework — healthcare data security standard', category: 'Frameworks & Compliance' },
+            { term: 'ISO/IEC 31000', definition: 'International standard for risk management principles and guidelines', category: 'Frameworks & Compliance' },
+            { term: 'SCF', definition: 'Secure Cloud Foundation — cloud security best practices framework', category: 'Frameworks & Compliance' },
+            { term: 'ITIL', definition: 'Information Technology Infrastructure Library — IT service management framework', category: 'Frameworks & Compliance' },
+            { term: 'TOGAF', definition: 'The Open Group Architecture Framework — enterprise architecture methodology', category: 'Frameworks & Compliance' },
+
+            // Cloud Security
+            { term: 'CASB', definition: 'Cloud Access Security Broker — solution for monitoring cloud service usage and enforcing security policies', category: 'Cloud Security' },
+            { term: 'CCM', definition: 'Cloud Control Matrix — framework for cloud security assessment', category: 'Cloud Security' },
+            { term: 'CIEM', definition: 'Cloud Infrastructure Entitlement Management — managing cloud access permissions', category: 'Cloud Security' },
+            { term: 'CSA', definition: 'Cloud Security Alliance — organization promoting cloud security best practices', category: 'Cloud Security' },
+            { term: 'CWPP', definition: 'Cloud Workload Protection Platform — security solution for cloud-based workloads', category: 'Cloud Security' },
+
+            // Identity & Access
+            { term: 'PAM', definition: 'Privileged Access Management — controlling and monitoring privileged user access', category: 'Identity & Access' },
+            { term: 'ITDR', definition: 'Identity Threat Detection and Response — detecting and responding to identity-based attacks', category: 'Identity & Access' },
+            { term: 'IdP', definition: 'Identity Provider — service for authenticating and managing user identities', category: 'Identity & Access' },
+            { term: 'JIT', definition: 'Just-In-Time access — granting temporary elevated permissions as needed', category: 'Identity & Access' },
+            { term: 'NTLM', definition: 'New Technology LAN Manager — Windows authentication protocol', category: 'Identity & Access' },
+            { term: 'RDAP', definition: 'Registration Data Access Protocol — protocol for querying domain registration data', category: 'Identity & Access' },
+
+            // Threat Detection
+            { term: 'LOLBIN', definition: 'Living Off The Land Binaries — legitimate system tools exploited for attacks', category: 'Threat Detection' },
+            { term: 'STIX', definition: 'Structured Threat Information Expression — format for sharing threat intelligence', category: 'Threat Detection' },
+            { term: 'MITRE D3FEND', definition: 'MITRE framework for defensive techniques and approaches', category: 'Threat Detection' },
+            { term: 'MITRE ATLAS', definition: 'MITRE Adversarial Threat Landscape for Artificial-Intelligence Systems', category: 'Threat Detection' },
+            { term: 'MITRE ENGENUITY', definition: 'MITRE framework for adversary emulation and attack simulation', category: 'Threat Detection' },
+            { term: 'MBC', definition: 'Malware Behavior Catalog — framework for analyzing malware behaviors', category: 'Threat Detection' },
+            { term: 'MAEC', definition: 'Malware Attribute Enumeration and Characterization — standard for malware analysis', category: 'Threat Detection' },
+            { term: 'VMDR', definition: 'Vulnerability Management, Detection, and Response — integrated vulnerability management', category: 'Threat Detection' },
+            { term: 'S/MIME', definition: 'Secure/Multipurpose Internet Mail Extensions — email encryption standard', category: 'Threat Detection' },
+
+            // Network
+            { term: 'NGFW', definition: 'Next-Generation Firewall — advanced firewall with application-aware filtering', category: 'Network' },
+            { term: 'DANE', definition: 'DNS-based Authentication of Named Entities — securing DNS with TLSA records', category: 'Network' },
+            { term: 'DoT', definition: 'DNS over HTTPS or DNS over TLS — encrypting DNS queries', category: 'Network' },
+            { term: 'SNMP', definition: 'Simple Network Management Protocol — network device monitoring protocol', category: 'Network' },
+            { term: 'NTP', definition: 'Network Time Protocol — time synchronization protocol', category: 'Network' },
+            { term: 'NFAT', definition: 'Network Flow Analysis Tool — analyzing network traffic patterns', category: 'Network' },
+
+            // Forensics & IR
+            { term: 'DFIR', definition: 'Digital Forensics and Incident Response — analyzing digital evidence and responding to incidents', category: 'Forensics & IR' },
+            { term: 'BIA', definition: 'Business Impact Analysis — assessing impact of security incidents on business', category: 'Forensics & IR' },
+            { term: 'CIRT', definition: 'Computer Incident Response Team — team responding to security incidents', category: 'Forensics & IR' },
+
+            // Vulnerability
+            { term: 'ASR', definition: 'Attack Surface Reduction — reducing avenues for attacks', category: 'Vulnerability' },
+            { term: 'CPE', definition: 'Common Platform Enumeration — standardized naming for software platforms', category: 'Vulnerability' },
+            { term: 'SBoM', definition: 'Software Bill of Materials — inventory of software components and dependencies', category: 'Vulnerability' },
+            { term: 'VPR', definition: 'Vulnerability Priority Rating — prioritizing vulnerabilities for remediation', category: 'Vulnerability' },
+
+            // Encryption
+            { term: 'AES', definition: 'Advanced Encryption Standard — symmetric encryption algorithm', category: 'Encryption' },
+            { term: 'TPM', definition: 'Trusted Platform Module — hardware for secure cryptographic operations', category: 'Encryption' }
+        ];
+
+        // Render functions
+        function renderTools(toolsToRender = tools) {
+            const grid = document.getElementById('toolsGrid');
+            const noResults = document.getElementById('toolsNoResults');
+
+            if (toolsToRender.length === 0) {
+                grid.innerHTML = '';
+                noResults.classList.remove('hidden');
+                return;
+            }
+
+            noResults.classList.add('hidden');
+            grid.innerHTML = toolsToRender.map(tool => `
+                <div class="tool-card">
+                    <div class="tool-name">${escapeHtml(tool.name)}</div>
+                    <div class="tool-description">${escapeHtml(tool.description)}</div>
+                    <div class="tool-meta">
+                        <span class="badge">${escapeHtml(tool.category)}</span>
+                        <span class="badge green">${escapeHtml(tool.os)}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderBookmarks(bookmarksToRender = bookmarks) {
+            const grid = document.getElementById('bookmarksGrid');
+            const noResults = document.getElementById('bookmarksNoResults');
+
+            if (bookmarksToRender.length === 0) {
+                grid.innerHTML = '';
+                noResults.classList.remove('hidden');
+                return;
+            }
+
+            noResults.classList.add('hidden');
+            grid.innerHTML = bookmarksToRender.map(bm => `
+                <div class="bookmark-card">
+                    <div class="bookmark-name">${escapeHtml(bm.name)}</div>
+                    <div class="bookmark-purpose">${escapeHtml(bm.purpose)}</div>
+                    <a href="${escapeHtml(bm.url)}" target="_blank" rel="noopener noreferrer" class="bookmark-url">${escapeHtml(bm.url.replace('https://', '').replace('http://', ''))}</a>
+                    <div class="tool-meta" style="margin-top: 1rem;">
+                        <span class="badge magenta">${escapeHtml(bm.category)}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderGlossary(glossaryToRender = glossary) {
+            const grid = document.getElementById('glossaryGrid');
+            const noResults = document.getElementById('glossaryNoResults');
+
+            if (glossaryToRender.length === 0) {
+                grid.innerHTML = '';
+                noResults.classList.remove('hidden');
+                return;
+            }
+
+            noResults.classList.add('hidden');
+            grid.innerHTML = glossaryToRender.map(item => `
+                <div class="glossary-card">
+                    <div class="glossary-term">${escapeHtml(item.term)}</div>
+                    <div class="glossary-definition">${escapeHtml(item.definition)}</div>
+                    <div class="tool-meta" style="margin-top: 1rem;">
+                        <span class="badge" style="border-color: var(--purple); color: var(--purple); background: rgba(160, 0, 255, 0.1);">${escapeHtml(item.category)}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Filter functions
+        function filterTools() {
+            const categoryFilter = document.getElementById('categoryFilter').value;
+            const osFilter = document.getElementById('osFilter').value;
+            const searchTerm = document.getElementById('globalSearch').value.toLowerCase();
+
+            let filtered = tools.filter(tool => {
+                const matchesCategory = !categoryFilter || tool.category === categoryFilter;
+                const matchesOS = !osFilter || tool.os === osFilter;
+                const matchesSearch = !searchTerm ||
+                    tool.name.toLowerCase().includes(searchTerm) ||
+                    tool.description.toLowerCase().includes(searchTerm) ||
+                    tool.category.toLowerCase().includes(searchTerm);
+
+                return matchesCategory && matchesOS && matchesSearch;
+            });
+
+            renderTools(filtered);
+        }
+
+        function filterBookmarks() {
+            const categoryFilter = document.getElementById('bookmarkCategoryFilter').value;
+            const searchTerm = document.getElementById('globalSearch').value.toLowerCase();
+
+            let filtered = bookmarks.filter(bm => {
+                const matchesCategory = !categoryFilter || bm.category === categoryFilter;
+                const matchesSearch = !searchTerm ||
+                    bm.name.toLowerCase().includes(searchTerm) ||
+                    bm.purpose.toLowerCase().includes(searchTerm) ||
+                    bm.url.toLowerCase().includes(searchTerm) ||
+                    bm.category.toLowerCase().includes(searchTerm);
+
+                return matchesCategory && matchesSearch;
+            });
+
+            renderBookmarks(filtered);
+        }
+
+        function filterGlossary() {
+            const categoryFilter = document.getElementById('glossaryCategoryFilter').value;
+            const searchTerm = document.getElementById('globalSearch').value.toLowerCase();
+
+            let filtered = glossary.filter(item => {
+                const matchesCategory = !categoryFilter || item.category === categoryFilter;
+                const matchesSearch = !searchTerm ||
+                    item.term.toLowerCase().includes(searchTerm) ||
+                    item.definition.toLowerCase().includes(searchTerm) ||
+                    item.category.toLowerCase().includes(searchTerm);
+
+                return matchesCategory && matchesSearch;
+            });
+
+            renderGlossary(filtered);
+        }
+
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, m => map[m]);
+        }
+
+        // Tab switching
+        function switchTab(tabName) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+
+            document.getElementById(tabName).classList.add('active');
+            event?.target?.classList.add('active');
+
+            // Find and activate the correct button
+            document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+        }
+
+        // Event listeners
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                switchTab(e.target.dataset.tab);
+            });
+        });
+
+        document.getElementById('globalSearch').addEventListener('input', () => {
+            const activeSection = document.querySelector('.section.active');
+            if (activeSection.id === 'tools') filterTools();
+            if (activeSection.id === 'bookmarks') filterBookmarks();
+            if (activeSection.id === 'glossary') filterGlossary();
+        });
+
+        // Initial render
+        renderTools();
+        renderBookmarks();
+        renderGlossary();
+    </script>
 </body>
 </html>
