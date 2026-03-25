@@ -1166,3 +1166,21 @@ fieldset.filter-chips {
         display: none;
     }
 }
+
+/* ===== Skip Link ===== */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--accent-color);
+    color: var(--bg-color);
+    padding: 8px;
+    z-index: 2000;
+    transition: top 0.2s ease-in-out;
+}
+
+.skip-link:focus {
+    top: 0;
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+}
