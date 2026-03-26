@@ -15,7 +15,7 @@ We currently support the following versions with security updates:
 
 If you discover a security vulnerability within this project, please report it via one of the following methods:
 
-1.  **Email:** [Add your security email here or use a secure contact method]
+1.  **Email:** timvanmaurik7@gmail.com
 2.  **GitHub Private Reporting:** Use the "Report a vulnerability" button in the Security tab of this repository.
 
 Please include the following in your report:
@@ -29,4 +29,4 @@ We will acknowledge receipt of your report within 48 hours and provide a timelin
 
 - **No PII:** Never commit Personally Identifiable Information (PII) or real-world credentials.
 - **Sanitize Links:** Ensure all external links point to official, verified security resources.
-- **Zero Trust:** Adhere to the "Assume Breach" mentality—don't trust inputs even if they originate from within the repo.
+- **Zero Trust:** Adhere to the "Assume Breach" mentality — don't trust inputs even if they originate from within the repo.
