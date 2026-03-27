@@ -700,7 +700,7 @@
                 <li><a href="#training" class="nav-link">Training</a></li>
             </ul>
             <div class="search-bar">
-                <input type="text" class="search-input" id="globalSearch" placeholder="Search all sections...">
+                <input type="text" class="search-input" id="globalSearch" placeholder="Search all sections..." aria-label="Search all sections...">
             </div>
         </div>
     </nav>
@@ -740,7 +740,7 @@
         </div>
     </section>
 
-    <div class="container">
+    <main id="main-content" class="container" tabindex="-1">
         <!-- Tools Section -->
         <section class="section" id="tools">
             <h2 class="section-title">Security Tools (187)</h2>
@@ -814,7 +814,7 @@
             <h2 class="section-title">Training & Courses (90+)</h2>
             <div id="trainingContainer"></div>
         </section>
-    </div>
+    </main>
 
     <!-- Footer -->
     <footer>
@@ -878,14 +878,24 @@
             let html = '';
             Object.keys(grouped).sort().forEach(cat => {
                 const courses = grouped[cat];
-                html += `<div class="training-category"><div class="category-header collapsed" onclick="toggleCategory(this)">${cat} (${courses.length})</div><div class="training-grid" style="display:none;">${courses.map(c => {const d = c.difficulty.toLowerCase()==='easy'?'difficulty-easy':c.difficulty.toLowerCase()==='medium'?'difficulty-medium':'difficulty-hard'; return `<div class="training-card" data-searchable="${(c.name+' '+c.platform+' '+c.techniques).toLowerCase()}"><div class="training-name">${c.name}</div><div class="training-platform">${c.platform}</div><div class="difficulty-badge ${d}">${c.difficulty}</div><div class="training-techniques">${c.techniques}</div></div>`; }).join('')}</div></div>`;
+                html += `<div class="training-category"><div class="category-header collapsed" role="button" tabindex="0" aria-expanded="false" onclick="toggleCategory(this)">${cat} (${courses.length})</div><div class="training-grid" style="display:none;">${courses.map(c => {const d = c.difficulty.toLowerCase()==='easy'?'difficulty-easy':c.difficulty.toLowerCase()==='medium'?'difficulty-medium':'difficulty-hard'; return `<div class="training-card" data-searchable="${(c.name+' '+c.platform+' '+c.techniques).toLowerCase()}"><div class="training-name">${c.name}</div><div class="training-platform">${c.platform}</div><div class="difficulty-badge ${d}">${c.difficulty}</div><div class="training-techniques">${c.techniques}</div></div>`; }).join('')}</div></div>`;
             });
             document.getElementById('trainingContainer').innerHTML = html;
+
+            document.querySelectorAll('#trainingContainer .category-header').forEach(header => {
+                header.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        toggleCategory(header);
+                    }
+                });
+            });
         }
 
         function toggleCategory(h) {
             h.classList.toggle('collapsed');
             h.nextElementSibling.style.display = h.nextElementSibling.style.display==='none'?'grid':'none';
+            h.setAttribute('aria-expanded', h.getAttribute('aria-expanded') === 'true' ? 'false' : 'true');
         }
 
         function setupToolFilters() {
