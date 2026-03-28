@@ -22,8 +22,17 @@ document.addEventListener('DOMContentLoaded', () => {
             // If there's a strong match, go to the first result
             window.location.href = results[0].url;
         } else {
-            // Fallback to Google Search for the site if no internal match
-            window.location.href = `https://www.google.com/search?q=site:zero-trust.pw+${encodeURIComponent(query)}`;
+            // Show "no results" message instead of leaking queries to Google
+            const searchContainer = document.querySelector('.search-container') || document.body;
+            let noResults = document.getElementById('no-results-msg');
+            if (!noResults) {
+                noResults = document.createElement('div');
+                noResults.id = 'no-results-msg';
+                noResults.style.cssText = 'padding: 1rem; margin-top: 1rem; text-align: center; color: var(--text-secondary, #aaa); border: 1px solid var(--border-color, #333); border-radius: 8px;';
+                searchContainer.appendChild(noResults);
+            }
+            noResults.textContent = `No results found for "${query}". Try a different search term.`;
+            noResults.style.display = 'block';
         }
     }
 });
