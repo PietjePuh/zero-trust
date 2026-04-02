@@ -684,6 +684,18 @@
             color: var(--text-secondary);
             font-family: 'JetBrains Mono', monospace;
         }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
     </style>
 </head>
 <body>
@@ -700,7 +712,7 @@
                 <li><a href="#training" class="nav-link">Training</a></li>
             </ul>
             <div class="search-bar">
-                <input type="text" class="search-input" id="globalSearch" placeholder="Search all sections..." aria-label="Search all sections...">
+                <input type="text" class="search-input" id="globalSearch" placeholder="Search all sections... (Press '/')" aria-label="Search all sections...">
             </div>
         </div>
     </nav>
@@ -925,11 +937,32 @@
         }
 
         function setupGlobalSearch() {
-            document.getElementById('globalSearch').addEventListener('input', (e) => {
+            const searchInput = document.getElementById('globalSearch');
+
+            // Create accessible live region for search results
+            const announcement = document.createElement('div');
+            announcement.className = 'sr-only';
+            announcement.setAttribute('aria-live', 'polite');
+            searchInput.parentNode.appendChild(announcement);
+
+            searchInput.addEventListener('input', (e) => {
                 const q = e.target.value.toLowerCase();
+                let count = 0;
                 document.querySelectorAll('[data-searchable]').forEach(el => {
-                    el.style.display = !q || el.dataset.searchable.includes(q) ? '':'none';
+                    const match = !q || el.dataset.searchable.includes(q);
+                    el.style.display = match ? '' : 'none';
+                    if (match) count++;
                 });
+                announcement.textContent = q ? `${count} results found.` : '';
+            });
+
+            // Keyboard shortcut for search discoverability
+            document.addEventListener('keydown', (e) => {
+                const activeTag = document.activeElement.tagName;
+                if (e.key === '/' && activeTag !== 'INPUT' && activeTag !== 'TEXTAREA') {
+                    e.preventDefault();
+                    searchInput.focus();
+                }
             });
         }
 
