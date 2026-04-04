@@ -129,6 +129,18 @@
             box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
         }
 
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
         /* Hero Section */
         .hero {
             min-height: 500px;
@@ -700,7 +712,8 @@
                 <li><a href="#training" class="nav-link">Training</a></li>
             </ul>
             <div class="search-bar">
-                <input type="text" class="search-input" id="globalSearch" placeholder="Search all sections..." aria-label="Search all sections...">
+                <input type="text" class="search-input" id="globalSearch" placeholder="Search all sections... (Press '/')" aria-label="Search all sections...">
+                <div id="searchAnnouncement" class="sr-only" aria-live="polite"></div>
             </div>
         </div>
     </nav>
@@ -741,6 +754,8 @@
     </section>
 
     <main id="main-content" class="container" tabindex="-1">
+        <div id="noResultsMsg" class="no-results hidden">No results found matching your search.</div>
+
         <!-- Tools Section -->
         <section class="section" id="tools">
             <h2 class="section-title">Security Tools (187)</h2>
@@ -925,11 +940,57 @@
         }
 
         function setupGlobalSearch() {
-            document.getElementById('globalSearch').addEventListener('input', (e) => {
+            const searchInput = document.getElementById('globalSearch');
+            const searchAnnouncement = document.getElementById('searchAnnouncement');
+            const noResultsMsg = document.getElementById('noResultsMsg');
+
+            // Keyboard shortcut to focus search
+            document.addEventListener('keydown', (e) => {
+                const activeTag = document.activeElement.tagName;
+                if (e.key === '/' && activeTag !== 'INPUT' && activeTag !== 'TEXTAREA') {
+                    e.preventDefault();
+                    searchInput.focus();
+                }
+            });
+
+            searchInput.addEventListener('input', (e) => {
                 const q = e.target.value.toLowerCase();
+                let totalVisible = 0;
+
+                // Filter items
                 document.querySelectorAll('[data-searchable]').forEach(el => {
-                    el.style.display = !q || el.dataset.searchable.includes(q) ? '':'none';
+                    if (!q || el.dataset.searchable.includes(q)) {
+                        el.style.display = '';
+                        totalVisible++;
+                    } else {
+                        el.style.display = 'none';
+                    }
                 });
+
+                // Hide empty sections and training categories
+                document.querySelectorAll('.section').forEach(section => {
+                    const hasVisibleItems = Array.from(section.querySelectorAll('[data-searchable]')).some(el => el.style.display !== 'none');
+                    section.style.display = (!q || hasVisibleItems) ? '' : 'none';
+                });
+
+                document.querySelectorAll('.training-category').forEach(cat => {
+                    const hasVisibleItems = Array.from(cat.querySelectorAll('[data-searchable]')).some(el => el.style.display !== 'none');
+                    cat.style.display = (!q || hasVisibleItems) ? '' : 'none';
+                });
+
+                // Toggle No Results Message
+                if (q && totalVisible === 0) {
+                    noResultsMsg.classList.remove('hidden');
+                } else {
+                    noResultsMsg.classList.add('hidden');
+                }
+
+                // Announce results to screen readers
+                if (q) {
+                    searchAnnouncement.textContent = totalVisible === 0 ? 'No results found.' : `${totalVisible} results found.`;
+                } else {
+                    searchAnnouncement.textContent = '';
+                }
             });
         }
 
