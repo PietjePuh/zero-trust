@@ -59,3 +59,7 @@
 ## 2024-03-24 - Sticky Header Anchor Offset
 **Learning:** When using sticky headers, native anchor links (`<a href="#section">`) cause the target element to scroll underneath the header, hiding content and disorienting users.
 **Action:** Always pair `position: sticky` headers with `scroll-padding-top` on the `html` element to offset the scroll position, and add `scroll-behavior: smooth` for better context.
+
+## 2026-04-06 - Incomplete Feature Implementations
+**Learning:** When replicating UI components across different sections (like adding glossary filters that mirror tool filters), the corresponding JavaScript logic is often forgotten, leaving the new interactive elements visually complete but functionally disconnected.
+**Action:** When adding or discovering repetitive UI components (e.g., filter buttons), always ensure the corresponding JavaScript event listeners and state management logic are implemented and initialized correctly.
