@@ -59,3 +59,6 @@
 ## 2024-03-24 - Sticky Header Anchor Offset
 **Learning:** When using sticky headers, native anchor links (`<a href="#section">`) cause the target element to scroll underneath the header, hiding content and disorienting users.
 **Action:** Always pair `position: sticky` headers with `scroll-padding-top` on the `html` element to offset the scroll position, and add `scroll-behavior: smooth` for better context.
+## 2026-04-07 - Empty State and Keyboard Discoverability for Global Search
+**Learning:** Implementing visual empty states and an ARIA live region `searchAnnouncer` significantly improves context for screen reader users and visual users when filtering static lists yields no results. Additionally, keyboard shortcut hints (like `Press '/'`) increase discoverability, provided there are proper checks to prevent interfering with active inputs.
+**Action:** Use an ARIA live region paired with an empty state element (hidden by default) whenever building real-time client-side filters. For keyboard shortcuts, always verify `document.activeElement.tagName` against `['INPUT', 'TEXTAREA']` before triggering.
