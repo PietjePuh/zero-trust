@@ -684,6 +684,19 @@
             color: var(--text-secondary);
             font-family: 'JetBrains Mono', monospace;
         }
+
+        /* Screen reader only */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
     </style>
 </head>
 <body>
@@ -700,7 +713,7 @@
                 <li><a href="#training" class="nav-link">Training</a></li>
             </ul>
             <div class="search-bar">
-                <input type="text" class="search-input" id="globalSearch" placeholder="Search all sections..." aria-label="Search all sections...">
+                <input type="text" class="search-input" id="globalSearch" placeholder="Search all sections... (Press '/')" aria-label="Search all sections... (Press '/')">
             </div>
         </div>
     </nav>
@@ -814,6 +827,12 @@
             <h2 class="section-title">Training & Courses (90+)</h2>
             <div id="trainingContainer"></div>
         </section>
+
+        <!-- No Results Message -->
+        <div id="noResults" class="hidden no-results">No results found for your search.</div>
+
+        <!-- Search Announcer -->
+        <div id="searchAnnouncer" class="sr-only" aria-live="polite"></div>
     </main>
 
     <!-- Footer -->
@@ -925,11 +944,39 @@
         }
 
         function setupGlobalSearch() {
-            document.getElementById('globalSearch').addEventListener('input', (e) => {
+            const searchInput = document.getElementById('globalSearch');
+            const noResultsMsg = document.getElementById('noResults');
+            const searchAnnouncer = document.getElementById('searchAnnouncer');
+
+            searchInput.addEventListener('input', (e) => {
                 const q = e.target.value.toLowerCase();
+                let visibleCount = 0;
+
                 document.querySelectorAll('[data-searchable]').forEach(el => {
-                    el.style.display = !q || el.dataset.searchable.includes(q) ? '':'none';
+                    const isVisible = !q || el.dataset.searchable.includes(q);
+                    el.style.display = isVisible ? '':'none';
+                    if (isVisible) visibleCount++;
                 });
+
+                if (q && visibleCount === 0) {
+                    noResultsMsg.classList.remove('hidden');
+                    searchAnnouncer.textContent = 'No results found.';
+                } else {
+                    noResultsMsg.classList.add('hidden');
+                    if (q) {
+                        searchAnnouncer.textContent = `${visibleCount} result${visibleCount === 1 ? '' : 's'} found.`;
+                    } else {
+                        searchAnnouncer.textContent = '';
+                    }
+                }
+            });
+
+            document.addEventListener('keydown', (e) => {
+                const activeTag = document.activeElement.tagName;
+                if (e.key === '/' && activeTag !== 'INPUT' && activeTag !== 'TEXTAREA') {
+                    e.preventDefault();
+                    searchInput.focus();
+                }
             });
         }
 
