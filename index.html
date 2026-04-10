@@ -700,7 +700,7 @@
                 <li><a href="#training" class="nav-link">Training</a></li>
             </ul>
             <div class="search-bar">
-                <input type="text" class="search-input" id="globalSearch" placeholder="Search all sections..." aria-label="Search all sections...">
+                <input type="text" class="search-input" id="globalSearch" placeholder="Search all sections... (Press '/')" aria-label="Search all sections...">
             </div>
         </div>
     </nav>
@@ -934,6 +934,14 @@
         }
 
         function setupNavigation() {
+            document.addEventListener('keydown', (e) => {
+                const activeTag = document.activeElement.tagName;
+                if (e.key === '/' && activeTag !== 'INPUT' && activeTag !== 'TEXTAREA') {
+                    e.preventDefault();
+                    document.getElementById('globalSearch').focus();
+                }
+            });
+
             const links = document.querySelectorAll('.nav-link');
             const cards = document.querySelectorAll('.stat-card');
             [...links, ...cards].forEach(link => {
