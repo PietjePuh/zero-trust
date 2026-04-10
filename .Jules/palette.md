@@ -59,3 +59,7 @@
 ## 2024-03-24 - Sticky Header Anchor Offset
 **Learning:** When using sticky headers, native anchor links (`<a href="#section">`) cause the target element to scroll underneath the header, hiding content and disorienting users.
 **Action:** Always pair `position: sticky` headers with `scroll-padding-top` on the `html` element to offset the scroll position, and add `scroll-behavior: smooth` for better context.
+
+## 2024-05-19 - Keyboard shortcut discoverability
+**Learning:** Adding a global search shortcut ('/') is great for power users, but discoverability is essential. Users need subtle visual hints (like placeholder text updates) to know the shortcut exists.
+**Action:** When adding global accessibility shortcuts in the future, always accompany them with visual hints in empty states or placeholders so they are discoverable without requiring users to read external documentation.
