@@ -63,3 +63,6 @@
 ## 2024-05-19 - Keyboard shortcut discoverability
 **Learning:** Adding a global search shortcut ('/') is great for power users, but discoverability is essential. Users need subtle visual hints (like placeholder text updates) to know the shortcut exists.
 **Action:** When adding global accessibility shortcuts in the future, always accompany them with visual hints in empty states or placeholders so they are discoverable without requiring users to read external documentation.
+## 2026-04-11 - Static Aria-Pressed States Out of Sync
+**Learning:** When using hardcoded `aria-pressed` states in HTML for initially active filter buttons, these states immediately become stale when a user selects a different option, unless JavaScript updates them dynamically. Having incorrect ARIA states is worse than having none at all, as it misleads screen reader users.
+**Action:** When adding `aria-pressed` to static HTML elements, always ensure there is a corresponding JavaScript listener that toggles these states during interactions.
