@@ -63,3 +63,7 @@
 ## 2024-05-19 - Keyboard shortcut discoverability
 **Learning:** Adding a global search shortcut ('/') is great for power users, but discoverability is essential. Users need subtle visual hints (like placeholder text updates) to know the shortcut exists.
 **Action:** When adding global accessibility shortcuts in the future, always accompany them with visual hints in empty states or placeholders so they are discoverable without requiring users to read external documentation.
+
+## 2026-03-12 - Missing Accessible Filter Group Context
+**Learning:** Static site filters using standard buttons often lack the semantic grouping and dynamic state required by screen readers, and sometimes filter logic is entirely missing (e.g., the glossary filter).
+**Action:** Always wrap filter buttons in a container with `role="group"` and `aria-label`, ensure active states are communicated using `aria-pressed`, and verify the corresponding JavaScript implements the matching dynamic update behavior.
