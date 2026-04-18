@@ -63,3 +63,6 @@
 ## 2024-05-19 - Keyboard shortcut discoverability
 **Learning:** Adding a global search shortcut ('/') is great for power users, but discoverability is essential. Users need subtle visual hints (like placeholder text updates) to know the shortcut exists.
 **Action:** When adding global accessibility shortcuts in the future, always accompany them with visual hints in empty states or placeholders so they are discoverable without requiring users to read external documentation.
+## 2026-03-12 - Explicit Category Filter State ARIA
+**Learning:** Static lists on index pages that use custom button groups for categories often only use visual classes (.active) to indicate state, which fails to convey meaning to screen readers.
+**Action:** Always wrap these buttons in a container with role="group" and an aria-label, and ensure their individual selection states are programmatically managed using the aria-pressed attribute toggled via JavaScript.
