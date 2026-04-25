@@ -684,6 +684,18 @@
             color: var(--text-secondary);
             font-family: 'JetBrains Mono', monospace;
         }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
     </style>
 </head>
 <body>
@@ -741,6 +753,9 @@
     </section>
 
     <main id="main-content" class="container" tabindex="-1">
+        <div id="noResults" class="no-results hidden">No results found matching your criteria.</div>
+        <div id="searchAnnouncement" class="sr-only" aria-live="polite"></div>
+
         <!-- Tools Section -->
         <section class="section" id="tools">
             <h2 class="section-title">Security Tools (187)</h2>
@@ -925,11 +940,45 @@
         }
 
         function setupGlobalSearch() {
-            document.getElementById('globalSearch').addEventListener('input', (e) => {
+            const searchInput = document.getElementById('globalSearch');
+            const noResults = document.getElementById('noResults');
+            const searchAnnouncement = document.getElementById('searchAnnouncement');
+            const sections = document.querySelectorAll('.section');
+
+            searchInput.addEventListener('input', (e) => {
                 const q = e.target.value.toLowerCase();
-                document.querySelectorAll('[data-searchable]').forEach(el => {
-                    el.style.display = !q || el.dataset.searchable.includes(q) ? '':'none';
+                let totalVisible = 0;
+
+                sections.forEach(section => {
+                    let sectionVisible = 0;
+                    const items = section.querySelectorAll('[data-searchable]');
+
+                    items.forEach(el => {
+                        const isMatch = !q || el.dataset.searchable.includes(q);
+                        el.style.display = isMatch ? '' : 'none';
+                        if (isMatch) {
+                            sectionVisible++;
+                            totalVisible++;
+                        }
+                    });
+
+                    // Hide section if no items match inside it
+                    if (sectionVisible === 0 && items.length > 0) {
+                        section.style.display = 'none';
+                    } else {
+                        section.style.display = '';
+                    }
                 });
+
+                // Handle empty state
+                if (totalVisible === 0) {
+                    noResults.classList.remove('hidden');
+                } else {
+                    noResults.classList.add('hidden');
+                }
+
+                // Announce results to screen readers
+                searchAnnouncement.textContent = totalVisible > 0 ? totalVisible + " items found." : "No results found.";
             });
         }
 
