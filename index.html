@@ -684,6 +684,18 @@
             color: var(--text-secondary);
             font-family: 'JetBrains Mono', monospace;
         }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
     </style>
 </head>
 <body>
@@ -701,6 +713,7 @@
             </ul>
             <div class="search-bar">
                 <input type="text" class="search-input" id="globalSearch" placeholder="Search all sections... (Press '/')" aria-label="Search all sections...">
+                <div id="globalSearchAnnouncement" class="sr-only" aria-live="polite"></div>
             </div>
         </div>
     </nav>
@@ -925,11 +938,69 @@
         }
 
         function setupGlobalSearch() {
+            // Add a global no-results message container to main-content
+            const mainContent = document.getElementById('main-content');
+            const noResultsMsg = document.createElement('div');
+            noResultsMsg.id = 'globalNoResults';
+            noResultsMsg.className = 'no-results hidden';
+            noResultsMsg.style.display = 'none';
+            noResultsMsg.style.textAlign = 'center';
+            noResultsMsg.style.padding = '2rem';
+            noResultsMsg.style.color = 'var(--text-secondary)';
+            noResultsMsg.innerHTML = '<h3>No results found</h3><p>Try adjusting your search terms.</p>';
+            mainContent.appendChild(noResultsMsg);
+
+            const announcement = document.getElementById('globalSearchAnnouncement');
+
             document.getElementById('globalSearch').addEventListener('input', (e) => {
                 const q = e.target.value.toLowerCase();
-                document.querySelectorAll('[data-searchable]').forEach(el => {
-                    el.style.display = !q || el.dataset.searchable.includes(q) ? '':'none';
+                let totalVisible = 0;
+
+                // Track visibility per section to hide empty sections
+                const sectionMap = new Map();
+
+                document.querySelectorAll('.section').forEach(sec => {
+                    sectionMap.set(sec, 0); // Initialize with 0 visible items
                 });
+
+                document.querySelectorAll('[data-searchable]').forEach(el => {
+                    const isVisible = !q || el.dataset.searchable.includes(q);
+                    el.style.display = isVisible ? '' : 'none';
+
+                    if (isVisible) {
+                        totalVisible++;
+                        const parentSection = el.closest('.section');
+                        if (parentSection) {
+                            sectionMap.set(parentSection, sectionMap.get(parentSection) + 1);
+                        }
+                    }
+                });
+
+                // Hide sections with no visible results
+                if (q) {
+                    sectionMap.forEach((visibleCount, section) => {
+                        section.style.display = visibleCount > 0 ? '' : 'none';
+                    });
+                } else {
+                    // Reset sections when search is empty
+                    document.querySelectorAll('.section').forEach(sec => {
+                        sec.style.display = '';
+                    });
+                }
+
+                // Show/hide no results message
+                if (q && totalVisible === 0) {
+                    noResultsMsg.style.display = 'block';
+                } else {
+                    noResultsMsg.style.display = 'none';
+                }
+
+                // Update screen reader announcement
+                if (q) {
+                    announcement.textContent = totalVisible > 0 ? totalVisible + ' results found.' : 'No results found.';
+                } else {
+                    announcement.textContent = '';
+                }
             });
         }
 
