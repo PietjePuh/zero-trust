@@ -745,19 +745,19 @@
         <section class="section" id="tools">
             <h2 class="section-title">Security Tools (187)</h2>
 
-            <div class="filter-buttons" id="toolFilters">
-                <button class="filter-btn active" data-filter="all">All Tools</button>
-                <button class="filter-btn" data-filter="Password Cracking">Password Cracking</button>
-                <button class="filter-btn" data-filter="Network Scanning">Network Scanning</button>
-                <button class="filter-btn" data-filter="Web Application Security">Web Security</button>
-                <button class="filter-btn" data-filter="Network Analysis">Network Analysis</button>
-                <button class="filter-btn" data-filter="Malware Analysis">Malware Analysis</button>
-                <button class="filter-btn" data-filter="Digital Forensics">Forensics</button>
-                <button class="filter-btn" data-filter="OSINT & Recon">OSINT</button>
-                <button class="filter-btn" data-filter="Vulnerability Assessment">Vulnerability</button>
-                <button class="filter-btn" data-filter="Wireless Security">Wireless</button>
-                <button class="filter-btn" data-filter="Cloud & Infrastructure">Cloud</button>
-                <button class="filter-btn" data-filter="Exploitation">Exploitation</button>
+            <div class="filter-buttons" id="toolFilters" role="group" aria-label="Filter tools by category">
+                <button class="filter-btn active" data-filter="all" aria-pressed="true">All Tools</button>
+                <button class="filter-btn" data-filter="Password Cracking" aria-pressed="false">Password Cracking</button>
+                <button class="filter-btn" data-filter="Network Scanning" aria-pressed="false">Network Scanning</button>
+                <button class="filter-btn" data-filter="Web Application Security" aria-pressed="false">Web Security</button>
+                <button class="filter-btn" data-filter="Network Analysis" aria-pressed="false">Network Analysis</button>
+                <button class="filter-btn" data-filter="Malware Analysis" aria-pressed="false">Malware Analysis</button>
+                <button class="filter-btn" data-filter="Digital Forensics" aria-pressed="false">Forensics</button>
+                <button class="filter-btn" data-filter="OSINT & Recon" aria-pressed="false">OSINT</button>
+                <button class="filter-btn" data-filter="Vulnerability Assessment" aria-pressed="false">Vulnerability</button>
+                <button class="filter-btn" data-filter="Wireless Security" aria-pressed="false">Wireless</button>
+                <button class="filter-btn" data-filter="Cloud & Infrastructure" aria-pressed="false">Cloud</button>
+                <button class="filter-btn" data-filter="Exploitation" aria-pressed="false">Exploitation</button>
             </div>
 
             <div class="tools-container" id="toolsContainer"></div>
@@ -773,15 +773,15 @@
         <section class="section" id="bookmarks">
             <h2 class="section-title">Threat Intelligence Bookmarks (173+)</h2>
 
-            <div class="filter-buttons" id="bookmarkFilters">
-                <button class="filter-btn active" data-filter="all">All</button>
-                <button class="filter-btn" data-filter="Security News">News</button>
-                <button class="filter-btn" data-filter="Threat Intel Platforms">Threat Intel</button>
-                <button class="filter-btn" data-filter="Malware Analysis">Malware</button>
-                <button class="filter-btn" data-filter="OSINT Tools">OSINT</button>
-                <button class="filter-btn" data-filter="Training">Training</button>
-                <button class="filter-btn" data-filter="Infrastructure">Infrastructure</button>
-                <button class="filter-btn" data-filter="Data Breach">Breaches</button>
+            <div class="filter-buttons" id="bookmarkFilters" role="group" aria-label="Filter bookmarks by category">
+                <button class="filter-btn active" data-filter="all" aria-pressed="true">All</button>
+                <button class="filter-btn" data-filter="Security News" aria-pressed="false">News</button>
+                <button class="filter-btn" data-filter="Threat Intel Platforms" aria-pressed="false">Threat Intel</button>
+                <button class="filter-btn" data-filter="Malware Analysis" aria-pressed="false">Malware</button>
+                <button class="filter-btn" data-filter="OSINT Tools" aria-pressed="false">OSINT</button>
+                <button class="filter-btn" data-filter="Training" aria-pressed="false">Training</button>
+                <button class="filter-btn" data-filter="Infrastructure" aria-pressed="false">Infrastructure</button>
+                <button class="filter-btn" data-filter="Data Breach" aria-pressed="false">Breaches</button>
             </div>
 
             <div class="bookmarks-grid" id="bookmarksContainer"></div>
@@ -797,13 +797,13 @@
         <section class="section" id="glossary">
             <h2 class="section-title">Security Glossary (44 Terms)</h2>
 
-            <div class="filter-buttons" id="glossaryFilters">
-                <button class="filter-btn active" data-filter="all">All</button>
-                <button class="filter-btn" data-filter="Frameworks & Compliance">Frameworks</button>
-                <button class="filter-btn" data-filter="Cloud Security">Cloud</button>
-                <button class="filter-btn" data-filter="Identity & Access">Identity</button>
-                <button class="filter-btn" data-filter="Threat Detection">Detection</button>
-                <button class="filter-btn" data-filter="Network & Protocols">Network</button>
+            <div class="filter-buttons" id="glossaryFilters" role="group" aria-label="Filter glossary terms by category">
+                <button class="filter-btn active" data-filter="all" aria-pressed="true">All</button>
+                <button class="filter-btn" data-filter="Frameworks & Compliance" aria-pressed="false">Frameworks</button>
+                <button class="filter-btn" data-filter="Cloud Security" aria-pressed="false">Cloud</button>
+                <button class="filter-btn" data-filter="Identity & Access" aria-pressed="false">Identity</button>
+                <button class="filter-btn" data-filter="Threat Detection" aria-pressed="false">Detection</button>
+                <button class="filter-btn" data-filter="Network & Protocols" aria-pressed="false">Network</button>
             </div>
 
             <div class="glossary-grid" id="glossaryContainer"></div>
@@ -901,8 +901,12 @@
         function setupToolFilters() {
             document.querySelectorAll('#toolFilters .filter-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
-                    document.querySelectorAll('#toolFilters .filter-btn').forEach(b => b.classList.remove('active'));
+                    document.querySelectorAll('#toolFilters .filter-btn').forEach(b => {
+                        b.classList.remove('active');
+                        b.setAttribute('aria-pressed', 'false');
+                    });
                     btn.classList.add('active');
+                    btn.setAttribute('aria-pressed', 'true');
                     const f = btn.dataset.filter;
                     document.querySelectorAll('#toolsContainer .tool-card').forEach(c => {
                         c.style.display = f==='all' || c.dataset.category===f ? '':'none';
@@ -914,12 +918,31 @@
         function setupBookmarkFilters() {
             document.querySelectorAll('#bookmarkFilters .filter-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
-                    document.querySelectorAll('#bookmarkFilters .filter-btn').forEach(b => b.classList.remove('active'));
+                    document.querySelectorAll('#bookmarkFilters .filter-btn').forEach(b => {
+                        b.classList.remove('active');
+                        b.setAttribute('aria-pressed', 'false');
+                    });
                     btn.classList.add('active');
+                    btn.setAttribute('aria-pressed', 'true');
                     const f = btn.dataset.filter;
                     document.querySelectorAll('#bookmarksContainer .bookmark-card').forEach(c => {
                         c.style.display = f==='all' || c.dataset.category===f ? '':'none';
                     });
+                });
+            });
+        }
+
+        function setupGlossaryFilters() {
+            document.querySelectorAll('#glossaryFilters .filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('#glossaryFilters .filter-btn').forEach(b => {
+                        b.classList.remove('active');
+                        b.setAttribute('aria-pressed', 'false');
+                    });
+                    btn.classList.add('active');
+                    btn.setAttribute('aria-pressed', 'true');
+                    // Structural placeholder: Glossary terms currently lack category metadata,
+                    // so we only manage the UI active state here.
                 });
             });
         }
@@ -962,7 +985,7 @@
 
         function init() {
             renderTools(); renderScripts(); renderBookmarks(); renderFrameworks(); renderGlossary(); renderTraining();
-            setupToolFilters(); setupBookmarkFilters(); setupGlobalSearch(); setupNavigation();
+            setupToolFilters(); setupBookmarkFilters(); setupGlossaryFilters(); setupGlobalSearch(); setupNavigation();
         }
 
         document.addEventListener('DOMContentLoaded', init);
