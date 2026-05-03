@@ -684,6 +684,45 @@
             color: var(--text-secondary);
             font-family: 'JetBrains Mono', monospace;
         }
+
+        .clear-button {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            cursor: pointer;
+            padding: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .clear-button:hover {
+            color: var(--text-primary);
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
     </style>
 </head>
 <body>
@@ -701,6 +740,8 @@
             </ul>
             <div class="search-bar">
                 <input type="text" class="search-input" id="globalSearch" placeholder="Search all sections... (Press '/')" aria-label="Search all sections...">
+                <button id="clearGlobalSearch" class="clear-button hidden" aria-label="Clear search" title="Clear search" type="button">✕</button>
+                <div id="globalSearchAnnouncement" class="sr-only" aria-live="polite"></div>
             </div>
         </div>
     </nav>
@@ -814,6 +855,8 @@
             <h2 class="section-title">Training & Courses (90+)</h2>
             <div id="trainingContainer"></div>
         </section>
+
+        <div id="globalNoResults" class="no-results hidden">No matching items found. Try a different search term.</div>
     </main>
 
     <!-- Footer -->
@@ -947,11 +990,61 @@
         }
 
         function setupGlobalSearch() {
-            document.getElementById('globalSearch').addEventListener('input', (e) => {
+            const searchInput = document.getElementById('globalSearch');
+            const clearBtn = document.getElementById('clearGlobalSearch');
+            const announcement = document.getElementById('globalSearchAnnouncement');
+            const noResults = document.getElementById('globalNoResults');
+            const sections = document.querySelectorAll('.section');
+
+            searchInput.addEventListener('input', (e) => {
                 const q = e.target.value.toLowerCase();
+
+                // Show/hide clear button
+                if (q) {
+                    clearBtn.classList.remove('hidden');
+                } else {
+                    clearBtn.classList.add('hidden');
+                }
+
+                let totalVisible = 0;
+
+                // Filter items
                 document.querySelectorAll('[data-searchable]').forEach(el => {
-                    el.style.display = !q || el.dataset.searchable.includes(q) ? '':'none';
+                    const isVisible = !q || el.dataset.searchable.includes(q);
+                    el.style.display = isVisible ? '' : 'none';
+                    if (isVisible) totalVisible++;
                 });
+
+                // Check sections visibility
+                let anySectionVisible = false;
+                sections.forEach(section => {
+                    const visibleItems = section.querySelectorAll('[data-searchable]:not([style*="display: none"])');
+                    // Hide section if it has searchable items but none are visible
+                    const hasSearchable = section.querySelectorAll('[data-searchable]').length > 0;
+
+                    if (hasSearchable && visibleItems.length === 0) {
+                        section.style.display = 'none';
+                    } else {
+                        section.style.display = '';
+                        anySectionVisible = true;
+                    }
+                });
+
+                // Toggle no results message
+                if (!anySectionVisible && q) {
+                    noResults.classList.remove('hidden');
+                } else {
+                    noResults.classList.add('hidden');
+                }
+
+                // Announce results for screen readers
+                announcement.textContent = q ? `${totalVisible} results found.` : '';
+            });
+
+            clearBtn.addEventListener('click', () => {
+                searchInput.value = '';
+                searchInput.dispatchEvent(new Event('input'));
+                searchInput.focus();
             });
         }
 
