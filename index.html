@@ -115,6 +115,7 @@
         .search-input {
             width: 100%;
             padding: 0.7rem 1rem;
+            padding-right: 2.5rem;
             background: rgba(45, 55, 72, 0.5);
             border: 1px solid rgba(0, 240, 255, 0.3);
             border-radius: 4px;
@@ -673,9 +674,46 @@
             }
         }
 
+        .clear-button {
+            position: absolute;
+            right: 0.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0.2rem;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+        }
+
+        .clear-button:hover {
+            color: var(--cyan);
+            background: rgba(0, 240, 255, 0.1);
+        }
+
         /* Hidden state */
         .hidden {
-            display: none;
+            display: none !important;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
         }
 
         .no-results {
@@ -701,6 +739,8 @@
             </ul>
             <div class="search-bar">
                 <input type="text" class="search-input" id="globalSearch" placeholder="Search all sections... (Press '/')" aria-label="Search all sections...">
+                <button id="clearGlobalSearch" class="clear-button hidden" aria-label="Clear search" title="Clear search" type="button">✕</button>
+                <div id="searchAnnouncement" class="sr-only" aria-live="polite"></div>
             </div>
         </div>
     </nav>
@@ -947,11 +987,39 @@
         }
 
         function setupGlobalSearch() {
-            document.getElementById('globalSearch').addEventListener('input', (e) => {
-                const q = e.target.value.toLowerCase();
+            const searchInput = document.getElementById('globalSearch');
+            const clearBtn = document.getElementById('clearGlobalSearch');
+            const searchAnnouncement = document.getElementById('searchAnnouncement');
+
+            function filterResults(q) {
+                let resultCount = 0;
                 document.querySelectorAll('[data-searchable]').forEach(el => {
-                    el.style.display = !q || el.dataset.searchable.includes(q) ? '':'none';
+                    if (!q || el.dataset.searchable.includes(q)) {
+                        el.style.display = '';
+                        resultCount++;
+                    } else {
+                        el.style.display = 'none';
+                    }
                 });
+
+                if (q) {
+                    clearBtn.classList.remove('hidden');
+                    searchAnnouncement.textContent = resultCount + (resultCount === 1 ? " result found." : " results found.");
+                } else {
+                    clearBtn.classList.add('hidden');
+                    searchAnnouncement.textContent = "Search cleared. All items visible.";
+                }
+            }
+
+            searchInput.addEventListener('input', (e) => {
+                const q = e.target.value.toLowerCase();
+                filterResults(q);
+            });
+
+            clearBtn.addEventListener('click', () => {
+                searchInput.value = '';
+                filterResults('');
+                searchInput.focus();
             });
         }
 
