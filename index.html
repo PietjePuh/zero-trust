@@ -114,7 +114,7 @@
 
         .search-input {
             width: 100%;
-            padding: 0.7rem 1rem;
+            padding: 0.7rem 2.5rem 0.7rem 1rem;
             background: rgba(45, 55, 72, 0.5);
             border: 1px solid rgba(0, 240, 255, 0.3);
             border-radius: 4px;
@@ -643,6 +643,46 @@
             font-size: 0.9rem;
         }
 
+        /* Utility */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .clear-button {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            cursor: pointer;
+            padding: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.2s, background-color 0.2s;
+        }
+
+        .clear-button:hover {
+            color: var(--text-primary);
+            background-color: rgba(45, 55, 72, 0.6);
+            border-radius: 4px;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .hero h1 {
@@ -701,6 +741,8 @@
             </ul>
             <div class="search-bar">
                 <input type="text" class="search-input" id="globalSearch" placeholder="Search all sections... (Press '/')" aria-label="Search all sections...">
+                <button id="clearGlobalSearch" class="clear-button hidden" aria-label="Clear search" title="Clear search" type="button">✕</button>
+                <div id="searchAnnouncement" class="sr-only" aria-live="polite"></div>
             </div>
         </div>
     </nav>
@@ -947,11 +989,35 @@
         }
 
         function setupGlobalSearch() {
-            document.getElementById('globalSearch').addEventListener('input', (e) => {
-                const q = e.target.value.toLowerCase();
+            const searchInput = document.getElementById('globalSearch');
+            const clearBtn = document.getElementById('clearGlobalSearch');
+            const searchAnnouncement = document.getElementById('searchAnnouncement');
+
+            function performSearch() {
+                const q = searchInput.value.toLowerCase();
+                let visibleCount = 0;
+
                 document.querySelectorAll('[data-searchable]').forEach(el => {
-                    el.style.display = !q || el.dataset.searchable.includes(q) ? '':'none';
+                    const isMatch = !q || el.dataset.searchable.includes(q);
+                    el.style.display = isMatch ? '' : 'none';
+                    if (isMatch) visibleCount++;
                 });
+
+                if (q) {
+                    clearBtn.classList.remove('hidden');
+                    searchAnnouncement.textContent = visibleCount > 0 ? `${visibleCount} results found.` : "No results found.";
+                } else {
+                    clearBtn.classList.add('hidden');
+                    searchAnnouncement.textContent = "";
+                }
+            }
+
+            searchInput.addEventListener('input', performSearch);
+
+            clearBtn.addEventListener('click', () => {
+                searchInput.value = '';
+                performSearch();
+                searchInput.focus();
             });
         }
 
