@@ -63,3 +63,7 @@
 ## 2024-05-19 - Keyboard shortcut discoverability
 **Learning:** Adding a global search shortcut ('/') is great for power users, but discoverability is essential. Users need subtle visual hints (like placeholder text updates) to know the shortcut exists.
 **Action:** When adding global accessibility shortcuts in the future, always accompany them with visual hints in empty states or placeholders so they are discoverable without requiring users to read external documentation.
+
+## 2026-05-12 - Input Clear Button Overlap
+**Learning:** Adding an absolutely positioned icon/button (like a clear button) inside an input field looks nice visually but frequently obscures user-typed text if the input's padding is not adjusted.
+**Action:** When placing an absolute positioned element inside an input, always verify and update the input's `padding-right` (or `padding-left` for RTL) so typed text naturally stops before the icon.
