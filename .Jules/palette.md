@@ -63,3 +63,7 @@
 ## 2024-05-19 - Keyboard shortcut discoverability
 **Learning:** Adding a global search shortcut ('/') is great for power users, but discoverability is essential. Users need subtle visual hints (like placeholder text updates) to know the shortcut exists.
 **Action:** When adding global accessibility shortcuts in the future, always accompany them with visual hints in empty states or placeholders so they are discoverable without requiring users to read external documentation.
+
+## 2026-03-26 - Static Search Feedback
+**Learning:** Client-side list filtering happens instantly visually, but screen reader users get no feedback about the number of results, leaving them unsure if their search worked or how many items to tab through.
+**Action:** For client-side list filtering (like search inputs), use an `aria-live="polite"` element (visually hidden) to dynamically announce the number of visible results after the filtering logic executes.
