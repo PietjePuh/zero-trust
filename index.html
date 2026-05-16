@@ -114,7 +114,7 @@
 
         .search-input {
             width: 100%;
-            padding: 0.7rem 1rem;
+            padding: 0.7rem 2.5rem 0.7rem 1rem;
             background: rgba(45, 55, 72, 0.5);
             border: 1px solid rgba(0, 240, 255, 0.3);
             border-radius: 4px;
@@ -127,6 +127,35 @@
             outline: none;
             border-color: var(--cyan);
             box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+        }
+
+        .clear-button {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .clear-button:hover {
+            color: var(--cyan);
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
         }
 
         /* Hero Section */
@@ -701,6 +730,8 @@
             </ul>
             <div class="search-bar">
                 <input type="text" class="search-input" id="globalSearch" placeholder="Search all sections... (Press '/')" aria-label="Search all sections...">
+                <button id="clearGlobalSearch" class="clear-button hidden" aria-label="Clear search" title="Clear search" type="button">✕</button>
+                <div id="searchAnnouncement" class="sr-only" aria-live="polite"></div>
             </div>
         </div>
     </nav>
@@ -947,11 +978,41 @@
         }
 
         function setupGlobalSearch() {
-            document.getElementById('globalSearch').addEventListener('input', (e) => {
+            const input = document.getElementById('globalSearch');
+            const clearBtn = document.getElementById('clearGlobalSearch');
+            const announcement = document.getElementById('searchAnnouncement');
+
+            input.addEventListener('input', (e) => {
                 const q = e.target.value.toLowerCase();
+
+                if (q) {
+                    clearBtn.classList.remove('hidden');
+                } else {
+                    clearBtn.classList.add('hidden');
+                }
+
+                let count = 0;
                 document.querySelectorAll('[data-searchable]').forEach(el => {
-                    el.style.display = !q || el.dataset.searchable.includes(q) ? '':'none';
+                    const match = !q || el.dataset.searchable.includes(q);
+                    el.style.display = match ? '' : 'none';
+                    if (match && el.style.display !== 'none') {
+                        // Avoid counting elements that might be hidden by other filters
+                        // In index.html, they are just directly toggled, so this works
+                        count++;
+                    }
                 });
+
+                if (q) {
+                    announcement.textContent = `${count} result${count !== 1 ? 's' : ''} found.`;
+                } else {
+                    announcement.textContent = '';
+                }
+            });
+
+            clearBtn.addEventListener('click', () => {
+                input.value = '';
+                input.dispatchEvent(new Event('input'));
+                input.focus();
             });
         }
 
