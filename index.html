@@ -114,7 +114,7 @@
 
         .search-input {
             width: 100%;
-            padding: 0.7rem 1rem;
+            padding: 0.7rem 2.5rem 0.7rem 1rem;
             background: rgba(45, 55, 72, 0.5);
             border: 1px solid rgba(0, 240, 255, 0.3);
             border-radius: 4px;
@@ -127,6 +127,46 @@
             outline: none;
             border-color: var(--cyan);
             box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+        }
+
+        .clear-button {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            cursor: pointer;
+            padding: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            transition: var(--transition);
+        }
+
+        .clear-button:hover {
+            color: var(--text-primary);
+            background-color: rgba(139, 148, 158, 0.2);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
         }
 
         /* Hero Section */
@@ -701,6 +741,8 @@
             </ul>
             <div class="search-bar">
                 <input type="text" class="search-input" id="globalSearch" placeholder="Search all sections... (Press '/')" aria-label="Search all sections...">
+                <button id="clearGlobalSearch" class="clear-button hidden" aria-label="Clear search" title="Clear search" type="button">✕</button>
+                <div id="searchAnnouncement" class="sr-only" aria-live="polite"></div>
             </div>
         </div>
     </nav>
@@ -947,11 +989,39 @@
         }
 
         function setupGlobalSearch() {
-            document.getElementById('globalSearch').addEventListener('input', (e) => {
+            const searchInput = document.getElementById('globalSearch');
+            const clearBtn = document.getElementById('clearGlobalSearch');
+            const announcement = document.getElementById('searchAnnouncement');
+
+            searchInput.addEventListener('input', (e) => {
                 const q = e.target.value.toLowerCase();
+                let count = 0;
+
+                if (q) {
+                    clearBtn.classList.remove('hidden');
+                } else {
+                    clearBtn.classList.add('hidden');
+                }
+
                 document.querySelectorAll('[data-searchable]').forEach(el => {
-                    el.style.display = !q || el.dataset.searchable.includes(q) ? '':'none';
+                    const isMatch = !q || el.dataset.searchable.includes(q);
+                    el.style.display = isMatch ? '':'none';
+                    // We only count matches if we are actually searching.
+                    // When not searching, we don't necessarily want to say "100 results found".
+                    if (q && isMatch) count++;
                 });
+
+                if (q) {
+                    announcement.textContent = count === 1 ? '1 result found.' : `${count} results found.`;
+                } else {
+                    announcement.textContent = '';
+                }
+            });
+
+            clearBtn.addEventListener('click', () => {
+                searchInput.value = '';
+                searchInput.dispatchEvent(new Event('input'));
+                searchInput.focus();
             });
         }
 
