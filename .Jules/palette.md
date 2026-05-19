@@ -63,3 +63,7 @@
 ## 2024-05-19 - Keyboard shortcut discoverability
 **Learning:** Adding a global search shortcut ('/') is great for power users, but discoverability is essential. Users need subtle visual hints (like placeholder text updates) to know the shortcut exists.
 **Action:** When adding global accessibility shortcuts in the future, always accompany them with visual hints in empty states or placeholders so they are discoverable without requiring users to read external documentation.
+
+## 2026-03-27 - Search Input Clear Button and Focus Management
+**Learning:** For global search inputs, users need a way to quickly clear the input and restart their search. Implementing a clear button without focus management often leads to the button consuming the focus state, making it annoying to resume typing.
+**Action:** When adding clear buttons to search inputs, always programmatically return focus to the search input (`element.focus()`) after clearing it so users can seamlessly begin their next search.
