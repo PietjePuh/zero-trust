@@ -63,3 +63,7 @@
 ## 2024-05-19 - Keyboard shortcut discoverability
 **Learning:** Adding a global search shortcut ('/') is great for power users, but discoverability is essential. Users need subtle visual hints (like placeholder text updates) to know the shortcut exists.
 **Action:** When adding global accessibility shortcuts in the future, always accompany them with visual hints in empty states or placeholders so they are discoverable without requiring users to read external documentation.
+
+## 2026-05-21 - Missing role group on filter container
+**Learning:** Filter button groups, like those controlling grid items, lack grouping semantics (e.g. `role="group"`) and accessible names (e.g. `aria-label`), reducing clarity for screen reader users on their purpose.
+**Action:** When creating a container for related filter buttons, ensure it includes `role="group"` and an appropriate `aria-label` to define the control context.
