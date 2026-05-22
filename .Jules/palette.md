@@ -63,3 +63,6 @@
 ## 2024-05-19 - Keyboard shortcut discoverability
 **Learning:** Adding a global search shortcut ('/') is great for power users, but discoverability is essential. Users need subtle visual hints (like placeholder text updates) to know the shortcut exists.
 **Action:** When adding global accessibility shortcuts in the future, always accompany them with visual hints in empty states or placeholders so they are discoverable without requiring users to read external documentation.
+## 2026-05-22 - Add clear search button to global search
+**Learning:** When implementing 'clear search' buttons, always programmatically return focus to the search input (e.g., `element.focus()`) after clearing to ensure seamless keyboard interaction and prevent the button from consuming focus. For client-side list filtering, an `aria-live="polite"` element is essential to dynamically announce the number of visible results, as screen readers receive no feedback from instant visual updates.
+**Action:** Applied 'clear search' button and `aria-live` region to the main global search in `index.html`.
