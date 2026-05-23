@@ -1,0 +1,84 @@
+<<<<<<< SEARCH
+        .search-input {
+            width: 100%;
+            padding: 0.7rem 1rem;
+            background: rgba(45, 55, 72, 0.5);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            border-radius: 4px;
+            color: var(--text-primary);
+            font-family: 'JetBrains Mono', monospace;
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--cyan);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+        }
+
+        /* Hero Section */
+=======
+        .search-input {
+            width: 100%;
+            padding: 0.7rem 2.5rem 0.7rem 1rem;
+            background: rgba(45, 55, 72, 0.5);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            border-radius: 4px;
+            color: var(--text-primary);
+            font-family: 'JetBrains Mono', monospace;
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--cyan);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+        }
+
+        .clear-search {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: none;
+            padding: 5px;
+        }
+
+        .clear-search:hover {
+            color: var(--cyan);
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* Hero Section */
+>>>>>>> REPLACE
+<<<<<<< SEARCH
+            <div class="search-bar">
+                <input type="text" class="search-input" id="globalSearch" placeholder="Search all sections... (Press '/')" aria-label="Search all sections...">
+            </div>
+        </div>
+    </nav>
+=======
+            <div class="search-bar">
+                <input type="text" class="search-input" id="globalSearch" placeholder="Search all sections... (Press '/')" aria-label="Search all sections...">
+                <button id="clearGlobalSearch" class="clear-search" aria-label="Clear search" title="Clear search">×</button>
+                <div id="searchAnnouncement" class="sr-only" aria-live="polite"></div>
+            </div>
+        </div>
+    </nav>
+>>>>>>> REPLACE
