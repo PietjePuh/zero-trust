@@ -114,7 +114,7 @@
 
         .search-input {
             width: 100%;
-            padding: 0.7rem 1rem;
+            padding: 0.7rem 2.5rem 0.7rem 1rem;
             background: rgba(45, 55, 72, 0.5);
             border: 1px solid rgba(0, 240, 255, 0.3);
             border-radius: 4px;
@@ -127,6 +127,36 @@
             outline: none;
             border-color: var(--cyan);
             box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+        }
+
+        .clear-search {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: none;
+            padding: 5px;
+        }
+
+        .clear-search:hover {
+            color: var(--cyan);
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
         }
 
         /* Hero Section */
@@ -701,6 +731,8 @@
             </ul>
             <div class="search-bar">
                 <input type="text" class="search-input" id="globalSearch" placeholder="Search all sections... (Press '/')" aria-label="Search all sections...">
+                <button id="clearGlobalSearch" class="clear-search" aria-label="Clear search" title="Clear search">×</button>
+                <div id="searchAnnouncement" class="sr-only" aria-live="polite"></div>
             </div>
         </div>
     </nav>
@@ -947,11 +979,27 @@
         }
 
         function setupGlobalSearch() {
-            document.getElementById('globalSearch').addEventListener('input', (e) => {
+            const searchInput = document.getElementById('globalSearch');
+            const clearBtn = document.getElementById('clearGlobalSearch');
+            const announcement = document.getElementById('searchAnnouncement');
+
+            searchInput.addEventListener('input', (e) => {
                 const q = e.target.value.toLowerCase();
+                let count = 0;
                 document.querySelectorAll('[data-searchable]').forEach(el => {
-                    el.style.display = !q || el.dataset.searchable.includes(q) ? '':'none';
+                    const match = !q || el.dataset.searchable.includes(q);
+                    el.style.display = match ? '':'none';
+                    if (match) count++;
                 });
+
+                clearBtn.style.display = q ? 'block' : 'none';
+                announcement.textContent = q ? (count === 1 ? "1 result found." : count + " results found.") : "";
+            });
+
+            clearBtn.addEventListener('click', () => {
+                searchInput.value = '';
+                searchInput.dispatchEvent(new Event('input'));
+                searchInput.focus();
             });
         }
 
