@@ -63,3 +63,7 @@
 ## 2024-05-19 - Keyboard shortcut discoverability
 **Learning:** Adding a global search shortcut ('/') is great for power users, but discoverability is essential. Users need subtle visual hints (like placeholder text updates) to know the shortcut exists.
 **Action:** When adding global accessibility shortcuts in the future, always accompany them with visual hints in empty states or placeholders so they are discoverable without requiring users to read external documentation.
+
+## 2024-05-25 - Search input overlap and reset
+**Learning:** Adding absolute positioned 'clear' buttons inside search inputs without adjusting the input's padding causes the text to overlap with the button, hiding user input. Also, when clearing a search input dynamically, it's essential to return `.focus()` to the input so the user's keyboard flow isn't interrupted.
+**Action:** When adding inline input controls (like clear or show password buttons), always add corresponding `padding-right` to the `<input>` element and restore focus after the control is activated.
