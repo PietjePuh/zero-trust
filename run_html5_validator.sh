@@ -1,0 +1,1 @@
+html5validator --root . --also-check-css --ignore 'CSS: "backdrop-filter":' --ignore 'CSS: "color-scheme":' --ignore 'CSS: "background":' --ignore 'CSS: "inset":' --match '*.html' --blacklist Sec-labs .github .Jules .
