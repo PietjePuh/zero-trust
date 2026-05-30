@@ -1555,9 +1555,9 @@
   function initKillChain() {
     const container = document.getElementById('kcChain');
     container.innerHTML = '';
+    const all = getAllSnippets();
 
     KILL_CHAIN.forEach(phase => {
-      const all = getAllSnippets();
       const items = all.filter(s => s.killchain === phase.id && matchesOs(s));
 
       const el = document.createElement('div');
@@ -1638,12 +1638,12 @@
   function initAttackMatrix() {
     const container = document.getElementById('attackMatrix');
     container.innerHTML = '';
+    const all = getAllSnippets();
 
     const grid = document.createElement('div');
     grid.className = 'attack-grid';
 
     ATTACK_TACTICS.forEach(tactic => {
-      const all = getAllSnippets();
       const items = all.filter(s => s.attack.includes(tactic.id) && matchesOs(s));
 
       const col = document.createElement('div');
@@ -1709,9 +1709,9 @@
   function initPyramid() {
     const container = document.getElementById('pyramidWrap');
     container.innerHTML = '';
+    const all = getAllSnippets();
 
     PYRAMID_LEVELS.forEach(level => {
-      const all = getAllSnippets();
       const items = all.filter(s => s.pyramid === level.id && matchesOs(s));
 
       const el = document.createElement('div');
@@ -1773,9 +1773,9 @@
   function initOwasp() {
     const container = document.getElementById('owaspGrid');
     container.innerHTML = '';
+    const all = getAllSnippets();
 
     OWASP_TOP10.forEach(cat => {
-      const all = getAllSnippets();
       const items = all.filter(s => s.owasp && s.owasp.includes(cat.id) && matchesOs(s));
 
       const card = document.createElement('div');
