@@ -1204,6 +1204,7 @@
     favBtn.className = 'fav-btn' + (state.favorites.has(item.id) ? ' active' : '');
     favBtn.textContent = state.favorites.has(item.id) ? '\u2605' : '\u2606';
     favBtn.title = state.favorites.has(item.id) ? 'Remove from favorites' : 'Add to favorites';
+    favBtn.setAttribute('aria-label', state.favorites.has(item.id) ? 'Remove from favorites' : 'Add to favorites');
     favBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       if (state.favorites.has(item.id)) {
@@ -1211,11 +1212,13 @@
         favBtn.classList.remove('active');
         favBtn.textContent = '\u2606';
         favBtn.title = 'Add to favorites';
+        favBtn.setAttribute('aria-label', 'Add to favorites');
       } else {
         state.favorites.add(item.id);
         favBtn.classList.add('active');
         favBtn.textContent = '\u2605';
         favBtn.title = 'Remove from favorites';
+        favBtn.setAttribute('aria-label', 'Remove from favorites');
       }
       saveFavorites();
       renderFavoritesStrip();
