@@ -968,18 +968,18 @@
   </div>
 
   <!-- Framework Tabs -->
-  <div class="fw-tabs">
-    <button class="fw-tab active" data-fw="killchain">Kill Chain</button>
-    <button class="fw-tab" data-fw="attack">MITRE ATT&CK</button>
-    <button class="fw-tab" data-fw="pyramid">Pyramid of Pain</button>
-    <button class="fw-tab" data-fw="owasp">OWASP Top 10</button>
-    <button class="fw-tab" data-fw="snippets">All Snippets</button>
+  <div class="fw-tabs" role="tablist" aria-label="Framework categories">
+    <button class="fw-tab active" data-fw="killchain" role="tab" aria-selected="true">Kill Chain</button>
+    <button class="fw-tab" data-fw="attack" role="tab" aria-selected="false">MITRE ATT&CK</button>
+    <button class="fw-tab" data-fw="pyramid" role="tab" aria-selected="false">Pyramid of Pain</button>
+    <button class="fw-tab" data-fw="owasp" role="tab" aria-selected="false">OWASP Top 10</button>
+    <button class="fw-tab" data-fw="snippets" role="tab" aria-selected="false">All Snippets</button>
   </div>
 
   <!-- ═══════════════════════════════════════════ -->
   <!-- Kill Chain                                  -->
   <!-- ═══════════════════════════════════════════ -->
-  <div class="fw-panel active" data-fw="killchain">
+  <div class="fw-panel active" data-fw="killchain" role="tabpanel">
     <div class="fw-info">
       <strong>Lockheed Martin Cyber Kill Chain</strong> — 7 phases an adversary must complete for a successful intrusion.
       Click a phase to see mapped Red Team (offensive) and Blue Team (defensive) tools.
@@ -993,7 +993,7 @@
   <!-- ═══════════════════════════════════════════ -->
   <!-- MITRE ATT&CK                                -->
   <!-- ═══════════════════════════════════════════ -->
-  <div class="fw-panel" data-fw="attack">
+  <div class="fw-panel" data-fw="attack" role="tabpanel">
     <div class="fw-info">
       <strong>MITRE ATT&CK Framework</strong> — Adversarial tactics and techniques based on real-world observations.
       Click a tactic to filter snippets below.
@@ -1007,7 +1007,7 @@
   <!-- ═══════════════════════════════════════════ -->
   <!-- Pyramid of Pain                             -->
   <!-- ═══════════════════════════════════════════ -->
-  <div class="fw-panel" data-fw="pyramid">
+  <div class="fw-panel" data-fw="pyramid" role="tabpanel">
     <div class="fw-info">
       <strong>David Bianco's Pyramid of Pain</strong> — The higher on the pyramid, the more painful it is for the adversary when you deny them that indicator.
       Click a level to see relevant tools and techniques.
@@ -1021,7 +1021,7 @@
   <!-- ═══════════════════════════════════════════ -->
   <!-- OWASP Top 10                                -->
   <!-- ═══════════════════════════════════════════ -->
-  <div class="fw-panel" data-fw="owasp">
+  <div class="fw-panel" data-fw="owasp" role="tabpanel">
     <div class="fw-info">
       <strong>OWASP Top 10 (2021)</strong> — The most critical web application security risks.
       Click a category to see offensive tools that exploit and defensive tools that mitigate each risk.
@@ -1035,7 +1035,7 @@
   <!-- ═══════════════════════════════════════════ -->
   <!-- All Snippets                                -->
   <!-- ═══════════════════════════════════════════ -->
-  <div class="fw-panel" data-fw="snippets">
+  <div class="fw-panel" data-fw="snippets" role="tabpanel">
     <div class="toolbar">
       <input id="searchInput" class="input" type="text" placeholder="Search snippets..." style="flex:1;min-width:200px;">
       <select id="categorySelect" class="select" style="width:170px;">

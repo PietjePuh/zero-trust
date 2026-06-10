@@ -64,3 +64,7 @@
 **Learning:** Adding a global search shortcut ('/') is great for power users, but discoverability is essential. Users need subtle visual hints (like placeholder text updates) to know the shortcut exists.
 **Action:** When adding global accessibility shortcuts in the future, always accompany them with visual hints in empty states or placeholders so they are discoverable without requiring users to read external documentation.
 ## 2026-03-26 - Universal Skip Links\n**Learning:** Implementing 'Skip to main content' globally requires attention to differing CSS variable architectures across sub-projects (e.g. `--accent-color` vs `--co-accent` vs `--primary`).\n**Action:** When adding global UI features, verify variable mappings in all sub-directories and inject styles explicitly where external stylesheets differ.
+
+## 2026-06-10 - Accessible Tab Interfaces
+**Learning:** Interactive tab interfaces often rely purely on visual styling (like an `.active` class) and lack semantic structure, rendering them invisible to screen readers as a grouped control. Without ARIA roles, users cannot understand the relationship between tabs and their content.
+**Action:** Always add `role="tablist"` to the container, `role="tab"` and dynamic `aria-selected` attributes to the buttons, and `role="tabpanel"` to the content panes to ensure accessible navigation.
