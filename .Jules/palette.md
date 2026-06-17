@@ -64,3 +64,7 @@
 **Learning:** Adding a global search shortcut ('/') is great for power users, but discoverability is essential. Users need subtle visual hints (like placeholder text updates) to know the shortcut exists.
 **Action:** When adding global accessibility shortcuts in the future, always accompany them with visual hints in empty states or placeholders so they are discoverable without requiring users to read external documentation.
 ## 2026-03-26 - Universal Skip Links\n**Learning:** Implementing 'Skip to main content' globally requires attention to differing CSS variable architectures across sub-projects (e.g. `--accent-color` vs `--co-accent` vs `--primary`).\n**Action:** When adding global UI features, verify variable mappings in all sub-directories and inject styles explicitly where external stylesheets differ.
+
+## 2026-06-17 - Missing ARIA Labels on Icon-only Close Buttons
+**Learning:** Icon-only close buttons (like `&times;`) in overlays and modals are frequently implemented without `aria-label` or `title` attributes, making them inaccessible to screen readers and difficult to discover for mouse users.
+**Action:** Always add `aria-label` (for screen readers) and `title` (for native tooltips) to icon-only close buttons. Even if they are dynamically generated, include the attributes in the generated template literal.
