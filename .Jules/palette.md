@@ -64,3 +64,7 @@
 **Learning:** Adding a global search shortcut ('/') is great for power users, but discoverability is essential. Users need subtle visual hints (like placeholder text updates) to know the shortcut exists.
 **Action:** When adding global accessibility shortcuts in the future, always accompany them with visual hints in empty states or placeholders so they are discoverable without requiring users to read external documentation.
 ## 2026-03-26 - Universal Skip Links\n**Learning:** Implementing 'Skip to main content' globally requires attention to differing CSS variable architectures across sub-projects (e.g. `--accent-color` vs `--co-accent` vs `--primary`).\n**Action:** When adding global UI features, verify variable mappings in all sub-directories and inject styles explicitly where external stylesheets differ.
+
+## 2026-03-27 - Search Input Keyboard Usability
+**Learning:** Users often rely on the 'Escape' key to quickly clear search inputs and reset lists to their default state. Without this keyboard shortcut, users must manually delete text or click clear buttons, adding friction to rapid searching.
+**Action:** Always bind a `keydown` listener to search inputs that checks for `e.key === 'Escape'` to clear the value, trigger the respective search/filter reset, and maintain focus on the input for continued interaction.
