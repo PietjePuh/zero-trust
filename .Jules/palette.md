@@ -64,3 +64,7 @@
 **Learning:** Adding a global search shortcut ('/') is great for power users, but discoverability is essential. Users need subtle visual hints (like placeholder text updates) to know the shortcut exists.
 **Action:** When adding global accessibility shortcuts in the future, always accompany them with visual hints in empty states or placeholders so they are discoverable without requiring users to read external documentation.
 ## 2026-03-26 - Universal Skip Links\n**Learning:** Implementing 'Skip to main content' globally requires attention to differing CSS variable architectures across sub-projects (e.g. `--accent-color` vs `--co-accent` vs `--primary`).\n**Action:** When adding global UI features, verify variable mappings in all sub-directories and inject styles explicitly where external stylesheets differ.
+
+## 2026-03-31 - Universal Icon Button Accessibility
+**Learning:** Icon-only buttons representing UI actions (like 'Close', 'Remove', or 'X') often use HTML entities like `&times;` and lack semantic meaning or tooltip context for screen readers and mouse users.
+**Action:** Always provide explicit semantic meaning to icon-only close/remove buttons by simultaneously defining both `aria-label` (for screen readers) and `title` (for mouse hover tooltips), even if they appear in modal headers or nested DOM templates.
