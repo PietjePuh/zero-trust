@@ -1034,6 +1034,15 @@
 
             searchInput.addEventListener('input', applySearch);
 
+            searchInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    e.preventDefault();
+                    searchInput.value = '';
+                    applySearch();
+                    searchInput.focus();
+                }
+            });
+
             clearBtn.addEventListener('click', () => {
                 searchInput.value = '';
                 applySearch();
