@@ -982,9 +982,13 @@
 
   document.querySelectorAll('.fw-tab').forEach(tab => {
     tab.addEventListener('click', () => {
-      document.querySelectorAll('.fw-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.fw-tab').forEach(t => {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
+      });
       document.querySelectorAll('.fw-panel').forEach(p => p.classList.remove('active'));
       tab.classList.add('active');
+      tab.setAttribute('aria-selected', 'true');
       document.querySelector(`.fw-panel[data-fw="${tab.dataset.fw}"]`).classList.add('active');
     });
   });
