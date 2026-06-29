@@ -26,7 +26,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO: ${{ github.repository }}
           PR: ${{ github.event.pull_request.number }}
-          AUTO_CLOSE: "false"
+          AUTO_CLOSE: "true"
           # A PR more than this many commits behind base is a stale revert-bomb
           # (the freshness guard flags it). Never let such a PR be the "keeper"
           # that closes a fresh one. Skip it as a dedup target.
