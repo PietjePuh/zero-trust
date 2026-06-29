@@ -1,0 +1,27 @@
+title = "secret scan"
+[extend]
+useDefault = true
+
+[[rules]]
+id = "groq-key"
+regex = '''gsk_[A-Za-z0-9]{20,}'''
+[[rules]]
+id = "openrouter-key"
+regex = '''sk-or-v1-[a-f0-9]{32,}'''
+[[rules]]
+id = "google-api-key"
+regex = '''AIzaSy[A-Za-z0-9_-]{20,}'''
+[[rules]]
+id = "github-token"
+regex = '''gh[pousr]_[A-Za-z0-9]{36}'''
+[[rules]]
+id = "anthropic-key"
+regex = '''sk-ant-[A-Za-z0-9_-]{20,}'''
+[[rules]]
+id = "tailscale-key"
+regex = '''tskey-(auth|api)-[A-Za-z0-9-]{20,}'''
+
+[allowlist]
+description = "refs/placeholders are fine"
+regexes = ['''op://''', '''REDACTED''', '''MASKED''', '''your-?(api-?)?key''', '''change(-?me|this)''', '''example''']
+paths = ['''.*\.example$''', '''.*\.tpl$''', '''.*\.gitleaks\.toml$''', '''.*__tests__/.*''', '''.*\.test\.(ts|js|mjs)$''', '''.*DEMO.*''']

@@ -1,0 +1,41 @@
+name: Freshness guard
+
+# Block stale revert-bomb PRs: a branch far behind its base reverts everything
+# that landed since it forked when merged. Pure git + bash on GitHub-hosted
+# ubuntu. A red check warns before a merge.
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+
+jobs:
+  freshness:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # CRITICAL: the PR's real head, NOT the default merge ref. The merge
+          # ref already contains base, so HEAD..base would be ~0 and the guard
+          # would never fire. Count against the head SHA explicitly below too.
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+
+      - name: Check divergence from base
+        env:
+          BASE_REF: ${{ github.base_ref }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          MAX_BEHIND=500
+          git fetch --no-tags origin "$BASE_REF"
+          BEHIND=$(git rev-list --count "$HEAD_SHA..origin/$BASE_REF")
+          AHEAD=$(git rev-list --count "origin/$BASE_REF..$HEAD_SHA")
+          echo "PR is $AHEAD ahead / $BEHIND behind origin/$BASE_REF (limit: $MAX_BEHIND behind)."
+          if [ "$BEHIND" -gt "$MAX_BEHIND" ]; then
+            echo "::error title=Stale branch::This branch is $BEHIND commits behind origin/$BASE_REF (limit $MAX_BEHIND). Merging it could REVERT landed work. Rebase onto origin/$BASE_REF, or recreate the branch fresh and cherry-pick, before merging."
+            exit 1
+          fi
+          echo "Freshness OK — branch is current enough to merge safely."

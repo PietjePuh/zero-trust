@@ -1,0 +1,101 @@
+name: Flag duplicate PRs
+
+# When several PRs edit the same files, they cannot all merge — the first to
+# land turns the rest into conflicts. This fires on PR open, compares changed
+# files against every other open PR, and flags overlaps. FLAG-ONLY by default
+# (AUTO_CLOSE=false) — set to "true" to auto-close the newer overlapping PR.
+
+on:
+  pull_request:
+    types: [opened, reopened, ready_for_review]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: dedupe-prs-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  flag-duplicates:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Compare changed files against other open PRs
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          PR: ${{ github.event.pull_request.number }}
+          AUTO_CLOSE: "false"
+          # A PR more than this many commits behind base is a stale revert-bomb
+          # (the freshness guard flags it). Never let such a PR be the "keeper"
+          # that closes a fresh one. Skip it as a dedup target.
+          DEDUPE_STALE_BEHIND: "500"
+        run: |
+          set -euo pipefail
+
+          gh pr view "$PR" --repo "$REPO" --json files --jq '.files[].path' \
+            | sort -u > /tmp/mine.txt
+          if [ ! -s /tmp/mine.txt ]; then
+            echo "PR #$PR changes no files; nothing to compare."
+            exit 0
+          fi
+
+          # Append-only / lockfile churn that two feature PRs both touch is not
+          # a real duplicate — ignore before deciding overlap.
+          printf '%s\n' \
+            'package.json' \
+            'package-lock.json' \
+            'pnpm-lock.yaml' \
+            'yarn.lock' \
+            'requirements.txt' \
+            'README.md' \
+            'CHANGELOG.md' \
+            | sort -u > /tmp/ignore.txt
+
+          OTHERS=$(gh pr list --repo "$REPO" --state open --json number \
+            --jq ".[].number | select(. != $PR)")
+
+          REPORT=""
+          for other in $OTHERS; do
+            # Skip a stale "other" PR as a dedup keeper (revert-bomb protection).
+            ohead=$(gh pr view "$other" --repo "$REPO" --json headRefOid --jq '.headRefOid' 2>/dev/null || echo '')
+            obase=$(gh pr view "$other" --repo "$REPO" --json baseRefName --jq '.baseRefName' 2>/dev/null || echo 'main')
+            if [ -n "$ohead" ]; then
+              obehind=$(gh api "repos/$REPO/compare/${obase}...${ohead}" --jq '.behind_by' 2>/dev/null || echo 0)
+              if [ "${obehind:-0}" -gt "${DEDUPE_STALE_BEHIND:-500}" ]; then
+                echo "Skipping stale PR #$other ($obehind commits behind $obase) as a dedup target."
+                continue
+              fi
+            fi
+            gh pr view "$other" --repo "$REPO" --json files \
+              --jq '.files[].path' | sort -u > /tmp/other.txt
+            shared=$(comm -12 /tmp/mine.txt /tmp/other.txt \
+              | grep -vxF -f /tmp/ignore.txt || true)
+            if [ -n "$shared" ]; then
+              count=$(printf '%s\n' "$shared" | grep -c . || true)
+              list=$(printf '%s\n' "$shared" | sed 's/^/    - `/; s/$/`/')
+              REPORT+=$'\n'"- #$other shares $count file(s):"$'\n'"$list"
+            fi
+          done
+
+          if [ -z "$REPORT" ]; then
+            echo "PR #$PR does not overlap any other open PR."
+            exit 0
+          fi
+
+          echo "Overlap detected for PR #$PR:$REPORT"
+
+          gh label create potential-duplicate --repo "$REPO" --color FBCA04 \
+            --description "Changes files already touched by another open PR" \
+            2>/dev/null || true
+          gh pr edit "$PR" --repo "$REPO" --add-label potential-duplicate
+
+          BODY="⚠️ **Possible duplicate.** This PR changes files already being modified by other open PR(s):${REPORT}"
+          BODY+=$'\n\n'"Only one can merge cleanly — the rest become conflicts once the first lands. Consolidate into one PR, or close the redundant one before merging."
+          gh pr comment "$PR" --repo "$REPO" --body "$BODY"
+
+          if [ "$AUTO_CLOSE" = "true" ]; then
+            gh pr close "$PR" --repo "$REPO" \
+              --comment "Auto-closing as a likely duplicate of the PR(s) listed above. Re-open if this overlap is intentional."
+          fi
