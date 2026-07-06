@@ -390,7 +390,6 @@
     const resourceCategories = document.querySelectorAll('.resource-category');
     const resourceItems = document.querySelectorAll('.resource-item');
     const filterChips = document.querySelectorAll('.filter-chip');
-    const searchAnnouncement = document.getElementById('searchAnnouncement');
     let currentCat = 'all';
 
     function updateURL() {
@@ -493,6 +492,14 @@
 
     searchInput.addEventListener('input', function () {
         applyFilters();
+    });
+
+    searchInput.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+            searchInput.value = '';
+            applyFilters();
+            searchInput.focus();
+        }
     });
 
     clearBtn.addEventListener('click', function () {
