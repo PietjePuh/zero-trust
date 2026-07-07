@@ -8,6 +8,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 performSearch(query);
             }
         });
+
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                e.target.value = '';
+                e.target.focus();
+            }
+        });
     });
 
     function performSearch(query) {
