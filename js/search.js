@@ -8,6 +8,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 performSearch(query);
             }
         });
+
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                input.value = '';
+                input.dispatchEvent(new Event('input'));
+                input.focus();
+
+                // Clear any no results message
+                const noResults = document.getElementById('no-results-msg');
+                if (noResults) {
+                    noResults.style.display = 'none';
+                }
+            }
+        });
     });
 
     function performSearch(query) {
