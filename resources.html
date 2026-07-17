@@ -386,11 +386,11 @@
     const searchInput = document.getElementById('resourceSearch');
     const clearBtn = document.getElementById('clearSearch');
     const noResults = document.getElementById('noResults');
+    // Note: Duplicate searchAnnouncement const was removed to prevent Playwright crash
     const searchAnnouncement = document.getElementById('searchAnnouncement');
     const resourceCategories = document.querySelectorAll('.resource-category');
     const resourceItems = document.querySelectorAll('.resource-item');
     const filterChips = document.querySelectorAll('.filter-chip');
-    const searchAnnouncement = document.getElementById('searchAnnouncement');
     let currentCat = 'all';
 
     function updateURL() {
@@ -499,6 +499,14 @@
         searchInput.value = '';
         applyFilters();
         searchInput.focus();
+    });
+
+    searchInput.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+            searchInput.value = '';
+            searchInput.dispatchEvent(new Event('input'));
+            searchInput.focus();
+        }
     });
 
     // Check for query parameter

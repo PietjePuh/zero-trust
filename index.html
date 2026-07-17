@@ -1039,9 +1039,17 @@
                 applySearch();
                 searchInput.focus();
             });
-        }
 
-        function setupNavigation() {
+        searchInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                searchInput.value = '';
+                searchInput.dispatchEvent(new Event('input'));
+                searchInput.focus();
+            }
+        });
+    }
+
+    function setupNavigation() {
             document.addEventListener('keydown', (e) => {
                 const activeTag = document.activeElement.tagName;
                 if (e.key === '/' && activeTag !== 'INPUT' && activeTag !== 'TEXTAREA') {
