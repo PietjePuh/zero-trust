@@ -15,7 +15,7 @@ We currently support the following versions with security updates:
 
 If you discover a security vulnerability within this project, please report it via one of the following methods:
 
-1.  **Email:** security@zero-trust.pw
+1.  **Email:** timvanmaurik7@gmail.com
 2.  **GitHub Private Reporting:** Use the "Report a vulnerability" button in the Security tab of this repository.
 
 Please include the following in your report:
