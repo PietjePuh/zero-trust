@@ -131,6 +131,12 @@
             position: relative;
         }
 
+        .search-wrapper {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
         .search-input {
             width: 100%;
             padding: 0.7rem 1rem;
@@ -756,8 +762,9 @@
                 <li><a href="#glossary" class="nav-link">Glossary</a></li>
                 <li><a href="#training" class="nav-link">Training</a></li>
             </ul>
-            <div class="search-bar">
-                <input type="text" class="search-input" id="globalSearch" placeholder="Search all sections... (Press '/')" aria-label="Search all sections...">
+            <div class="search-bar search-wrapper">
+                <label for="globalSearch" class="sr-only">Search all sections</label>
+                <input type="text" class="search-input" id="globalSearch" placeholder="Search all sections... (Press '/')" aria-label="Search all sections">
                 <button id="clearGlobalSearch" class="clear-button hidden" aria-label="Clear search" title="Clear search" type="button">✕</button>
                 <div id="searchAnnouncement" class="sr-only" aria-live="polite"></div>
             </div>
