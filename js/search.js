@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 window.location.href = results[0].url;
             }
         } else {
-            // No internal match - show feedback instead of leaking to Google
+            // No internal match - show feedback instead of leaking queries to Google
             if (noResults) {
                 noResults.innerHTML = ''; // Safe to clear
 
@@ -101,7 +101,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 noResults.appendChild(p);
                 noResults.classList.remove('hidden');
             } else {
-                alert(`No results found for "${query}".`);
+                // No suggestion container on this page: create one instead of alert()
+                const searchContainer = document.querySelector('.search-container') || document.body;
+                let noResultsMsg = document.getElementById('no-results-msg');
+                if (!noResultsMsg) {
+                    noResultsMsg = document.createElement('div');
+                    noResultsMsg.id = 'no-results-msg';
+                    noResultsMsg.style.cssText = 'padding: 1rem; margin-top: 1rem; text-align: center; color: var(--text-secondary, #aaa); border: 1px solid var(--border-color, #333); border-radius: 8px;';
+                    searchContainer.appendChild(noResultsMsg);
+                }
+                noResultsMsg.textContent = `No results found for "${query}". Try a different search term.`;
+                noResultsMsg.style.display = 'block';
             }
         }
     }
