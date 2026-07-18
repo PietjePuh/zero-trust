@@ -494,14 +494,6 @@
         applyFilters();
     });
 
-    searchInput.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') {
-            searchInput.value = '';
-            searchInput.dispatchEvent(new Event('input'));
-            searchInput.focus();
-        }
-    });
-
     clearBtn.addEventListener('click', function () {
         searchInput.value = '';
         applyFilters();
