@@ -21,7 +21,7 @@ Desktop.ini
 *.swo
 *~
 
-# Node (indien van toepassing)
+# Node (if applicable)
 node_modules/
 npm-debug.log*
 
