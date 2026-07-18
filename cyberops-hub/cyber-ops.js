@@ -1379,7 +1379,9 @@
         if (result.cyberOpsOs) {
           state.os = result.cyberOpsOs;
           group.querySelectorAll('.os-btn').forEach(b => {
-            b.classList.toggle('active', b.dataset.os === state.os);
+            const isActive = b.dataset.os === state.os;
+            b.classList.toggle('active', isActive);
+            b.setAttribute('aria-pressed', isActive ? 'true' : 'false');
           });
           refreshAllViews();
         }
@@ -1389,8 +1391,12 @@
     group.querySelectorAll('.os-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         state.os = btn.dataset.os;
-        group.querySelectorAll('.os-btn').forEach(b => b.classList.remove('active'));
+        group.querySelectorAll('.os-btn').forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-pressed', 'false');
+        });
         btn.classList.add('active');
+        btn.setAttribute('aria-pressed', 'true');
         if (typeof chrome !== 'undefined' && chrome.storage) {
           chrome.storage.local.set({ cyberOpsOs: state.os });
         }
@@ -1480,6 +1486,7 @@
     filterToggle.addEventListener('click', () => {
       state.filterByTools = !state.filterByTools;
       filterToggle.classList.toggle('active', state.filterByTools);
+      filterToggle.setAttribute('aria-pressed', state.filterByTools ? 'true' : 'false');
       filterToggle.textContent = state.filterByTools ? 'Show All' : 'Hide Unavailable';
       if (typeof chrome !== 'undefined' && chrome.storage) {
         chrome.storage.local.set({ cyberOpsFilterByTools: state.filterByTools });
@@ -1496,6 +1503,7 @@
         if (result.cyberOpsFilterByTools) {
           state.filterByTools = true;
           filterToggle.classList.add('active');
+          filterToggle.setAttribute('aria-pressed', 'true');
           filterToggle.textContent = 'Show All';
         }
         renderToolGrid();
@@ -1541,9 +1549,13 @@
 
   document.querySelectorAll('.fw-tab').forEach(tab => {
     tab.addEventListener('click', () => {
-      document.querySelectorAll('.fw-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.fw-tab').forEach(t => {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
+      });
       document.querySelectorAll('.fw-panel').forEach(p => p.classList.remove('active'));
       tab.classList.add('active');
+      tab.setAttribute('aria-selected', 'true');
       document.querySelector(`.fw-panel[data-fw="${tab.dataset.fw}"]`).classList.add('active');
     });
   });
@@ -2135,7 +2147,9 @@
           const osGroup = document.getElementById('osGroup');
           if (osGroup) {
             osGroup.querySelectorAll('.os-btn').forEach(b => {
-              b.classList.toggle('active', b.dataset.os === state.os);
+              const isActive = b.dataset.os === state.os;
+              b.classList.toggle('active', isActive);
+              b.setAttribute('aria-pressed', isActive ? 'true' : 'false');
             });
           }
         }

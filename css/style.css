@@ -285,6 +285,7 @@ code {
     width: 100%;
     max-width: 600px;
     padding: 1rem;
+    padding-right: 2.5rem;
     font-size: 1.2rem;
     background-color: var(--secondary-bg);
     border: 1px solid var(--border-color);

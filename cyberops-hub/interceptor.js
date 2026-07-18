@@ -721,13 +721,13 @@ function renderRepeaterHeaders() {
     <div class="header-row">
       <input type="text" placeholder="Header name" value="${escHtml(h.name)}" data-idx="${i}" data-field="name">
       <input type="text" placeholder="Header value" value="${escHtml(h.value)}" data-idx="${i}" data-field="value">
-      <button class="remove-header" data-idx="${i}" title="Remove">&times;</button>
+      <button class="remove-header" data-idx="${i}" title="Remove header" aria-label="Remove header">&times;</button>
     </div>
   `).join('') + `
     <div class="header-row">
       <input type="text" placeholder="+ Add header name" data-idx="new" data-field="name">
       <input type="text" placeholder="Value" data-idx="new" data-field="value">
-      <button class="remove-header" style="visibility: hidden;">&times;</button>
+      <button class="remove-header" style="visibility: hidden;" title="Remove header" aria-label="Remove header">&times;</button>
     </div>
   `;
 

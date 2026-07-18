@@ -917,10 +917,10 @@
     <span style="width:1px;height:24px;background:var(--co-border);margin:0 4px;"></span>
     <label class="var-label">OS</label>
     <div class="os-group" id="osGroup">
-      <button class="os-btn active" data-os="all">All</button>
-      <button class="os-btn" data-os="linux"><span class="os-icon">&#128039;</span>Linux</button>
-      <button class="os-btn" data-os="windows"><span class="os-icon">&#9726;</span>Win</button>
-      <button class="os-btn" data-os="macos"><span class="os-icon">&#63743;</span>Mac</button>
+      <button class="os-btn active" data-os="all" aria-pressed="true">All</button>
+      <button class="os-btn" data-os="linux" aria-pressed="false"><span class="os-icon">&#128039;</span>Linux</button>
+      <button class="os-btn" data-os="windows" aria-pressed="false"><span class="os-icon">&#9726;</span>Win</button>
+      <button class="os-btn" data-os="macos" aria-pressed="false"><span class="os-icon">&#63743;</span>Mac</button>
     </div>
     <button class="launch-btn" id="toolsToggleBtn" title="Configure installed tools">Tools</button>
     <button class="launch-btn" id="notionSyncBtn" title="Sync snippets from Notion Security Tools DB">Notion Sync</button>
@@ -961,19 +961,19 @@
       <div class="tools-actions">
         <button class="tools-action-btn" id="toolsSelectAll">Select All</button>
         <button class="tools-action-btn" id="toolsSelectNone">Clear All</button>
-        <button class="tools-action-btn" id="toolsFilterToggle" title="When active, dim snippets for tools you don't have">Hide Unavailable</button>
+        <button class="tools-action-btn" id="toolsFilterToggle" title="When active, dim snippets for tools you don't have" aria-pressed="false">Hide Unavailable</button>
       </div>
     </div>
     <div class="tools-grid" id="toolsGrid"></div>
   </div>
 
   <!-- Framework Tabs -->
-  <div class="fw-tabs">
-    <button class="fw-tab active" data-fw="killchain">Kill Chain</button>
-    <button class="fw-tab" data-fw="attack">MITRE ATT&CK</button>
-    <button class="fw-tab" data-fw="pyramid">Pyramid of Pain</button>
-    <button class="fw-tab" data-fw="owasp">OWASP Top 10</button>
-    <button class="fw-tab" data-fw="snippets">All Snippets</button>
+  <div class="fw-tabs" role="tablist" aria-label="Frameworks">
+    <button class="fw-tab active" data-fw="killchain" role="tab" aria-selected="true">Kill Chain</button>
+    <button class="fw-tab" data-fw="attack" role="tab" aria-selected="false">MITRE ATT&CK</button>
+    <button class="fw-tab" data-fw="pyramid" role="tab" aria-selected="false">Pyramid of Pain</button>
+    <button class="fw-tab" data-fw="owasp" role="tab" aria-selected="false">OWASP Top 10</button>
+    <button class="fw-tab" data-fw="snippets" role="tab" aria-selected="false">All Snippets</button>
   </div>
 
   <!-- ═══════════════════════════════════════════ -->
@@ -1058,7 +1058,7 @@
   <!-- ═══════════════════════════════════════════ -->
   <div class="cheatsheet-overlay" id="cheatsheetOverlay">
     <div class="cheatsheet-box">
-      <button class="cs-close" id="cheatsheetClose">&times;</button>
+      <button class="cs-close" id="cheatsheetClose" title="Close cheatsheet" aria-label="Close cheatsheet">&times;</button>
       <h2>Keyboard Shortcuts &amp; Quick Reference</h2>
 
       <div class="cs-section">

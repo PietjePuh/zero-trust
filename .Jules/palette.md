@@ -63,4 +63,17 @@
 ## 2024-05-19 - Keyboard shortcut discoverability
 **Learning:** Adding a global search shortcut ('/') is great for power users, but discoverability is essential. Users need subtle visual hints (like placeholder text updates) to know the shortcut exists.
 **Action:** When adding global accessibility shortcuts in the future, always accompany them with visual hints in empty states or placeholders so they are discoverable without requiring users to read external documentation.
+
+## 2024-05-25 - Filter Group Accessibility
+**Learning:** Filter button clusters often rely on proximity and visual styling to convey they are a group, but screen readers miss this context. Furthermore, while CSS `.active` classes handle visual state, `aria-pressed` must be actively managed via JavaScript to convey the selected state to assistive technology.
+**Action:** When implementing filter button groups, wrap them in a container with `role="group"` and `aria-label`, initialize the default active button with `aria-pressed="true"` (and others `false`), and explicitly toggle these attributes in the JavaScript click handlers.
+
 ## 2026-03-26 - Universal Skip Links\n**Learning:** Implementing 'Skip to main content' globally requires attention to differing CSS variable architectures across sub-projects (e.g. `--accent-color` vs `--co-accent` vs `--primary`).\n**Action:** When adding global UI features, verify variable mappings in all sub-directories and inject styles explicitly where external stylesheets differ.
+
+## 2026-03-31 - Accessible Tab Interfaces
+**Learning:** Framework tabs implemented simply as buttons lack necessary semantic meaning, making it difficult for screen reader users to understand the structure of the tabs and their active state.
+**Action:** When implementing interactive tab interfaces, ensure the container has `role="tablist"` and an `aria-label`, the buttons have `role="tab"`, and dynamically update the `aria-selected` attribute to true or false based on the active tab state using JavaScript.
+
+## 2026-07-18 - Search Field Escape Key Accessbility
+**Learning:** Search fields often lack keyboard accessibility for clearing their content. By convention, pressing the 'Escape' key while focused on a search input should clear it.
+**Action:** Always add a `keydown` event listener for the 'Escape' key to search inputs that clears the value, dispatches an 'input' event to trigger any filtering logic, and restores focus to the input.

@@ -127,6 +127,14 @@ document.addEventListener('DOMContentLoaded', () => {
         filterTools(e.target.value);
     });
 
+    searchInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            searchInput.value = '';
+            searchInput.dispatchEvent(new Event('input'));
+            searchInput.focus();
+        }
+    });
+
     clearBtn.addEventListener('click', () => {
         searchInput.value = '';
         filterTools('');
@@ -180,6 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 fragment.appendChild(wrapper);
             } else {
                 // Keep element nodes (e.g. strong tags)
+                // Also keep whitespace if needed? No, block elements handle layout.
                 if (node.nodeType === Node.ELEMENT_NODE) {
                     fragment.appendChild(node.cloneNode(true));
                 }
@@ -189,4 +198,5 @@ document.addEventListener('DOMContentLoaded', () => {
         flagsContainer.innerHTML = '';
         flagsContainer.appendChild(fragment);
     });
+
 });

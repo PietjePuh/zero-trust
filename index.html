@@ -125,11 +125,41 @@
             color: var(--cyan);
         }
 
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            width: 44px;
+            height: 44px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1001;
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 28px;
+            height: 3px;
+            background-color: var(--cyan);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
         .search-bar {
             flex: 1;
             min-width: 250px;
             max-width: 400px;
             position: relative;
+        }
+
+        .search-wrapper {
+            position: relative;
+            display: inline-block;
+            width: 100%;
         }
 
         .search-input {
@@ -707,8 +737,24 @@
             }
 
             .nav-container {
-                flex-direction: column;
                 gap: 1rem;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            /* Hamburger to X animation */
+            .menu-toggle.active span:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+
+            .menu-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .menu-toggle.active span:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
             }
 
             .search-bar {
@@ -725,8 +771,30 @@
             }
 
             .nav-links {
-                font-size: 0.85rem;
-                gap: 1rem;
+                display: none;
+            }
+
+            .nav-links.active {
+                display: flex;
+                flex-direction: column;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: var(--dark-bg);
+                padding: 6rem 2rem 2rem;
+                gap: 1.5rem;
+                z-index: 1000;
+                overflow-y: auto;
+                align-items: flex-start;
+            }
+
+            .nav-links.active a {
+                display: flex;
+                align-items: center;
+                min-height: 44px;
+                font-size: 1.1rem;
             }
         }
 
@@ -749,7 +817,12 @@
     <nav>
         <div class="nav-container">
             <a href="#" class="nav-logo">⚔ ZERO TRUST</a>
-            <ul class="nav-links">
+            <button id="menuToggle" class="menu-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="navMenu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul id="navMenu" class="nav-links">
                 <li><a href="#tools" class="nav-link">Tools</a></li>
                 <li><a href="#scripts" class="nav-link">Scripts</a></li>
                 <li><a href="#bookmarks" class="nav-link">Intel</a></li>
@@ -757,8 +830,9 @@
                 <li><a href="#glossary" class="nav-link">Glossary</a></li>
                 <li><a href="#training" class="nav-link">Training</a></li>
             </ul>
-            <div class="search-bar">
-                <input type="text" class="search-input" id="globalSearch" placeholder="Search all sections... (Press '/')" aria-label="Search all sections...">
+            <div class="search-bar search-wrapper">
+                <label for="globalSearch" class="sr-only">Search all sections</label>
+                <input type="text" class="search-input" id="globalSearch" placeholder="Search all sections... (Press '/')" aria-label="Search all sections">
                 <button id="clearGlobalSearch" class="clear-button hidden" aria-label="Clear search" title="Clear search" type="button">✕</button>
                 <div id="searchAnnouncement" class="sr-only" aria-live="polite"></div>
             </div>
@@ -801,6 +875,10 @@
     </section>
 
     <main id="main-content" class="container" tabindex="-1">
+        <div id="globalNoResults" class="no-results hidden">
+            <p>No results found matching your criteria. Try different keywords.</p>
+        </div>
+
         <!-- Tools Section -->
         <section class="section" id="tools">
             <h2 class="section-title">Security Tools (187)</h2>
@@ -1015,12 +1093,33 @@
                 const q = searchInput.value.toLowerCase();
                 let visibleCount = 0;
 
-                document.querySelectorAll('[data-searchable]').forEach(el => {
-                    if (!q || el.dataset.searchable.includes(q)) {
-                        el.style.display = '';
-                        visibleCount++;
+                document.querySelectorAll('.section').forEach(section => {
+                    let sectionVisibleCount = 0;
+
+                    section.querySelectorAll('[data-searchable]').forEach(el => {
+                        if (!q || el.dataset.searchable.includes(q)) {
+                            el.style.display = '';
+                            sectionVisibleCount++;
+                            visibleCount++;
+                        } else {
+                            el.style.display = 'none';
+                        }
+                    });
+
+                    // Handle nested training categories
+                    section.querySelectorAll('.training-category').forEach(cat => {
+                        const visibleInCat = Array.from(cat.querySelectorAll('[data-searchable]')).filter(el => el.style.display !== 'none').length;
+                        if (q && visibleInCat === 0) {
+                            cat.style.display = 'none';
+                        } else {
+                            cat.style.display = '';
+                        }
+                    });
+
+                    if (q && sectionVisibleCount === 0) {
+                        section.style.display = 'none';
                     } else {
-                        el.style.display = 'none';
+                        section.style.display = '';
                     }
                 });
 
@@ -1030,10 +1129,25 @@
                     clearBtn.classList.add('hidden');
                 }
 
+                const noResultsEl = document.getElementById('globalNoResults');
+                if (q && visibleCount === 0) {
+                    noResultsEl.classList.remove('hidden');
+                } else {
+                    noResultsEl.classList.add('hidden');
+                }
+
                 announcement.textContent = visibleCount > 0 ? `${visibleCount} results found.` : "No results found.";
             }
 
             searchInput.addEventListener('input', applySearch);
+
+            searchInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    searchInput.value = '';
+                    searchInput.dispatchEvent(new Event('input'));
+                    searchInput.focus();
+                }
+            });
 
             clearBtn.addEventListener('click', () => {
                 searchInput.value = '';
@@ -1069,9 +1183,47 @@
             });
         }
 
+        // ============ MOBILE NAVIGATION ============
+
+        function setupMobileMenu() {
+            const menuToggle = document.getElementById('menuToggle');
+            const navMenu = document.getElementById('navMenu');
+            if (!menuToggle || !navMenu) return;
+
+            const closeMenu = () => {
+                menuToggle.setAttribute('aria-expanded', 'false');
+                menuToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            };
+
+            menuToggle.addEventListener('click', () => {
+                const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+                menuToggle.setAttribute('aria-expanded', String(!isExpanded));
+                menuToggle.classList.toggle('active');
+                navMenu.classList.toggle('active');
+                // Prevent scroll when menu is open
+                document.body.style.overflow = !isExpanded ? 'hidden' : '';
+            });
+
+            // Close menu when clicking a link
+            navMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', closeMenu);
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (navMenu.classList.contains('active') &&
+                    !navMenu.contains(e.target) &&
+                    !menuToggle.contains(e.target)) {
+                    closeMenu();
+                }
+            });
+        }
+
         function init() {
             renderTools(); renderScripts(); renderBookmarks(); renderFrameworks(); renderGlossary(); renderTraining();
-            setupToolFilters(); setupBookmarkFilters(); setupGlossaryFilters(); setupGlobalSearch(); setupNavigation();
+            setupToolFilters(); setupBookmarkFilters(); setupGlossaryFilters(); setupGlobalSearch(); setupNavigation(); setupMobileMenu();
         }
 
         document.addEventListener('DOMContentLoaded', init);
