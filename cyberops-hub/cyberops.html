@@ -7,6 +7,24 @@
   <title>Cyber Ops — Toolbelt</title>
   <link rel="stylesheet" href="../css/tokens.css">
   <style>
+/* Skip Link */
+.skip-link {
+    position: absolute;
+    top: -100px;
+    left: 0;
+    padding: 10px;
+    background-color: var(--co-accent);
+    color: var(--co-bg);
+    font-weight: bold;
+    z-index: 9999;
+    text-decoration: none;
+    transition: top 0.3s;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
     :root {
       --co-bg: var(--bg, #0b1220);
       --co-surface: var(--surface, #111a2a);
@@ -867,6 +885,7 @@
   </style>
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
 
   <!-- Header -->
   <div class="app-header">
