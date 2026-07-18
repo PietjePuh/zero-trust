@@ -800,6 +800,10 @@
     </section>
 
     <main id="main-content" class="container" tabindex="-1">
+        <div id="globalNoResults" class="no-results hidden">
+            <p>No results found matching your criteria. Try different keywords.</p>
+        </div>
+
         <!-- Tools Section -->
         <section class="section" id="tools">
             <h2 class="section-title">Security Tools (187)</h2>
@@ -1014,12 +1018,33 @@
                 const q = searchInput.value.toLowerCase();
                 let visibleCount = 0;
 
-                document.querySelectorAll('[data-searchable]').forEach(el => {
-                    if (!q || el.dataset.searchable.includes(q)) {
-                        el.style.display = '';
-                        visibleCount++;
+                document.querySelectorAll('.section').forEach(section => {
+                    let sectionVisibleCount = 0;
+
+                    section.querySelectorAll('[data-searchable]').forEach(el => {
+                        if (!q || el.dataset.searchable.includes(q)) {
+                            el.style.display = '';
+                            sectionVisibleCount++;
+                            visibleCount++;
+                        } else {
+                            el.style.display = 'none';
+                        }
+                    });
+
+                    // Handle nested training categories
+                    section.querySelectorAll('.training-category').forEach(cat => {
+                        const visibleInCat = Array.from(cat.querySelectorAll('[data-searchable]')).filter(el => el.style.display !== 'none').length;
+                        if (q && visibleInCat === 0) {
+                            cat.style.display = 'none';
+                        } else {
+                            cat.style.display = '';
+                        }
+                    });
+
+                    if (q && sectionVisibleCount === 0) {
+                        section.style.display = 'none';
                     } else {
-                        el.style.display = 'none';
+                        section.style.display = '';
                     }
                 });
 
@@ -1029,10 +1054,25 @@
                     clearBtn.classList.add('hidden');
                 }
 
+                const noResultsEl = document.getElementById('globalNoResults');
+                if (q && visibleCount === 0) {
+                    noResultsEl.classList.remove('hidden');
+                } else {
+                    noResultsEl.classList.add('hidden');
+                }
+
                 announcement.textContent = visibleCount > 0 ? `${visibleCount} results found.` : "No results found.";
             }
 
             searchInput.addEventListener('input', applySearch);
+
+            searchInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    searchInput.value = '';
+                    searchInput.dispatchEvent(new Event('input'));
+                    searchInput.focus();
+                }
+            });
 
             clearBtn.addEventListener('click', () => {
                 searchInput.value = '';
