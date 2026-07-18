@@ -2,6 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="description" content="Technical guide and lab walkthrough for identifying and exploiting buffer overflow vulnerabilities.">
+  <meta property="og:title" content="Lab: Buffer Overflow - Zero Trust">
+  <meta property="og:description" content="Technical guide and lab walkthrough for identifying and exploiting buffer overflow vulnerabilities.">
+  <meta property="og:image" content="../../../favicon.png">
+  <link rel="icon" type="image/x-icon" href="../../../favicon.ico">
+  <link rel="icon" type="image/png" href="../../../favicon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
   <meta http-equiv="X-Frame-Options" content="DENY">
@@ -11,6 +17,7 @@
   <link rel="stylesheet" href="../../../css/style.css">
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
   <header class="page-header">
     <div class="nav-bar">
         <a href="../../../index.html">Home</a>
@@ -22,7 +29,7 @@
     <p>MITRE T1190: Exploiting application vulnerability for Remote Code Execution (RCE).</p>
   </header>
 
-  <main>
+  <main id="main-content" tabindex="-1">
     <div class="resource-category">
         <h2 class="wiki-section-title">⚔️ The Attack (Red Team)</h2>
         <p><strong>Concept:</strong> Overwriting the Return Address (EIP) to redirect execution flow to our shellcode.</p>

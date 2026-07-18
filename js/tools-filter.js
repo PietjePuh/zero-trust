@@ -135,7 +135,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Keyboard shortcut for search
     document.addEventListener('keydown', (e) => {
-        if (e.key === '/' && document.activeElement !== searchInput) {
+        const activeTag = document.activeElement.tagName;
+        if (e.key === '/' && activeTag !== 'INPUT' && activeTag !== 'TEXTAREA') {
             e.preventDefault();
             searchInput.focus();
         }
