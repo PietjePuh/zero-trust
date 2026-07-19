@@ -77,3 +77,6 @@
 ## 2026-07-18 - Search Field Escape Key Accessbility
 **Learning:** Search fields often lack keyboard accessibility for clearing their content. By convention, pressing the 'Escape' key while focused on a search input should clear it.
 **Action:** Always add a `keydown` event listener for the 'Escape' key to search inputs that clears the value, dispatches an 'input' event to trigger any filtering logic, and restores focus to the input.
+## 2026-03-31 - Accessible Scroll Navigation Cards
+**Learning:** Structural elements (like `.stat-card`) used as visually rich navigation shortcuts are frequently inaccessible, implemented simply as `div` elements with `click` event listeners and `cursor: pointer`. This completely alienates keyboard and screen reader users.
+**Action:** When implementing custom structural elements for navigation, always ensure they are fully accessible by adding `role="button"`, `tabindex="0"`, a descriptive `aria-label`, visible focus styling via `:focus-visible`, and javascript `keydown` handlers for `Enter` and `Space` keys to mimic native button functionality.
