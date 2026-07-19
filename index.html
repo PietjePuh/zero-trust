@@ -254,6 +254,12 @@
             transform: translateY(-2px);
         }
 
+        .stat-card:focus-visible {
+            outline: none;
+            border-color: var(--green);
+            box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.3), 0 0 20px rgba(0, 255, 136, 0.2);
+        }
+
         .stat-number {
             font-family: 'JetBrains Mono', monospace;
             font-size: 2rem;
@@ -942,27 +948,27 @@
             <p>SOC Resource Center — Tools, Intel, Training</p>
 
             <div class="stats">
-                <div class="stat-card" data-scroll="tools">
+                <div class="stat-card" data-scroll="tools" role="button" tabindex="0" aria-label="Scroll to Security Tools section">
                     <div class="stat-number">169</div>
                     <div class="stat-label">Security Tools</div>
                 </div>
-                <div class="stat-card" data-scroll="scripts">
+                <div class="stat-card" data-scroll="scripts" role="button" tabindex="0" aria-label="Scroll to Security Scripts section">
                     <div class="stat-number">25</div>
                     <div class="stat-label">Scripts</div>
                 </div>
-                <div class="stat-card" data-scroll="bookmarks">
+                <div class="stat-card" data-scroll="bookmarks" role="button" tabindex="0" aria-label="Scroll to Threat Intelligence Bookmarks section">
                     <div class="stat-number">120+</div>
                     <div class="stat-label">Intel Sources</div>
                 </div>
-                <div class="stat-card" data-scroll="glossary">
+                <div class="stat-card" data-scroll="glossary" role="button" tabindex="0" aria-label="Scroll to Security Glossary section">
                     <div class="stat-number">44</div>
                     <div class="stat-label">Glossary Terms</div>
                 </div>
-                <div class="stat-card" data-scroll="training">
+                <div class="stat-card" data-scroll="training" role="button" tabindex="0" aria-label="Scroll to Training & Courses section">
                     <div class="stat-number">90+</div>
                     <div class="stat-label">Training Courses</div>
                 </div>
-                <div class="stat-card" data-scroll="frameworks">
+                <div class="stat-card" data-scroll="frameworks" role="button" tabindex="0" aria-label="Scroll to Security Frameworks section">
                     <div class="stat-number">6</div>
                     <div class="stat-label">Frameworks</div>
                 </div>
@@ -1263,19 +1269,30 @@
 
             const links = document.querySelectorAll('.nav-link');
             const cards = document.querySelectorAll('.stat-card');
-            [...links, ...cards].forEach(link => {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    links.forEach(nl => nl.classList.remove('active'));
-                    const t = link.dataset.scroll || link.getAttribute('href')?.replace('#','');
-                    if(t) {
-                        const s = document.getElementById(t);
-                        if(s) {
-                            s.scrollIntoView({behavior:'smooth'});
-                            link.classList.add('active');
-                        }
+
+            function handleNav(link, e) {
+                e.preventDefault();
+                links.forEach(nl => nl.classList.remove('active'));
+                const t = link.dataset.scroll || link.getAttribute('href')?.replace('#','');
+                if(t) {
+                    const s = document.getElementById(t);
+                    if(s) {
+                        s.scrollIntoView({behavior:'smooth'});
+                        link.classList.add('active');
                     }
-                });
+                }
+            }
+
+            [...links, ...cards].forEach(link => {
+                link.addEventListener('click', (e) => handleNav(link, e));
+                if (link.classList.contains('stat-card')) {
+                    link.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            handleNav(link, e);
+                        }
+                    });
+                }
             });
         }
 
